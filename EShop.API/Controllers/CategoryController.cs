@@ -15,27 +15,34 @@ namespace EShop.API.Controllers
         {
             this.categoryService = categoryService;
         }
+
         /// <summary>
         /// Get all categories
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Status code of the action </returns>
+        /// <response code="200">Successfully get items information.</response>
+        /// <response code="500">There is something wrong while execute.</response>
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             List<CategoryResponse> categories = await categoryService.GetAllCategories();
             return Ok(categories);
         }
+
         /// <summary>
         /// Create new category
         /// </summary>
         /// <param name="categoryRequest"></param>
+        /// <returns>Status code of the action.</returns>
+        /// <response code="201">Successfully created item.</response>
         /// <returns></returns>
         [HttpPost("create")]
         public async Task<IActionResult> Create(CategoryRequest categoryRequest)
         {
             CategoryResponse category = await categoryService.AddCategory(categoryRequest);
-            return Ok(category);
+            return CreatedAtAction(nameof(Create), new { id = category.Id }, category);
         }
+
         /// <summary>
         /// Update category by id 
         /// </summary>
@@ -48,6 +55,7 @@ namespace EShop.API.Controllers
             CategoryResponse categoryResponse = await categoryService.UpdateCategory(id, categoryRequest);
             return Ok(categoryResponse);
         }
+
         /// <summary>
         /// Delete category by id 
         /// </summary>
