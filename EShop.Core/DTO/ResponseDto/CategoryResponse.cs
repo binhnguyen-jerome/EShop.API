@@ -8,6 +8,8 @@ namespace EShop.Core.DTO.ResponseDto
         public string? Name { get; set; }
 
         public string? Description { get; set; }
+        // It compares the current object to another object of CategoryResponse type and returns true,
+        // if both values are same; otherwise returns false
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
@@ -17,6 +19,7 @@ namespace EShop.Core.DTO.ResponseDto
             CategoryResponse category = (CategoryResponse)obj;
             return Id == category.Id && Name == category.Name && Description == category.Description;
         }
+        // return an unique key for the current object
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -24,7 +27,7 @@ namespace EShop.Core.DTO.ResponseDto
     }
     public static class CategoryExtensions
     {
-        //Converts from Country object to CountryResponse object
+        //Converts from Category object to CategoryResponse object
         public static CategoryResponse ToCategoryResponse(this Category category)
         {
             return new CategoryResponse() { Id = category.Id, Name = category.Name, Description = category.Description };
