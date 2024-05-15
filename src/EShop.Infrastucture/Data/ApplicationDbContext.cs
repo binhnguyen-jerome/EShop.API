@@ -13,6 +13,7 @@ namespace EShop.Infrastucture.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
             var MenShirtId = "ce284d5a-1eba-4967-8d51-1d541a8025d2";
             var MenPantId = "91052f64-008c-4f54-a344-154d3f1ce37a";
