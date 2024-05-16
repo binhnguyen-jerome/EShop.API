@@ -1,6 +1,5 @@
-﻿using EShop.Core.DTO.RequestDto;
-using EShop.Core.DTO.ResponseDto;
-using EShop.Core.IServices;
+﻿using EShop.Core.IServices;
+using EShop.ViewModels.CategoryViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers

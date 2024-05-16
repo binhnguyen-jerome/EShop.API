@@ -1,6 +1,5 @@
-﻿using EShop.Core.Domain.Entities;
-
-namespace EShop.Core.DTO.ResponseDto
+﻿
+namespace EShop.ViewModels.CategoryViewModel
 {
     public class CategoryResponse
     {
@@ -23,14 +22,6 @@ namespace EShop.Core.DTO.ResponseDto
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-    }
-    public static class CategoryExtensions
-    {
-        //Converts from Category object to CategoryResponse object
-        public static CategoryResponse ToCategoryResponse(this Category category)
-        {
-            return new CategoryResponse() { Id = category.Id, Name = category.Name, Description = category.Description };
         }
     }
 }

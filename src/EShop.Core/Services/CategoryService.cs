@@ -1,8 +1,8 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Core.DTO.RequestDto;
-using EShop.Core.DTO.ResponseDto;
 using EShop.Core.IServices;
+using EShop.Core.Mappers;
+using EShop.ViewModels.CategoryViewModel;
 
 namespace EShop.Core.Services
 {
@@ -16,7 +16,7 @@ namespace EShop.Core.Services
             this.categoryRepository = categoryRepository;
             this.unitOfWork = unitOfWork;
         }
-        public async Task<CategoryResponse> AddCategory(CategoryRequest? categoryRequest)
+        public async Task<CategoryResponse> AddCategory(CategoryRequest categoryRequest)
         {
             if (categoryRequest == null)
                 throw new ArgumentNullException(nameof(categoryRequest));

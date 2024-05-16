@@ -1,5 +1,4 @@
-﻿using EShop.Core.DTO.RequestDto;
-using EShop.Core.DTO.ResponseDto;
+﻿using EShop.ViewModels.CategoryViewModel;
 
 namespace EShop.Core.IServices
 {
