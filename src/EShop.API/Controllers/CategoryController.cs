@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
 {
-    [Route("api/category")]
+    [Route("api/v1/category")]
     [ApiController]
     public class CategoryController : ControllerBase
     {

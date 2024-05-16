@@ -1,29 +1,37 @@
 ﻿using EShop.Core.Domain.Entities;
+using EShop.Infrastucture.Data.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EShop.Infrastucture.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductImage> Images { get; set; }
+
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             base.OnModelCreating(modelBuilder);
-            var MenShirtId = "ce284d5a-1eba-4967-8d51-1d541a8025d2";
-            var MenPantId = "91052f64-008c-4f54-a344-154d3f1ce37a";
-            var AccessoryId = "09d05933-a638-4694-8c1d-f3e5c998124c";
-            // Seed Category data
-            modelBuilder.Entity<Category>().HasData(
-                new Category { Id = new Guid(MenShirtId), Name = "Men Shirt", Description = "Test" },
-                new Category { Id = new Guid(MenPantId), Name = "Men Pant", Description = "Test" },
-                new Category { Id = new Guid(AccessoryId), Name = "Accessory", Description = "Test" }
-            );
+            modelBuilder.Seed();
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+
         }
     }
 }

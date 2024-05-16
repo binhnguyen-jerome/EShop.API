@@ -1,8 +1,10 @@
-﻿using EShop.Core.Domain.Repositories;
+﻿using EShop.Core.Domain.Entities;
+using EShop.Core.Domain.Repositories;
 using EShop.Core.IServices;
 using EShop.Core.Services;
 using EShop.Infrastucture.Data;
 using EShop.Infrastucture.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -21,7 +23,11 @@ namespace EShop.API.Extensions
             services.AddSwaggerGen();
             services.AddDbContext<ApplicationDbContext>(options =>
                            options.UseSqlServer(connectDB));
+            services.AddIdentityApiEndpoints<ApplicationUser>()
+                .AddRoles<IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             return services;
+
         }
         public static void ConfigureSwagger(this IServiceCollection services)
         {
