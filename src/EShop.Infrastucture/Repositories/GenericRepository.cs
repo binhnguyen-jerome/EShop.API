@@ -14,12 +14,12 @@ namespace EShop.Infrastucture.Repositories
             _db = db;
             dbSet = _db.Set<T>();
         }
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             dbSet.Add(entity);
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
+        public virtual async Task<T> Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
             IQueryable<T> query;
             if (tracked)
@@ -45,7 +45,7 @@ namespace EShop.Infrastucture.Repositories
 
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null)
+        public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)
@@ -63,12 +63,12 @@ namespace EShop.Infrastucture.Repositories
             return await query.ToListAsync();
         }
 
-        public void Remove(T entity)
+        public virtual void Remove(T entity)
         {
             dbSet.Remove(entity);
         }
 
-        public async Task<IEnumerable<T>> RemoveRange(IEnumerable<T> entity)
+        public virtual async Task<IEnumerable<T>> RemoveRange(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);
             return entity;

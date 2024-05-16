@@ -3,7 +3,7 @@
     public class Comment : BaseModel
     {
         public int Rate { get; set; }
-        public string Content { get; set; } = string.Empty;
+        public string? Content { get; set; }
         public DateTime DateTime { get; set; } = DateTime.Now;
 
         public Guid ProductId { get; set; }
