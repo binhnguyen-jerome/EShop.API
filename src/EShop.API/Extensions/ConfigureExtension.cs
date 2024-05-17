@@ -4,9 +4,12 @@ using EShop.Core.IServices;
 using EShop.Core.Services;
 using EShop.Infrastucture.Data;
 using EShop.Infrastucture.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace EShop.API.Extensions
 {
@@ -14,18 +17,52 @@ namespace EShop.API.Extensions
     {
         public static IServiceCollection ConfigureService(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectDB = configuration.GetConnectionString("DefaultConnection");
+            // Inject Service Repositories
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            // Connect to Database
+            var connectDB = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
                            options.UseSqlServer(connectDB));
+            // Add Identity
             services.AddIdentityApiEndpoints<ApplicationUser>()
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            // Check password 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
+            // Add JWT
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = configuration["Jwt:Issuer"],
+                        ValidAudience = configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                    };
+                });
+
             return services;
 
         }
@@ -48,20 +85,30 @@ namespace EShop.API.Extensions
                     Version = "development"
                 };
                 options.SwaggerDoc("v1", apiInfo);
-                //string xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                // Add JWT bearer token support
+                options.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
                         {
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
                             Reference = new OpenApiReference
                             {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
                             }
                         },
-                        Array.Empty<string>()
+                        new List<string>()
                     }
                 });
             });
