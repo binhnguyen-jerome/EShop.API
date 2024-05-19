@@ -19,6 +19,11 @@ namespace EShop.Infrastucture.Repositories
             dbSet.Add(entity);
         }
 
+        public void AddRange(IEnumerable<T> entities)
+        {
+            dbSet.AddRange(entities);
+        }
+
         public virtual async Task<T> Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
             IQueryable<T> query;
@@ -68,10 +73,9 @@ namespace EShop.Infrastucture.Repositories
             dbSet.Remove(entity);
         }
 
-        public virtual async Task<IEnumerable<T>> RemoveRange(IEnumerable<T> entity)
+        public virtual void RemoveRange(IEnumerable<T> entities)
         {
-            dbSet.RemoveRange(entity);
-            return entity;
+            dbSet.RemoveRange(entities);
         }
 
         public void Update(T entity)

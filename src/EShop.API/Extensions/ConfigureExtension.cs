@@ -18,13 +18,11 @@ namespace EShop.API.Extensions
         public static IServiceCollection ConfigureService(this IServiceCollection services, IConfiguration configuration)
         {
             // Inject Service Repositories
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddTransient<IAuthService, AuthService>();
-            services.AddControllers();
-            services.AddEndpointsApiExplorer();
+
             // Connect to Database
             var connectDB = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>

@@ -7,12 +7,10 @@ namespace EShop.Infrastucture.Repositories
     {
         private readonly ApplicationDbContext _db;
         private readonly Dictionary<Type, object> _repositories = new();
-        public IProductRepository Product { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
-            Product = new ProductRepository(_db);
         }
         public IGenericRepository<T> GetBaseRepo<T>() where T : class
         {
