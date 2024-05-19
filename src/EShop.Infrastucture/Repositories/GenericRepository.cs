@@ -41,7 +41,7 @@ namespace EShop.Infrastucture.Repositories
                     query = query.Include(includeProp);
                 }
             }
-            return await query.FirstOrDefaultAsync();
+            return await query.FirstAsync();
 
         }
 
@@ -72,6 +72,11 @@ namespace EShop.Infrastucture.Repositories
         {
             dbSet.RemoveRange(entity);
             return entity;
+        }
+
+        public void Update(T entity)
+        {
+            dbSet.Update(entity);
         }
     }
 }

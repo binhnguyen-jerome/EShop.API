@@ -9,5 +9,6 @@ namespace EShop.Core.Domain.Repositories
         void Add(T entity);
         void Remove(T entity);
         Task<IEnumerable<T>> RemoveRange(IEnumerable<T> entity);
+        void Update(T entity);
     }
 }
