@@ -14,56 +14,39 @@ namespace EShop.API.Controllers
         {
             this.categoryService = categoryService;
         }
+        //[Authorize(Roles = "Admin")]
 
-        /// <summary>
-        /// Get all categories
-        /// </summary>
-        /// <returns> Status code of the action </returns>
-        /// <response code="200">Successfully get items information.</response>
-        /// <response code="500">There is something wrong while execute.</response>
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
-            List<CategoryResponse> categories = await categoryService.GetAllCategories();
+            List<CategoryResponse> categories = await categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }
 
-        /// <summary>
-        /// Create new category
-        /// </summary>
-        /// <param name="categoryRequest"></param>
-        /// <returns>Status code of the action.</returns>
-        /// <response code="201">Successfully created item.</response>
-        /// <returns></returns>
         [HttpPost("create")]
-        public async Task<IActionResult> Create(CategoryRequest categoryRequest)
+        public async Task<IActionResult> Create([FromBody] CategoryRequest categoryRequest)
         {
-            CategoryResponse category = await categoryService.AddCategory(categoryRequest);
+            CategoryResponse category = await categoryService.CreateCategoryAsync(categoryRequest);
             return CreatedAtAction(nameof(Create), new { id = category.Id }, category);
         }
-
-        /// <summary>
-        /// Update category by id 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="categoryRequest"></param>
-        /// <returns></returns>
-        [HttpPost("update/{id}")]
-        public async Task<IActionResult> Update(Guid? id, CategoryRequest categoryRequest)
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> Get([FromRoute] Guid? id)
         {
-            CategoryResponse categoryResponse = await categoryService.UpdateCategory(id, categoryRequest);
+            CategoryResponse? categoryResponse = await categoryService.GetCategoryByIdAsync(id);
             return Ok(categoryResponse);
         }
 
-        /// <summary>
-        /// Delete category by id 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete(Guid? id)
+        [HttpPost("update/{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid? id, [FromBody] CategoryRequest categoryRequest)
         {
-            CategoryResponse categoryResponse = await categoryService.DeleteCategory(id);
+            CategoryResponse categoryResponse = await categoryService.UpdateCategoryAsync(id, categoryRequest);
+            return Ok(categoryResponse);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid? id)
+        {
+            CategoryResponse categoryResponse = await categoryService.DeleteCategoryAsync(id);
             return Ok(categoryResponse);
         }
     }

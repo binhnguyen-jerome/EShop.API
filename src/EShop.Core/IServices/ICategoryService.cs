@@ -4,10 +4,10 @@ namespace EShop.Core.IServices
 {
     public interface ICategoryService
     {
-        Task<List<CategoryResponse>> GetAllCategories();
-        Task<CategoryResponse?> GetCategoryById(Guid? id);
-        Task<CategoryResponse> AddCategory(CategoryRequest? category);
-        Task<CategoryResponse> UpdateCategory(Guid? id, CategoryRequest? category);
-        Task<CategoryResponse> DeleteCategory(Guid? id);
+        Task<List<CategoryResponse>> GetAllCategoriesAsync();
+        Task<CategoryResponse?> GetCategoryByIdAsync(Guid? id);
+        Task<CategoryResponse> CreateCategoryAsync(CategoryRequest? category);
+        Task<CategoryResponse> UpdateCategoryAsync(Guid? id, CategoryRequest? category);
+        Task<CategoryResponse> DeleteCategoryAsync(Guid? id);
     }
 }
