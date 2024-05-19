@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EShop.Infrastucture.Data.Configuration
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class ImageConfiguration : IEntityTypeConfiguration<Image>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<Image> builder)
         {
-
         }
     }
 }

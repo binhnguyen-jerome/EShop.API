@@ -8,15 +8,11 @@ namespace EShop.Infrastucture.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder
-                    .HasMany(o => o.OrderItems)
-                    .WithOne(i => i.Order)
-                    .HasForeignKey(i => i.OrderId)
-                    .IsRequired();
+
             builder.HasOne(o => o.ApplicationUser)
                     .WithMany(u => u.Orders)
                     .HasForeignKey(o => o.ApplicationUserId)
-                    .IsRequired();
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

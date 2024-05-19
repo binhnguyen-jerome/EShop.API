@@ -8,15 +8,6 @@ namespace EShop.Infrastucture.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder
-                .HasMany(c => c.ProductImages)
-                .WithOne(p => p.Product)
-                .HasForeignKey(p => p.ProductId)
-                .IsRequired(false);
-            builder.HasMany(p => p.Comments)
-                .WithOne(c => c.Product)
-                .HasForeignKey(c => c.ProductId)
-                .IsRequired();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EShop.Infrastucture.Data
@@ -22,7 +23,14 @@ namespace EShop.Infrastucture.Data
             modelBuilder.Entity<Product>().HasData(
                  new Product { Id = new Guid(Product1Id), Name = "Shirt12", Description = "Shirt12", Summary = "Shirt12", CategoryId = new Guid(MenShirtId), CreateDate = DateTime.Now, Price = 200, Stock = 12 },
                   new Product { Id = new Guid(Product2Id), Name = "Shirt13", Description = "Shirt13", Summary = "Shirt13", CategoryId = new Guid(MenShirtId), CreateDate = DateTime.Now, Price = 300, Stock = 100 }
-                 ); ;
+                 );
+            // Seed Data Identity Role 
+            var adminRoleId = "cc6b8705-6ce1-4233-8e73-56255932c8cb";
+            var customerRoleId = "d6059475-8e7f-42ac-8194-027f5d2a594e";
+            modelBuilder.Entity<IdentityRole<Guid>>().HasData(
+              new IdentityRole<Guid> { Id = new Guid(adminRoleId), Name = "Admin", ConcurrencyStamp = adminRoleId, NormalizedName = "Admin".ToUpper() },
+              new IdentityRole<Guid> { Id = new Guid(customerRoleId), Name = "Customer", ConcurrencyStamp = customerRoleId, NormalizedName = "Customer".ToUpper() }
+          );
         }
     }
 }

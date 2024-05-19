@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EShop.Core.Domain.Entities
 {
     public class Product : BaseModel
     {
-        [Required]
         public string Name { get; set; }
         public string? Description { get; set; }
 
@@ -17,7 +15,7 @@ namespace EShop.Core.Domain.Entities
         public decimal PriceDiscount { get; set; }
 
         public int Stock { get; set; }
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public DateTime CreateDate { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
@@ -25,7 +23,7 @@ namespace EShop.Core.Domain.Entities
         public virtual Category? Category { get; set; }
 
         public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
-        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public virtual ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
 
     }
 }

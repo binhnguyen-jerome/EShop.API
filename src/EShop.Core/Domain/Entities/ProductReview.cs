@@ -1,15 +1,16 @@
 ﻿namespace EShop.Core.Domain.Entities
 {
-    public class Comment : BaseModel
+    public class ProductReview : BaseModel
     {
         public int Rate { get; set; }
         public string? Content { get; set; }
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public DateTime CreateAt { get; set; } = DateTime.Now;
 
         public Guid ProductId { get; set; }
         public virtual Product? Product { get; set; }
 
         public Guid ApplicationUserId { get; set; }
         public virtual ApplicationUser? ApplicationUser { get; set; }
+        public virtual ICollection<ProductReviewImage>? ProductReviewImages { get; set; }
     }
 }

@@ -9,16 +9,6 @@ namespace EShop.Infrastucture.Data.Configuration
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
 
-            builder
-                    .HasMany(u => u.Orders)
-                    .WithOne(o => o.ApplicationUser)
-                    .HasForeignKey(o => o.Id)
-                    .IsRequired();
-            builder
-                    .HasMany(u => u.Comments)
-                    .WithOne(c => c.ApplicationUser)
-                    .HasForeignKey(c => c.Id)
-                    .IsRequired();
         }
     }
 }
