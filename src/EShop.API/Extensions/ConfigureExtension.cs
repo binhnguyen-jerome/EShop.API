@@ -17,6 +17,8 @@ namespace EShop.API.Extensions
     {
         public static IServiceCollection ConfigureService(this IServiceCollection services, IConfiguration configuration)
         {
+            //Inject Query 
+            services.AddScoped<IProductQueries, ProductQueries>();
             // Inject Service Repositories
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
