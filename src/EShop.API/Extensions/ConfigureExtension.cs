@@ -19,9 +19,12 @@ namespace EShop.API.Extensions
         {
             //Inject Query 
             services.AddScoped<IProductQueries, ProductQueries>();
+            services.AddScoped<IOrderQueries, OrderQueries>();
             // Inject Service Repositories
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductReviewService, ProductReviewService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthService, AuthService>();
 
