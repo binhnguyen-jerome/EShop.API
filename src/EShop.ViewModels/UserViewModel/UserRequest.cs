@@ -2,7 +2,7 @@
 
 namespace EShop.ViewModels.UserViewModel
 {
-    public class RegisterRequest
+    public class UserRequest
     {
         [Required]
         [EmailAddress]
@@ -17,6 +17,5 @@ namespace EShop.ViewModels.UserViewModel
         public string? State { get; set; }
         public string? PostalCode { get; set; }
         public string[] Role { get; set; }
-
     }
 }

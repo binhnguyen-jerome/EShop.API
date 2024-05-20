@@ -26,7 +26,7 @@ namespace EShop.API.Extensions
             services.AddScoped<IProductReviewService, ProductReviewService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUserService, UserService>();
 
             // Connect to Database
             var connectDB = configuration.GetConnectionString("DefaultConnection");

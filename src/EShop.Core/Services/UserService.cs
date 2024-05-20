@@ -1,7 +1,9 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.IServices;
+using EShop.Core.Mappers;
 using EShop.ViewModels.UserViewModel;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,12 +12,12 @@ using System.Text;
 
 namespace EShop.Core.Services
 {
-    public class AuthService : IAuthService
+    public class UserService : IUserService
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration configuration;
 
-        public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public UserService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.configuration = configuration;
@@ -29,6 +31,7 @@ namespace EShop.Core.Services
                 UserName = registerRequest.Email,
                 FirstName = registerRequest.FirstName,
                 LastName = registerRequest.LastName,
+                PhoneNumber = registerRequest.PhoneNumber,
                 StreetAddress = registerRequest.StreetAddress,
                 City = registerRequest.City,
                 State = registerRequest.State,
@@ -55,7 +58,61 @@ namespace EShop.Core.Services
             }
             return false;
         }
+        public async Task<List<UserReponse>> GetAllUserAsync()
+        {
+            var users = await userManager.Users.ToListAsync();
+            return users.Select(u => u.ToUserReponse()).ToList();
+        }
 
+        public async Task<UserReponse?> GetUserByIdAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            return user.ToUserReponse();
+        }
+        public async Task<bool> DeleteUserAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            var user = userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            await userManager.DeleteAsync(user.Result);
+            return true;
+        }
+        public async Task<UserReponse> UpdateUserAsync(Guid? id, UserRequest userRequest)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            user.Email = userRequest.Email;
+            user.FirstName = userRequest.FirstName;
+            user.LastName = userRequest.LastName;
+            user.PhoneNumber = userRequest.PhoneNumber;
+            user.StreetAddress = userRequest.StreetAddress;
+            user.City = userRequest.City;
+            user.State = userRequest.State;
+            user.PostalCode = userRequest.PostalCode;
+            await userManager.UpdateAsync(user);
+            return user.ToUserReponse();
+        }
         public async Task<string> CreateJWTToken(LoginRequest user)
         {
             var claims = await GetClaims(user.Email);
@@ -88,6 +145,5 @@ namespace EShop.Core.Services
             }
             return claims;
         }
-
     }
 }
