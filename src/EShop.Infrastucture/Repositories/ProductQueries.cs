@@ -15,6 +15,7 @@ namespace EShop.Infrastucture.Repositories
             return await dbSet
                 .Where(p => p.CategoryId == categoryId)
                 .Include(p => p.Category)
+                .Include(p => p.ProductReviews)
                 .Include(p => p.ProductImages)
                 .ThenInclude(p => p.Image)
                 .ToListAsync();
@@ -33,6 +34,7 @@ namespace EShop.Infrastucture.Repositories
             return await dbSet
                 .Where(p => p.Id == id)
                 .Include(p => p.Category)
+                .Include(p => p.ProductReviews)
                 .Include(p => p.ProductImages)
                 .ThenInclude(p => p.Image)
                 .FirstOrDefaultAsync();

@@ -4,7 +4,7 @@
     {
         public int Rate { get; set; }
         public string? Content { get; set; }
-        public DateTime CreateAt { get; set; } = DateTime.Now;
+        public DateTime CreateAt { get; set; }
 
         public Guid ProductId { get; set; }
         public virtual Product? Product { get; set; }

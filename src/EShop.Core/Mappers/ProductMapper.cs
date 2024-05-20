@@ -24,7 +24,7 @@ namespace EShop.Core.Mappers
                 {
                     ImageUrl = x.Image.ImageUrl,
                     PublicId = x.Image.PublicId
-                }).ToList()
+                }).ToList(),
 
             };
         }
