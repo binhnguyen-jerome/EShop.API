@@ -1,34 +1,34 @@
 using EShop.CustomerFe.Models;
-using EShop.ViewModels.CategoryViewModel;
+using EShop.CustomerFe.Services;
+using EShop.ViewModels.HomeViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace EShop.CustomerFe.Controllers
 {
     public class HomeController : Controller
     {
-        Uri uri = new Uri("https://localhost:7045/api");
-        private readonly HttpClient _client;
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductService productService;
+        private readonly ICategoryService categoryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductService productService, ICategoryService categoryService)
         {
             _logger = logger;
-            _client = new HttpClient();
-            _client.BaseAddress = uri;
+            this.productService = productService;
+            this.categoryService = categoryService;
         }
-        [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<CategoryResponse>? categoryList = new List<CategoryResponse>();
-            HttpResponseMessage result = _client.GetAsync(_client.BaseAddress + "/v1/category/all").Result;
-            if (result.IsSuccessStatusCode)
+            var products = await productService.GetAllProductsAsync();
+            var categories = await categoryService.GetAllCategoriesAsync();
+            var viewModel = new HomeViewModel
             {
-                string data = result.Content.ReadAsStringAsync().Result;
-                categoryList = JsonConvert.DeserializeObject<List<CategoryResponse>>(data);
-            }
-            return View(categoryList);
+                Products = products,
+                Categories = categories
+            };
+            ViewBag.Categories = categories;
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

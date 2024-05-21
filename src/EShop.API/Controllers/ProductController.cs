@@ -20,7 +20,7 @@ namespace EShop.API.Controllers
             List<ProductResponse> products = await productService.GetAllProductsAsync();
             return Ok(products);
         }
-        [HttpGet("getbycategory")]
+        [HttpGet("all/category")]
         public async Task<IActionResult> GetByCategory(Guid? categoryId)
         {
             List<ProductResponse> products = await productService.GetProductsByCategoryAsync(categoryId);
