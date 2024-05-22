@@ -1,6 +1,6 @@
 ﻿using EShop.ViewModels.ProductViewModel;
 
-namespace EShop.CustomerFe.Services
+namespace EShop.CustomerFe.Services.Interface
 {
     public interface IProductService
     {
