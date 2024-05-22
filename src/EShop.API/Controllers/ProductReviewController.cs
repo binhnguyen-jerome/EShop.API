@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
 {
-    [Route("api/productReview")]
+    [Route("api/v1/productReview")]
     [ApiController]
     public class ProductReviewController : Controller
     {
@@ -15,9 +15,9 @@ namespace EShop.API.Controllers
             this.productReviewService = productReviewService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetProductReviewAsync(Guid? id)
+        public async Task<IActionResult> GetProductReviewAsync(Guid? productId)
         {
-            List<ProductReviewResponse> productReviewResponses = await productReviewService.GetProductReviewsByProductIdAsync(id);
+            List<ProductReviewResponse> productReviewResponses = await productReviewService.GetProductReviewsByProductIdAsync(productId);
             return Ok(productReviewResponses);
         }
         [HttpPost("create")]

@@ -1,5 +1,9 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+.img-icon {
+    width: 14px;
+    height: 14px;
+}
 .text-inherit {
   color: var(--fc-gray-800);
 }

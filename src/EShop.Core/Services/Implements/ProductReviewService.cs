@@ -48,7 +48,7 @@ namespace EShop.Core.Services.Implements
             {
                 throw new ArgumentNullException(nameof(productId));
             }
-            var productReviews = await productReviewRepository.GetAll(p => p.ProductId == productId);
+            var productReviews = await productReviewRepository.GetAll(p => p.ProductId == productId, includeProperties: "ApplicationUser");
             return productReviews.Select(p => p.ToProductReviewResponse()).ToList();
         }
 

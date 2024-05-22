@@ -1,5 +1,5 @@
 using EShop.CustomerFe.Models;
-using EShop.CustomerFe.Services;
+using EShop.CustomerFe.Services.Interface;
 using EShop.ViewModels.HomeViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

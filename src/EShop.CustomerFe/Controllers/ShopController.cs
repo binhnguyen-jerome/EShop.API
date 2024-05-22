@@ -1,4 +1,4 @@
-﻿using EShop.CustomerFe.Services;
+﻿using EShop.CustomerFe.Services.Interface;
 using EShop.ViewModels.ShopViewModel;
 using Microsoft.AspNetCore.Mvc;
 

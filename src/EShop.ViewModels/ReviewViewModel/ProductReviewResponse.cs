@@ -8,7 +8,10 @@
         public DateTime CreateAt { get; set; }
 
         public Guid ProductId { get; set; }
-
         public Guid ApplicationUserId { get; set; }
+    }
+    public class ProductReviewUserResponse : ProductReviewResponse
+    {
+        public string ApplicationUserName { get; set; }
     }
 }

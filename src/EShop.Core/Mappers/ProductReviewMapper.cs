@@ -14,6 +14,20 @@ namespace EShop.Core.Mappers
                 CreateAt = productReview.CreateAt,
                 ProductId = productReview.ProductId,
                 ApplicationUserId = productReview.ApplicationUserId,
+                Rate = productReview.Rate,
+            };
+        }
+        public static ProductReviewUserResponse ToProductReviewUserResponse(this ProductReview productReview)
+        {
+            return new ProductReviewUserResponse()
+            {
+                Id = productReview.Id,
+                Content = productReview.Content,
+                CreateAt = productReview.CreateAt,
+                ProductId = productReview.ProductId,
+                ApplicationUserId = productReview.ApplicationUserId,
+                Rate = productReview.Rate,
+                ApplicationUserName = productReview.ApplicationUser.FirstName
             };
         }
         public static ProductReview ToProductReview(this ProductReviewRequest productReviewRequest)

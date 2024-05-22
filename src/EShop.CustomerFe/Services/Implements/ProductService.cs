@@ -22,9 +22,9 @@ namespace EShop.CustomerFe.Services
             return JsonConvert.DeserializeObject<List<ProductResponse>>(content);
         }
 
-        public async Task<ProductResponse> GetProductByIdAsync(Guid id)
+        public async Task<ProductResponse> GetProductByIdAsync(Guid productId)
         {
-            var response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/v1/product/get/{id}");
+            var response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/v1/product/get/{productId}");
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ProductResponse>(content);
