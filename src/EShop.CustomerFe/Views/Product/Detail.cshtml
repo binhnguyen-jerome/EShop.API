@@ -34,51 +34,23 @@
               <!-- img slide -->
                 <div class="product" id="product">
                     <div class="zoom"
-                         style="background-image: url(~/images/products/product-single-img-1.jpg);">
+                         style="background-image: url(@Model.Images.FirstOrDefault().ImageUrl);">
                         <!-- img -->
                         <!-- img -->
-                        <img src="~/images/products/product-single-img-1.jpg" alt="" />
+                        <img src="@Model.Images.FirstOrDefault().ImageUrl" alt="" />
                     </div>
                 </div>
               <!-- product tools -->
               <div class="product-tools">
                 <div class="thumbnails row g-3" id="productThumbnails">
-                  <div class="col-3">
-                    <div class="thumbnails-img">
-                      <!-- img -->
-                      <img
-                        src="~/images/products/product-single-img-1.jpg"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <div class="thumbnails-img">
-                      <!-- img -->
-                      <img
-                        src="~/images/products/product-single-img-2.jpg"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <div class="thumbnails-img">
-                      <!-- img -->
-                      <img
-                        src="~/images/products/product-single-img-3.jpg"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <div class="thumbnails-img">
-                      <!-- img -->
-                      <img
-                        src="~/images/products/product-single-img-4.jpg"
-                        alt=""
-                      />
-                    </div>
-                  </div>
+                    @foreach(var image in Model.Images)
+                    {
+                        <div class="col-3">
+                            <div class="thumbnail">
+                                <img src="@image.ImageUrl" alt="" />
+                            </div>
+                        </div>
+                    })
                 </div>
               </div>
             </div>
@@ -425,7 +397,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="d-flex border-bottom pb-6 mb-6">
+                                        <div class="d-flex border-bottom pb-6 mb-6 pb-4">
                                             <!-- img -->
                                             <!-- img -->
                                             <img src="../assets/images/avatar/avatar-10.jpg"
@@ -480,138 +452,6 @@
                                                              class="img-fluid" />
                                                     </div>
                                                 </div>
-                                                <!-- icon -->
-                                                <div class="d-flex justify-content-end mt-4">
-                                                    <a href="#" class="text-muted">
-                                                        <i class="feather-icon icon-thumbs-up me-1"></i>
-                                                        Helpful
-                                                    </a>
-                                                    <a href="#" class="text-muted ms-4">
-                                                        <i class="feather-icon icon-flag me-2"></i>
-                                                        Report abuse
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex border-bottom pb-6 mb-6 pt-4">
-                                            <!-- img -->
-                                            <img src="../assets/images/avatar/avatar-12.jpg"
-                                                 alt=""
-                                                 class="rounded-circle avatar-lg" />
-                                            <div class="ms-5">
-                                                <h6 class="mb-1">Robert Thomas</h6>
-                                                <!-- content -->
-                                                <p class="small">
-                                                    <span class="text-muted">29 December 2022</span>
-                                                    <span class="text-primary ms-3 fw-bold">Verified Purchase</span>
-                                                </p>
-                                                <!-- rating -->
-                                                <div class="mb-2">
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star text-warning"></i>
-                                                    <span class="ms-3 text-dark fw-bold">
-                                                        Need to recheck the weight at delivery
-                                                        point
-                                                    </span>
-                                                </div>
-
-                                                <p>
-                                                    Product quality is good. But, weight seemed less
-                                                    than 1kg. Since it is being sent in open
-                                                    package, there is a possibility of pilferage in
-                                                    between. FreshCart sends the veggies and fruits
-                                                    through sealed plastic covers and Barcode on the
-                                                    weight etc. .
-                                                </p>
-
-                                                <!-- icon -->
-                                                <div class="d-flex justify-content-end mt-4">
-                                                    <a href="#" class="text-muted">
-                                                        <i class="feather-icon icon-thumbs-up me-1"></i>
-                                                        Helpful
-                                                    </a>
-                                                    <a href="#" class="text-muted ms-4">
-                                                        <i class="feather-icon icon-flag me-2"></i>
-                                                        Report abuse
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex border-bottom pb-6 mb-6 pt-4">
-                                            <!-- img -->
-                                            <img src="../assets/images/avatar/avatar-9.jpg"
-                                                 alt=""
-                                                 class="rounded-circle avatar-lg" />
-                                            <div class="ms-5">
-                                                <h6 class="mb-1">Barbara Tay</h6>
-                                                <!-- content -->
-                                                <p class="small">
-                                                    <span class="text-muted">28 December 2022</span>
-                                                    <span class="text-danger ms-3 fw-bold">Unverified Purchase</span>
-                                                </p>
-                                                <!-- rating -->
-                                                <div class="mb-2">
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star text-warning"></i>
-                                                    <span class="ms-3 text-dark fw-bold">
-                                                        Need to recheck the weight at delivery
-                                                        point
-                                                    </span>
-                                                </div>
-
-                                                <p>
-                                                    Everytime i ordered from fresh i got greenish
-                                                    yellow bananas just like i wanted so go for it ,
-                                                    its happens very rare that u get over riped
-                                                    ones.
-                                                </p>
-
-                                                <!-- icon -->
-                                                <div class="d-flex justify-content-end mt-4">
-                                                    <a href="#" class="text-muted">
-                                                        <i class="feather-icon icon-thumbs-up me-1"></i>
-                                                        Helpful
-                                                    </a>
-                                                    <a href="#" class="text-muted ms-4">
-                                                        <i class="feather-icon icon-flag me-2"></i>
-                                                        Report abuse
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex border-bottom pb-6 mb-6 pt-4">
-                                            <!-- img -->
-                                            <img src="../assets/images/avatar/avatar-8.jpg"
-                                                 alt=""
-                                                 class="rounded-circle avatar-lg" />
-                                            <div class="ms-5 flex-grow-1">
-                                                <h6 class="mb-1">Sandra Langevin</h6>
-                                                <!-- content -->
-                                                <p class="small">
-                                                    <span class="text-muted">8 December 2022</span>
-                                                    <span class="text-danger ms-3 fw-bold">Unverified Purchase</span>
-                                                </p>
-                                                <!-- rating -->
-                                                <div class="mb-2">
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star text-warning"></i>
-                                                    <span class="ms-3 text-dark fw-bold">Great product</span>
-                                                </div>
-
-                                                <p>
-                                                    Great product & package. Delivery can be
-                                                    expedited.
-                                                </p>
-
                                                 <!-- icon -->
                                                 <div class="d-flex justify-content-end mt-4">
                                                     <a href="#" class="text-muted">

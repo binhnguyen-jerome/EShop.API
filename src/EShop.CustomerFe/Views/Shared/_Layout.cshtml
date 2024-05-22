@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/lib/feather-webfont/dist/feather-icons.css"/>
 </head>
 <body>
-    <partial name="Header" />
+    @await Component.InvokeAsync("Header")
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
