@@ -1,10 +1,10 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Core.IServices;
 using EShop.Core.Mappers;
+using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.ProductViewModel;
 
-namespace EShop.Core.Services
+namespace EShop.Core.Services.Implements
 {
     public class ProductService : IProductService
     {

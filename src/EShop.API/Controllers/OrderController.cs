@@ -1,4 +1,4 @@
-﻿using EShop.Core.IServices;
+﻿using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.OrderViewModel;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,6 @@
 ﻿using EShop.ViewModels.CategoryViewModel;
 
-namespace EShop.Core.IServices
+namespace EShop.Core.Services.Interfaces
 {
     public interface ICategoryService
     {

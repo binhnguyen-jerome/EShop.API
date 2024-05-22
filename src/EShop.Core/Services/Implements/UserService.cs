@@ -1,6 +1,6 @@
 ﻿using EShop.Core.Domain.Entities;
-using EShop.Core.IServices;
 using EShop.Core.Mappers;
+using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.UserViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace EShop.Core.Services
+namespace EShop.Core.Services.Implements
 {
     public class UserService : IUserService
     {

@@ -1,6 +1,6 @@
 ﻿using EShop.ViewModels.OrderViewModel;
 
-namespace EShop.Core.IServices
+namespace EShop.Core.Services.Interfaces
 {
     public interface IOrderService
     {

@@ -1,6 +1,6 @@
 ﻿using EShop.ViewModels.UserViewModel;
 
-namespace EShop.Core.IServices
+namespace EShop.Core.Services.Interfaces
 {
     public interface IUserService
     {

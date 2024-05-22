@@ -1,7 +1,7 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Core.IServices;
-using EShop.Core.Services;
+using EShop.Core.Services.Implements;
+using EShop.Core.Services.Interfaces;
 using EShop.Infrastucture.Data;
 using EShop.Infrastucture.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
