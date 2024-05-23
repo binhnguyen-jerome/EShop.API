@@ -1,4 +1,4 @@
-﻿namespace EShop.ViewModels.CategoryViewModel
+﻿namespace EShop.ViewModels.Dtos.Category
 {
     public class CategoryRequest
     {

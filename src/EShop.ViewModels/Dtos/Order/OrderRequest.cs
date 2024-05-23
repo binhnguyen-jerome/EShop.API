@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EShop.ViewModels.OrderViewModel
+namespace EShop.ViewModels.Dtos.Order
 {
     public class OrderRequest
     {

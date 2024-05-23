@@ -1,9 +1,9 @@
-﻿using EShop.ViewModels.CategoryViewModel;
+﻿using EShop.ViewModels.Dtos.Category;
 using EShop.ViewModels.ProductViewModel;
 
-namespace EShop.ViewModels.ShopViewModel
+namespace EShop.ViewModels.ViewModel
 {
-    public class ShopViewModel
+    public class ShopVM
     {
         public List<ProductResponse> Products { get; set; }
         public List<CategoryResponse> Categories { get; set; }

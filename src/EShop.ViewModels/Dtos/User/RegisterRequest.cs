@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EShop.ViewModels.UserViewModel
+namespace EShop.ViewModels.Dtos.User
 {
-    public class UserRequest
+    public class RegisterRequest
     {
         [Required]
         [EmailAddress]
@@ -16,6 +16,7 @@ namespace EShop.ViewModels.UserViewModel
         public string? City { get; set; }
         public string? State { get; set; }
         public string? PostalCode { get; set; }
-        public string[] Role { get; set; }
+        public string? Role { get; set; } = "Customer";
+
     }
 }

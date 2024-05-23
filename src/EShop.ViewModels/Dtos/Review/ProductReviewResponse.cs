@@ -1,4 +1,4 @@
-﻿namespace EShop.ViewModels.ProductReviewViewModel
+﻿namespace EShop.ViewModels.Dtos.Review
 {
     public class ProductReviewResponse
     {

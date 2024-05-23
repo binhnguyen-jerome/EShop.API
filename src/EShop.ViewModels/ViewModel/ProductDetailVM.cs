@@ -1,8 +1,9 @@
-﻿using EShop.ViewModels.ProductReviewViewModel;
+﻿using EShop.ViewModels.Dtos.Review;
+using EShop.ViewModels.ProductViewModel;
 
-namespace EShop.ViewModels.ProductViewModel
+namespace EShop.ViewModels.ViewModel
 {
-    public class ProductDetailViewModel
+    public class ProductDetailVM
     {
         public ProductResponse Product { get; set; }
         public List<ProductReviewUserResponse> Reviews { get; set; }

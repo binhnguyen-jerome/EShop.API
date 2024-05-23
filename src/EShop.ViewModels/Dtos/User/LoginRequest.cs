@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EShop.ViewModels.UserViewModel
+namespace EShop.ViewModels.Dtos.User
 {
     public class LoginRequest
     {
