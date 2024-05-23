@@ -1,4 +1,8 @@
 using EShop.CustomerFe.Services;
+using EShop.CustomerFe.Services.Implement;
+using EShop.CustomerFe.Services.Implements;
+using EShop.CustomerFe.Services.Interface;
+using EShop.CustomerFe.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IProductService, ProductService>();
 builder.Services.AddHttpClient<ICategoryService, CategoryService>();
+builder.Services.AddHttpClient<IProductReviewService, ProductReviewService>();
+builder.Services.AddHttpClient<IUserService, UserService>();
 
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = false;
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,8 +35,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

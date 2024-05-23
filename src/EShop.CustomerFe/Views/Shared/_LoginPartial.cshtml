@@ -1,0 +1,19 @@
+﻿@* @{
+    var token = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "Token")?.Value : null;
+    var userName = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value : null;
+} *@
+@if(ViewBag.Token != null)
+{
+  <li class="nav-item">
+        <a class="nav-link" asp-controller="User" asp-action="Logout">Logout</a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="User" asp-action="Login">Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="User" asp-action="Register">Register</a>
+    </li>
+}

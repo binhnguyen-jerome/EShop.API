@@ -39,7 +39,7 @@ namespace EShop.API.Controllers
                 return Ok(token);
             };
 
-            return BadRequest();
+            return Unauthorized();
         }
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUser()
@@ -50,6 +50,8 @@ namespace EShop.API.Controllers
         [HttpGet("user/{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
+            //Giải user id từ token
+            //var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var user = await _authService.GetUserByIdAsync(id);
             if (user == null)
             {
