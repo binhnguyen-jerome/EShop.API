@@ -26,8 +26,8 @@ namespace EShop.API.Extensions
             services.AddScoped<IProductReviewService, ProductReviewService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IUserService, UserService>();
-
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
             // Connect to Database
             var connectDB = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -94,7 +94,7 @@ namespace EShop.API.Extensions
                     Name = "Authorization",
                     Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
+                    Type = SecuritySchemeType.Http,
                     Scheme = "Bearer",
                     BearerFormat = "JWT"
                 });

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
 {
-    [Route("api/v1/category")]
+    [Route("api/v1/categories/")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -16,34 +16,34 @@ namespace EShop.API.Controllers
         }
         //[Authorize(Roles = "Admin")]
 
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetCategories()
         {
             List<CategoryResponse> categories = await categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CategoryRequest categoryRequest)
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryRequest categoryRequest)
         {
             CategoryResponse category = await categoryService.CreateCategoryAsync(categoryRequest);
-            return CreatedAtAction(nameof(Create), new { id = category.Id }, category);
+            return CreatedAtAction(nameof(CreateCategory), new { id = category.Id }, category);
         }
-        [HttpGet("get/{id}")]
-        public async Task<IActionResult> Get([FromRoute] Guid? id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategory([FromRoute] Guid? id)
         {
             CategoryResponse? categoryResponse = await categoryService.GetCategoryByIdAsync(id);
             return Ok(categoryResponse);
         }
 
-        [HttpPost("update/{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid? id, [FromBody] CategoryRequest categoryRequest)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory([FromRoute] Guid? id, [FromBody] CategoryRequest categoryRequest)
         {
             CategoryResponse categoryResponse = await categoryService.UpdateCategoryAsync(id, categoryRequest);
             return Ok(categoryResponse);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid? id)
         {
             CategoryResponse categoryResponse = await categoryService.DeleteCategoryAsync(id);

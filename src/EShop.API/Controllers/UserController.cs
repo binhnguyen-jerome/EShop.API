@@ -4,79 +4,46 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
 {
-    [Route("api/v1/userManager")]
+    [Route("api/v1/users/")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _authService;
+        private readonly IUserService userService;
 
-        public UserController(IUserService authService)
+        public UserController(IUserService userService)
         {
-            _authService = authService;
+            this.userService = userService;
         }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterRequest registerRequest)
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
         {
-            var result = await _authService.RegisterUser(registerRequest);
-            if (result)
-            {
-                return Ok("Successfull register user");
-            }
-            return BadRequest();
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest loginRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            var user = await _authService.Login(loginRequest);
-            if (user != null)
-            {
-                var jwt = await _authService.CreateJWTToken(loginRequest);
-                return Ok(new
-                {
-                    token = jwt,
-                    userName = user.FirstName,
-                    userId = user.Id
-                });
-            };
-
-            return Unauthorized();
-        }
-        [HttpGet("users")]
-        public async Task<IActionResult> GetAllUser()
-        {
-            var users = await _authService.GetAllUserAsync();
+            var users = await userService.GetUsersAsync();
             return Ok(users);
         }
-        [HttpGet("user/{id}")]
-        public async Task<IActionResult> GetUserById(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser(Guid id)
         {
-            var user = await _authService.GetUserByIdAsync(id);
+            var user = await userService.GetUserAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
             return Ok(user);
         }
-        [HttpDelete("user/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var result = await _authService.DeleteUserAsync(id);
+            var result = await userService.DeleteUserAsync(id);
             if (result)
             {
                 return Ok("User deleted");
             }
             return BadRequest();
         }
-        [HttpPut("user/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, UserRequest updateUser)
         {
-            UserReponse userReponse = await _authService.UpdateUserAsync(id, updateUser);
+            UserReponse userReponse = await userService.UpdateUserAsync(id, updateUser);
             return Ok(userReponse);
 
         }

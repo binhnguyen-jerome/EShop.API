@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
 {
-    [Route("api/v1/product")]
+    [Route("api/v1/products/")]
+    [ApiController]
     public class ProductController : Controller
     {
         private readonly IProductService productService;
@@ -14,40 +15,40 @@ namespace EShop.API.Controllers
             this.productService = productService;
         }
 
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
         {
             List<ProductResponse> products = await productService.GetAllProductsAsync();
             return Ok(products);
         }
-        [HttpGet("all/category")]
+        [HttpGet("category/{id}")]
         public async Task<IActionResult> GetByCategory(Guid? categoryId)
         {
             List<ProductResponse> products = await productService.GetProductsByCategoryAsync(categoryId);
             return Ok(products);
         }
-        [HttpGet("get/{id}")]
-        public async Task<IActionResult> Get([FromRoute] Guid? id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct([FromRoute] Guid? id)
         {
             ProductResponse? product = await productService.GetProductByIdAsync(id);
             return Ok(product);
         }
-        [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CreateProductRequest productRequest)
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest productRequest)
         {
             ProductResponse productResponse = await productService.CreateProductAsync(productRequest);
-            return CreatedAtAction(nameof(Create), new { id = productResponse.Id }, productResponse);
+            return CreatedAtAction(nameof(CreateProduct), new { id = productResponse.Id }, productResponse);
         }
 
-        [HttpPost("update/{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid? id, [FromBody] UpdateProductRequest productRequest)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> UpdateProduct([FromRoute] Guid? id, [FromBody] UpdateProductRequest productRequest)
         {
             ProductResponse productResponse = await productService.UpdateProductAsync(id, productRequest);
             return Ok(productResponse);
         }
 
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid? id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid? id)
         {
             if (await productService.DeleteProductAsync(id))
             {

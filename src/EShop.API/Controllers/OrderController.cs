@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
 {
-    [Route("api/v1/order")]
+    [Route("api/v1/orders/")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -14,29 +14,35 @@ namespace EShop.API.Controllers
         {
             this.orderService = orderService;
         }
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetOrders()
         {
             List<OrderResponse> orders = await orderService.GetAllOrderAsync();
             return Ok(orders);
         }
-        [HttpGet("get/{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrder(Guid id)
         {
             OrderDetailResponse? order = await orderService.GetOrderDetailByIdAsync(id);
             return Ok(order);
         }
-        [HttpPost("create")]
-        public async Task<IActionResult> Create(OrderRequest orderRequest)
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder(OrderRequest orderRequest)
         {
             OrderResponse orderResponse = await orderService.CreateOrderAsync(orderRequest);
-            return CreatedAtAction(nameof(Create), new { id = orderResponse }, orderResponse);
+            return CreatedAtAction(nameof(CreateOrder), new { id = orderResponse }, orderResponse);
         }
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(Guid id)
         {
             var result = await orderService.DeleteOrderAsync(id);
             return Ok(result);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOrder(Guid id, OrderRequest orderRequest)
+        {
+            OrderResponse orderResponse = await orderService.UpdateOrderAsync(id, orderRequest);
+            return Ok(orderResponse);
         }
 
     }
