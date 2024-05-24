@@ -1,4 +1,4 @@
-﻿using EShop.ViewModels.CategoryViewModel;
+﻿using EShop.ViewModels.Dtos.Category;
 
 namespace EShop.Core.Services.Interfaces
 {

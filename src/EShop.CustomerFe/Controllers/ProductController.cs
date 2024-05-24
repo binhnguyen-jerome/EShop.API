@@ -1,6 +1,6 @@
 ﻿using EShop.CustomerFe.Services.Interface;
 using EShop.CustomerFe.Services.Interfaces;
-using EShop.ViewModels.ProductViewModel;
+using EShop.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.CustomerFe.Controllers
@@ -17,11 +17,13 @@ namespace EShop.CustomerFe.Controllers
             this.productService = productService;
             this.productReviewService = productReviewService;
         }
+
+        [HttpGet]
         public async Task<IActionResult> Detail(Guid productId)
         {
             var product = await productService.GetProductByIdAsync(productId);
             var reviews = await productReviewService.GetProductReviewsAsync(productId);
-            var productDetailViewModel = new ProductDetailViewModel
+            var productDetailViewModel = new ProductDetailVM
             {
                 Product = product,
                 Reviews = reviews
@@ -39,9 +41,9 @@ namespace EShop.CustomerFe.Controllers
             return View(productDetailViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateReview(ProductDetailViewModel model)
+        public async Task<IActionResult> CreateReview(ProductDetailVM model)
         {
-            var review = await productReviewService.CreateProductReviewAsync(model.NewReview);
+            await productReviewService.CreateProductReviewAsync(model.NewReview);
             return RedirectToAction("Detail", new { productId = model.NewReview.ProductId });
         }
     }

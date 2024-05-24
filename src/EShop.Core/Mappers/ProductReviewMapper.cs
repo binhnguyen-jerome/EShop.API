@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
-using EShop.ViewModels.ProductReviewViewModel;
+using EShop.ViewModels.Dtos.Review;
 
 namespace EShop.Core.Mappers
 {

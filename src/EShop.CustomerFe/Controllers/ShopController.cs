@@ -1,5 +1,5 @@
 ﻿using EShop.CustomerFe.Services.Interface;
-using EShop.ViewModels.ShopViewModel;
+using EShop.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.CustomerFe.Controllers
@@ -22,7 +22,7 @@ namespace EShop.CustomerFe.Controllers
             var products = await productService.GetProductByCategoryIdAsync(categoryId);
             var category = products.FirstOrDefault()?.CategoryName;
             var categories = await categoryService.GetAllCategoriesAsync();
-            var shopViewModel = new ShopViewModel
+            var shopViewModel = new ShopVM
             {
                 Products = products,
                 CategoryName = category,

@@ -1,5 +1,5 @@
 ﻿using EShop.CustomerFe.Services.Interfaces;
-using EShop.ViewModels.ProductReviewViewModel;
+using EShop.ViewModels.Dtos.Review;
 using Newtonsoft.Json;
 using System.Text;
 

@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.CategoryViewModel;
+using EShop.ViewModels.Dtos.Category;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers

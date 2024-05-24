@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.OrderViewModel;
+using EShop.ViewModels.Dtos.Order;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers

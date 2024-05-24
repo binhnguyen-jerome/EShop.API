@@ -2,7 +2,7 @@
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.OrderViewModel;
+using EShop.ViewModels.Dtos.Order;
 
 namespace EShop.Core.Services.Implements
 {

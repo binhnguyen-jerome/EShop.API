@@ -1,4 +1,4 @@
-﻿using EShop.ViewModels.ProductReviewViewModel;
+﻿using EShop.ViewModels.Dtos.Review;
 
 namespace EShop.CustomerFe.Services.Interfaces
 {

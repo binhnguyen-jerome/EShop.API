@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
-using EShop.ViewModels.UserViewModel;
+using EShop.ViewModels.Dtos.User;
 
 namespace EShop.Core.Mappers
 {

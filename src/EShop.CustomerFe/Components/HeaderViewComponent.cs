@@ -14,7 +14,6 @@ namespace EShop.CustomerFe.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var categories = await categoryService.GetAllCategoriesAsync();
-            ViewBag.Token = HttpContext.Session.GetString("Token");
             return View(categories);
         }
     }

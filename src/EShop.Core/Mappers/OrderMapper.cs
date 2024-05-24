@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
-using EShop.ViewModels.OrderViewModel;
+using EShop.ViewModels.Dtos.Order;
 
 namespace EShop.Core.Mappers
 {

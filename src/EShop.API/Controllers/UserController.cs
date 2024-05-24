@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.UserViewModel;
+using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
@@ -27,16 +27,22 @@ namespace EShop.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest user)
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            if (await _authService.Login(user))
+            var user = await _authService.Login(loginRequest);
+            if (user != null)
             {
-                var token = await _authService.CreateJWTToken(user);
-                return Ok(token);
+                var jwt = await _authService.CreateJWTToken(loginRequest);
+                return Ok(new
+                {
+                    token = jwt,
+                    userName = user.FirstName,
+                    userId = user.Id
+                });
             };
 
             return Unauthorized();
@@ -50,8 +56,6 @@ namespace EShop.API.Controllers
         [HttpGet("user/{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
-            //Giải user id từ token
-            //var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var user = await _authService.GetUserByIdAsync(id);
             if (user == null)
             {

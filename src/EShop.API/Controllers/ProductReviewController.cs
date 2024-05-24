@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.ProductReviewViewModel;
+using EShop.ViewModels.Dtos.Review;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers

@@ -2,8 +2,8 @@
 {
     public class LoginResponse
     {
-        public Guid Id;
-        public string FirstName;
-        public string Token;
+        public Guid userId;
+        public string username;
+        public string token;
     }
 }

@@ -1,7 +1,7 @@
-﻿@{
+﻿@model EShop.ViewModels.ViewModel.HomeVM
+@{
     ViewData["Title"] = "Home Page";
 }
-@model EShop.ViewModels.HomeViewModel.HomeViewModel
 <!--Carousel-->
 @Html.Partial("~/Views/Shared/Components/Carousel/Default.cshtml")
 <!--Category-->
@@ -48,11 +48,14 @@
                                 <div class="position-absolute top-0 start-0">
                                     <span class="badge bg-danger">Sale</span>
                                 </div>
-                                <a asp-action="Detail" asp-route-productId="@product.Id" asp-controller="Product">
+                                <a asp-action="Detail" asp-controller="Product" asp-route-productId="@product.Id">
                                     <img src="@product.Images.FirstOrDefault().ImageUrl"
                                          alt="Product Image"
                                          class="mb-3 img-fluid" />
                                 </a>
+                            </div>
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>@product.Id</small></a>
                             </div>
                             <div class="text-small mb-1">
                                 <a href="#!" class="text-decoration-none text-muted"><small>@product.CategoryName</small></a>

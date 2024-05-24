@@ -2,7 +2,8 @@
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.CategoryViewModel;
+using EShop.ViewModels.Dtos.Category;
+using Microsoft.Extensions.Logging;
 
 namespace EShop.Core.Services.Implements
 {
@@ -10,20 +11,25 @@ namespace EShop.Core.Services.Implements
     {
         private readonly IGenericRepository<Category> categoryRepository;
         private readonly IUnitOfWork unitOfWork;
+        private readonly ILogger<CategoryService> logger;
 
-        public CategoryService(IUnitOfWork unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork, ILogger<CategoryService> logger)
         {
             this.unitOfWork = unitOfWork;
+            this.logger = logger;
             categoryRepository = unitOfWork.GetBaseRepo<Category>();
         }
         public async Task<List<CategoryResponse>> GetAllCategoriesAsync()
         {
+            logger.LogInformation("Get all categories");
+
             var categories = await categoryRepository.GetAll();
             return categories.Select(c => c.ToCategoryResponse()).ToList();
         }
 
         public async Task<CategoryResponse?> GetCategoryByIdAsync(Guid? id)
         {
+            logger.LogInformation("Get category by id");
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             var category = await categoryRepository.Get(c => c.Id == id);
@@ -35,6 +41,7 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest categoryRequest)
         {
+            logger.LogInformation("Create category");
             if (categoryRequest == null)
                 throw new ArgumentNullException(nameof(categoryRequest));
             Category category = categoryRequest.ToCategory();
@@ -46,6 +53,7 @@ namespace EShop.Core.Services.Implements
 
         public async Task<CategoryResponse> DeleteCategoryAsync(Guid? id)
         {
+            logger.LogInformation("Delete category");
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             var category = await categoryRepository.Get(c => c.Id == id);
@@ -60,6 +68,7 @@ namespace EShop.Core.Services.Implements
 
         public async Task<CategoryResponse> UpdateCategoryAsync(Guid? id, CategoryRequest? categoryRequest)
         {
+            logger.LogInformation("Update category");
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             if (categoryRequest == null)

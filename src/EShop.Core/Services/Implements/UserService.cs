@@ -1,7 +1,7 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.UserViewModel;
+using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,19 +44,27 @@ namespace EShop.Core.Services.Implements
                 {
                     await userManager.AddToRoleAsync(User, "Customer");
                 }
-                await userManager.AddToRolesAsync(User, registerRequest.Role);
+                await userManager.AddToRoleAsync(User, registerRequest.Role);
             }
             return result.Succeeded;
         }
 
-        public async Task<bool> Login(LoginRequest loginRequest)
+        public async Task<UserReponse> Login(LoginRequest loginRequest)
         {
             var user = await userManager.FindByEmailAsync(loginRequest.Email);
-            if (user != null)
+            //if (user != null)
+            //{
+            //    return await userManager.CheckPasswordAsync(user, loginRequest.Password);
+            //}
+            //return false;
+            if (user != null && await userManager.CheckPasswordAsync(user, loginRequest.Password))
             {
-                return await userManager.CheckPasswordAsync(user, loginRequest.Password);
+                var userResponse = user.ToUserReponse();
+                return userResponse;
             }
-            return false;
+            return null;
+
+
         }
         public async Task<List<UserReponse>> GetAllUserAsync()
         {

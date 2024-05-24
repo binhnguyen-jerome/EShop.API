@@ -1,8 +1,13 @@
 ﻿@{
+    var token = User.Claims.FirstOrDefault(c => c.Type == "JWT")?.Value;
+    var userName = User.Identity.Name;
+    var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+}
+@{
     ViewData["Title"] = "Product Detail";
 
 }
-@model EShop.ViewModels.ProductViewModel.ProductDetailViewModel
+@model EShop.ViewModels.ViewModel.ProductDetailVM
 <!--Navigation-->
 <div class="mt-4">
     <div class="container">
@@ -442,38 +447,54 @@
                                     </div>
                                     <!-- Create rating and review for product-->
                                     <div>
-                                        <form asp-action="CreateReview" method="post">
-                                            <h3 class="mb-5">Create Review</h3>
-                                            <div class="border-bottom py-4 mb-4">
-                                                <h4 class="mb-3">Overall rating</h4>
-                                                <div class="rater">
-                                                    <img src="~/images/icons/star-icon.svg" class="img-icon" />
-                                                    <img src="~/images/icons/star-icon.svg" class="img-icon" />
-                                                    <img src="~/images/icons/star-icon.svg" class="img-icon" />
-                                                    <img src="~/images/icons/star-icon.svg" class="img-icon" />
-                                                    <img src="~/images/icons/star-icon.svg" class="img-icon" />
+                                        @if(token != null) {
+                                            <!--Form Product Rating-->
+                                            <form asp-controller="Product" asp-action="CreateReview" method="post">
+                                                <h3 class="mb-5">Create Review</h3>
+                                                <div class="border-bottom py-4 mb-4">
+                                                    <h4 class="mb-3">Overall rating</h4>
+                                                    <div class="rater">
+                                                        <img src="~/images/icons/star-icon.svg" class="img-icon" />
+                                                        <img src="~/images/icons/star-icon.svg" class="img-icon" />
+                                                        <img src="~/images/icons/star-icon.svg" class="img-icon" />
+                                                        <img src="~/images/icons/star-icon.svg" class="img-icon" />
+                                                        <img src="~/images/icons/star-icon.svg" class="img-icon" />
+                                                    </div>
+                                                    <select class="form-control mt-2" id="Rate" required asp-for="NewReview.Rate">
+                                                        <option value="">Select Rating</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
                                                 </div>
-                                                <select class="form-control mt-2" id="Rate" required asp-for="NewReview.Rate">
-                                                    <option value="">Select Rating</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </select>
+                                                <!--form-->
+                                                <div class="py-4 mb-4">
+                                                    <!-- heading -->
+                                                    <h5>Add a written review</h5>
+                                                    <textarea class="form-control" rows="3" placeholder="What did you like or dislike? What did you use this product for?" asp-for="NewReview.Content"></textarea>
+                                                </div>
+                                                <!-- button -->
+                                                <div class="d-flex justify-content-end">
+                                                    <input type="hidden" asp-for="NewReview.ProductId" value="@Model.Product.Id" />
+                                                    <input type="hidden" asp-for="NewReview.ApplicationUserId" value=@userId/>
+                                                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                                                </div>
+                                            </form>
+                                        } else
+                                        {
+                                            <!--Login to rating-->
+                                            <div class="d-flex justify-content-between align-items-center mb-8">
+                                                <div>
+                                                    <!-- heading -->
+                                                    <h3 class="mb-5">Create Review</h3>
+                                                </div>
+                                                <div>
+                                                    <a asp-action="Login" asp-controller="User" class="btn btn-primary">Login to rate</a>
+                                                </div>
                                             </div>
-                                            <!--form-->
-                                            <div class="py-4 mb-4">
-                                                <!-- heading -->
-                                                <h5>Add a written review</h5>
-                                                <textarea class="form-control" rows="3" placeholder="What did you like or dislike? What did you use this product for?"asp-for="NewReview.Content"></textarea>
-                                            </div>
-                                            <!-- button -->
-                                            <div class="d-flex justify-content-end">
-                                                <input type="hidden" asp-for="NewReview.ProductId" value="@Model.Product.Id" />
-                                                <button type="submit" class="btn btn-primary">Submit Review</button>
-                                            </div>
-                                        </form>
+                                        }
                                     </div>
                                 </div>
                             </div>

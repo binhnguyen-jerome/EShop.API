@@ -1,5 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
-using EShop.ViewModels.CategoryViewModel;
+using EShop.ViewModels.Dtos.Category;
 
 namespace EShop.Core.Mappers
 {

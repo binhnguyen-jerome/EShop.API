@@ -1,6 +1,6 @@
 using EShop.CustomerFe.Models;
 using EShop.CustomerFe.Services.Interface;
-using EShop.ViewModels.HomeViewModel;
+using EShop.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -22,7 +22,8 @@ namespace EShop.CustomerFe.Controllers
         {
             var products = await productService.GetAllProductsAsync();
             var categories = await categoryService.GetAllCategoriesAsync();
-            var viewModel = new HomeViewModel
+
+            HomeVM viewModel = new()
             {
                 Products = products,
                 Categories = categories

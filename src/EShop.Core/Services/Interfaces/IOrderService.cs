@@ -1,4 +1,4 @@
-﻿using EShop.ViewModels.OrderViewModel;
+﻿using EShop.ViewModels.Dtos.Order;
 
 namespace EShop.Core.Services.Interfaces
 {

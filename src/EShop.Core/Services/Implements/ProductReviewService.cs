@@ -2,7 +2,7 @@
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
-using EShop.ViewModels.ProductReviewViewModel;
+using EShop.ViewModels.Dtos.Review;
 
 namespace EShop.Core.Services.Implements
 {

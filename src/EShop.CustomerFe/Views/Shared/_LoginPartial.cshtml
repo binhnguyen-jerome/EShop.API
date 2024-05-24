@@ -1,11 +1,11 @@
-﻿@* @{
-    var token = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "Token")?.Value : null;
-    var userName = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value : null;
-} *@
-@if(ViewBag.Token != null)
+﻿@{
+    var token = User.Claims.FirstOrDefault(c => c.Type == "JWT")?.Value;
+    var userName = User.Identity.Name;
+}
+@if(token != null)
 {
   <li class="nav-item">
-        <a class="nav-link" asp-controller="User" asp-action="Logout">Logout</a>
+        <a class="nav-link" asp-controller="User" asp-action="Logout">Logout @userName</a>
     </li>
 }
 else

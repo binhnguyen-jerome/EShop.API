@@ -1,6 +1,9 @@
 ﻿using EShop.CustomerFe.Services.Interfaces;
-using EShop.ViewModels.UserViewModel;
+using EShop.ViewModels.Dtos.User;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace EShop.CustomerFe.Controllers
 {
@@ -22,18 +25,31 @@ namespace EShop.CustomerFe.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var token = await userService.AuthenticateAsync(loginRequest);
-            if (token != null)
+            var user = await userService.AuthenticateAsync(loginRequest);
+            if (user != null)
             {
-                HttpContext.Session.SetString("Token", token);
-                ViewBag.Token = token;
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.username),
+                    new Claim("UserId", user.userId.ToString()),
+                    new Claim("JWT", user.token)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
                 return RedirectToAction("Index", "Home");
             }
             return View();
         }
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("Token");
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]

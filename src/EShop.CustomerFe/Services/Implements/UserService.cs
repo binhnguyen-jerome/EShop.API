@@ -1,5 +1,6 @@
 ﻿using EShop.CustomerFe.Services.Interfaces;
-using EShop.ViewModels.UserViewModel;
+using EShop.ViewModels.Dtos.User;
+using Newtonsoft.Json;
 
 namespace EShop.CustomerFe.Services.Implements
 {
@@ -13,13 +14,16 @@ namespace EShop.CustomerFe.Services.Implements
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = uri;
         }
-        public async Task<string> AuthenticateAsync(LoginRequest loginRequest)
+        public async Task<LoginResponse> AuthenticateAsync(LoginRequest loginRequest)
         {
             var response = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress + "/v1/userManager/login", loginRequest);
+
+            response.EnsureSuccessStatusCode();
             if (response.IsSuccessStatusCode)
             {
-                var token = await response.Content.ReadAsStringAsync();
-                return token;
+                var user = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<LoginResponse>(user);
+                //return token;
             }
             return null;
         }
