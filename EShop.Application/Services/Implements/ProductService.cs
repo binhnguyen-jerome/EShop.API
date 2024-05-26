@@ -2,6 +2,7 @@
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
+using EShop.ViewModels.Dtos.Product;
 using EShop.ViewModels.ProductViewModel;
 
 namespace EShop.Core.Services.Implements
@@ -22,26 +23,17 @@ namespace EShop.Core.Services.Implements
             imageRepository = unitOfWork.GetBaseRepo<Image>();
             productImageRepository = unitOfWork.GetBaseRepo<ProductImage>();
         }
-        public async Task<List<ProductResponse>> GetAllProductsAsync()
+        public async Task<List<ProductResponse>> GetProductsAsync(ProductQuery query)
         {
-            var products = await productQueries.GetAllProductsAsync();
-            return products.Select(p => p.ToProductResponse()).ToList();
-        }
-        public async Task<List<ProductResponse>> GetProductsByCategoryAsync(Guid? categoryId)
-        {
-            if (categoryId == null)
-                throw new ArgumentNullException(nameof(categoryId));
-            var products = await productQueries.GetAllProductByCategoryAsync(categoryId.Value);
+            var products = await productQueries.GetFilteredProductsAsync(query);
             return products.Select(p => p.ToProductResponse()).ToList();
         }
 
-        public async Task<ProductResponse?> GetProductByIdAsync(Guid? id)
+        public async Task<ProductResponse?> GetProductByIdAsync(Guid id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-            var product = await productQueries.GetByIdAsync(id.Value);
+            var product = await productQueries.GetByIdAsync(id);
             if (product == null)
-                throw new ArgumentNullException(nameof(product));
+                throw new KeyNotFoundException(nameof(product));
             return product.ToProductResponse();
         }
         public async Task<ProductResponse> CreateProductAsync(CreateProductRequest? createProduct)
@@ -62,16 +54,14 @@ namespace EShop.Core.Services.Implements
             var newProduct = await productQueries.GetByIdAsync(product.Id);
             return newProduct.ToProductResponse();
         }
-        public async Task<ProductResponse> UpdateProductAsync(Guid? id, UpdateProductRequest? updateProduct)
+        public async Task<ProductResponse> UpdateProductAsync(Guid id, UpdateProductRequest? updateProduct)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
             if (updateProduct == null)
                 throw new ArgumentNullException(nameof(updateProduct));
-            var product = await productQueries.GetByIdAsync(id.Value);
+            var product = await productQueries.GetByIdAsync(id);
             if (product == null)
             {
-                throw new Exception("Product not found");
+                throw new KeyNotFoundException("Product not found");
             }
             product.Name = updateProduct.Name;
             product.Description = updateProduct.Description;
@@ -95,13 +85,11 @@ namespace EShop.Core.Services.Implements
             await unitOfWork.CompleteAsync();
             return product.ToProductResponse();
         }
-        public async Task<bool> DeleteProductAsync(Guid? id)
+        public async Task<bool> DeleteProductAsync(Guid id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-            var product = await productQueries.GetByIdAsync(id.Value);
+            var product = await productQueries.GetByIdAsync(id);
             if (product == null)
-                return false;
+                throw new KeyNotFoundException("Can not find product");
             // Delete Images 
             var images = product.ProductImages.Select(p => p.Image).ToList();
             imageRepository.RemoveRange(images);

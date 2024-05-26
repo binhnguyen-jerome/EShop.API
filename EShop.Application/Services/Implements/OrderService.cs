@@ -26,13 +26,11 @@ namespace EShop.Core.Services.Implements
             return orders.Select(x => x.ToOrderResponse()).ToList();
         }
 
-        public async Task<OrderDetailResponse?> GetOrderDetailByIdAsync(Guid? id)
+        public async Task<OrderDetailResponse?> GetOrderDetailByIdAsync(Guid id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-            var order = await orderQueries.GetOrderDetailByIdAsync(id.Value);
+            var order = await orderQueries.GetOrderDetailByIdAsync(id);
             if (order == null)
-                throw new ArgumentNullException(nameof(order));
+                throw new KeyNotFoundException(nameof(order));
             return order.ToOrderDetailResponse();
         }
         public async Task<OrderResponse> CreateOrderAsync(OrderRequest? order)
@@ -51,17 +49,15 @@ namespace EShop.Core.Services.Implements
             return newOrder.ToOrderResponse();
 
         }
-        public Task<OrderResponse> UpdateOrderAsync(Guid? id, OrderRequest? order)
+        public Task<OrderResponse> UpdateOrderAsync(Guid id, OrderRequest order)
         {
             throw new NotImplementedException();
         }
-        public async Task<bool> DeleteOrderAsync(Guid? id)
+        public async Task<bool> DeleteOrderAsync(Guid id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
             var order = await orderRepository.Get(o => o.Id == id);
             if (order == null)
-                throw new ArgumentNullException(nameof(order));
+                throw new KeyNotFoundException(nameof(order));
             orderRepository.Remove(order);
             await unitOfWork.CompleteAsync();
             return true;

@@ -27,23 +27,24 @@ namespace EShop.Core.Services.Implements
             return categories.Select(c => c.ToCategoryResponse()).ToList();
         }
 
-        public async Task<CategoryResponse?> GetCategoryByIdAsync(Guid? id)
+        public async Task<CategoryResponse?> GetCategoryByIdAsync(Guid id)
         {
             logger.LogInformation("Get category by id");
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+
             var category = await categoryRepository.Get(c => c.Id == id);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new KeyNotFoundException("Category not found");
             }
             return category.ToCategoryResponse();
         }
-        public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest categoryRequest)
+        public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest? categoryRequest)
         {
             logger.LogInformation("Create category");
+
             if (categoryRequest == null)
                 throw new ArgumentNullException(nameof(categoryRequest));
+
             Category category = categoryRequest.ToCategory();
             categoryRepository.Add(category);
             await unitOfWork.CompleteAsync();
@@ -51,32 +52,28 @@ namespace EShop.Core.Services.Implements
 
         }
 
-        public async Task<CategoryResponse> DeleteCategoryAsync(Guid? id)
+        public async Task<CategoryResponse> DeleteCategoryAsync(Guid id)
         {
             logger.LogInformation("Delete category");
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
             var category = await categoryRepository.Get(c => c.Id == id);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new KeyNotFoundException("Category not found");
             }
             categoryRepository.Remove(category);
             await unitOfWork.CompleteAsync();
             return category.ToCategoryResponse();
         }
 
-        public async Task<CategoryResponse> UpdateCategoryAsync(Guid? id, CategoryRequest? categoryRequest)
+        public async Task<CategoryResponse> UpdateCategoryAsync(Guid id, CategoryRequest? categoryRequest)
         {
             logger.LogInformation("Update category");
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
             if (categoryRequest == null)
                 throw new ArgumentNullException(nameof(categoryRequest));
             var category = await categoryRepository.Get(c => c.Id == id);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new KeyNotFoundException("Category not found");
             }
             category.Name = categoryRequest.Name;
             category.Description = categoryRequest.Description;

@@ -42,7 +42,7 @@ namespace EShop.Core.Services.Implements
                 {
                     await userManager.AddToRoleAsync(User, "Customer");
                 }
-                await userManager.AddToRoleAsync(User, registerRequest.Role);
+                await userManager.AddToRoleAsync(User, registerRequest.Role.ToString());
             }
             return result.Succeeded;
         }
