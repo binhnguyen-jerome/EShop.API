@@ -32,21 +32,21 @@ namespace EShop.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategory([FromRoute] Guid? id)
         {
-            CategoryResponse? categoryResponse = await categoryService.GetCategoryByIdAsync(id);
+            CategoryResponse? categoryResponse = await categoryService.GetCategoryByIdAsync(id.Value);
             return Ok(categoryResponse);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory([FromRoute] Guid? id, [FromBody] CategoryRequest categoryRequest)
         {
-            CategoryResponse categoryResponse = await categoryService.UpdateCategoryAsync(id, categoryRequest);
+            CategoryResponse categoryResponse = await categoryService.UpdateCategoryAsync(id.Value, categoryRequest);
             return Ok(categoryResponse);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid? id)
         {
-            CategoryResponse categoryResponse = await categoryService.DeleteCategoryAsync(id);
+            CategoryResponse categoryResponse = await categoryService.DeleteCategoryAsync(id.Value);
             return Ok(categoryResponse);
         }
     }

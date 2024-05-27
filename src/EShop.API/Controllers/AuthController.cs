@@ -15,7 +15,7 @@ namespace EShop.API.Controllers
             this.authService = authService;
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterRequest registerRequest)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
             var result = await authService.RegisterUser(registerRequest);
             if (result)
@@ -26,7 +26,7 @@ namespace EShop.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest loginRequest)
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -36,10 +36,11 @@ namespace EShop.API.Controllers
             if (user != null)
             {
                 var jwt = await authService.CreateJWTToken(loginRequest);
+
                 return Ok(new
                 {
                     token = jwt,
-                    userName = user.FirstName,
+                    userName = user.FirstName + " " + user.LastName,
                     userId = user.Id
                 });
             };

@@ -1,4 +1,5 @@
 ﻿using EShop.Core.Services.Interfaces;
+using EShop.ViewModels.Dtos.Product;
 using EShop.ViewModels.ProductViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,19 +17,14 @@ namespace EShop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts([FromQuery] ProductQuery? query)
         {
-            List<ProductResponse> products = await productService.GetAllProductsAsync();
+            List<ProductResponse> products = await productService.GetProductsAsync(query);
             return Ok(products);
         }
-        [HttpGet("category/{id}")]
-        public async Task<IActionResult> GetByCategory(Guid? categoryId)
-        {
-            List<ProductResponse> products = await productService.GetProductsByCategoryAsync(categoryId);
-            return Ok(products);
-        }
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProduct([FromRoute] Guid? id)
+        public async Task<IActionResult> GetProduct([FromRoute] Guid id)
         {
             ProductResponse? product = await productService.GetProductByIdAsync(id);
             return Ok(product);
@@ -41,14 +37,14 @@ namespace EShop.API.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> UpdateProduct([FromRoute] Guid? id, [FromBody] UpdateProductRequest productRequest)
+        public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, [FromBody] UpdateProductRequest productRequest)
         {
             ProductResponse productResponse = await productService.UpdateProductAsync(id, productRequest);
             return Ok(productResponse);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct([FromRoute] Guid? id)
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
         {
             if (await productService.DeleteProductAsync(id))
             {

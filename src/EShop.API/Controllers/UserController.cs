@@ -21,17 +21,13 @@ namespace EShop.API.Controllers
             return Ok(users);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(Guid id)
+        public async Task<IActionResult> GetUser([FromRoute] Guid id)
         {
             var user = await userService.GetUserAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
             return Ok(user);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
             var result = await userService.DeleteUserAsync(id);
             if (result)
@@ -41,11 +37,21 @@ namespace EShop.API.Controllers
             return BadRequest();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, UserRequest updateUser)
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UserRequest updateUser)
         {
             UserReponse userReponse = await userService.UpdateUserAsync(id, updateUser);
             return Ok(userReponse);
 
+        }
+        [HttpPut("{id}/role")]
+        public async Task<IActionResult> UpdateUserRole([FromRoute] Guid id, [FromBody] string newRole)
+        {
+            var result = await userService.UpdateUserRoleAsync(id, newRole);
+            if (result)
+            {
+                return Ok("Role updated");
+            }
+            return BadRequest();
         }
     }
 }
