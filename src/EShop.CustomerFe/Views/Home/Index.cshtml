@@ -16,7 +16,7 @@
             @foreach (var category in Model.Categories)
             {
                 <div class="item p-2">
-                    <a asp-action="Page" asp-controller="Shop" asp-route-categoryId="@category.Id"
+                    <a asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id"
                        class="text-decoration-none text-inherit">
                         <div class="card card-product mb-lg-4">
                             <div class="card-body text-center py-8">
@@ -53,9 +53,6 @@
                                          alt="Product Image"
                                          class="mb-3 img-fluid" />
                                 </a>
-                            </div>
-                            <div class="text-small mb-1">
-                                <a href="#!" class="text-decoration-none text-muted"><small>@product.Id</small></a>
                             </div>
                             <div class="text-small mb-1">
                                 <a href="#!" class="text-decoration-none text-muted"><small>@product.CategoryName</small></a>

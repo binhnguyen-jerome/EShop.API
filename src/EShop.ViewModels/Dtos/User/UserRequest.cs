@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace EShop.ViewModels.Dtos.User
 {
     public class UserRequest
@@ -16,6 +15,6 @@ namespace EShop.ViewModels.Dtos.User
         public string? City { get; set; }
         public string? State { get; set; }
         public string? PostalCode { get; set; }
-        public string[] Role { get; set; }
+        public string Role { get; set; }
     }
 }

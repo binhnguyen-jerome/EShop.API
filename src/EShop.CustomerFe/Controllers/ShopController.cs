@@ -1,4 +1,5 @@
 ﻿using EShop.CustomerFe.Services.Interface;
+using EShop.ViewModels.Dtos.Product;
 using EShop.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,10 @@ namespace EShop.CustomerFe.Controllers
             this.productService = productService;
             this.categoryService = categoryService;
         }
-        public async Task<IActionResult> Page(Guid categoryId)
+        public async Task<IActionResult> Index(Guid categoryId)
         {
-            var products = await productService.GetProductByCategoryIdAsync(categoryId);
+            var query = new ProductQuery { CategoryId = categoryId };
+            var products = await productService.GetFilterProducts(query);
             var category = products.FirstOrDefault()?.CategoryName;
             var categories = await categoryService.GetAllCategoriesAsync();
             var shopViewModel = new ShopVM

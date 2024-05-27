@@ -1,4 +1,5 @@
 ﻿using EShop.ViewModels.Dtos.Category;
+using EShop.ViewModels.Dtos.Product;
 using EShop.ViewModels.ProductViewModel;
 
 namespace EShop.ViewModels.ViewModel
@@ -8,5 +9,7 @@ namespace EShop.ViewModels.ViewModel
         public List<ProductResponse> Products { get; set; }
         public List<CategoryResponse> Categories { get; set; }
         public string CategoryName { get; set; }
+
+        public ProductQuery ProductQuery { get; set; }
     }
 }

@@ -46,19 +46,19 @@
                     </div>
                     <div class="offcanvas-body ps-lg-2 pt-lg-0">
                         <div class="mb-8">
-                            <!-- title -->
-                            <h5 class="mb-3">Categories</h5>
-                            <!-- nav -->
-                            <ul class="nav nav-category" id="categoryCollapseMenu">
-                                @foreach(var category in Model.Categories)
-                                {
-                                  <li class="nav-item border-bottom w-100">
-                                        <a asp-action="Page" asp-controller="Shop" asp-route-categoryId="@category.Id" class="nav-link collapsed">
-                                        @category.Name
-                                    </a>
-                                </li>
-                                }
-                            </ul>
+                                <!-- title -->
+                                <h5 class="mb-3">Categories</h5>
+                                <!-- nav -->
+                                <ul class="nav nav-category" id="categoryCollapseMenu">
+                                    @foreach (var category in Model.Categories)
+                                    {
+                                        <li class="nav-item border-bottom w-100">
+                                            <a asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id" class="nav-link collapsed">
+                                                @category.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
                         </div>
                     </div>
                 </div>

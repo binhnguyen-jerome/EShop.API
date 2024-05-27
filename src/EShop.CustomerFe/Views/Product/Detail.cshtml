@@ -1,5 +1,5 @@
 ﻿@{
-    var token = User.Claims.FirstOrDefault(c => c.Type == "JWT")?.Value;
+    var accesstoken = User.Claims.FirstOrDefault(c => c.Type == "access_token")?.Value;
     var userName = User.Identity.Name;
     var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
 }
@@ -447,7 +447,7 @@
                                     </div>
                                     <!-- Create rating and review for product-->
                                     <div>
-                                        @if(token != null) {
+                                        @if(accesstoken != null) {
                                             <!--Form Product Rating-->
                                             <form asp-controller="Product" asp-action="CreateReview" method="post">
                                                 <h3 class="mb-5">Create Review</h3>

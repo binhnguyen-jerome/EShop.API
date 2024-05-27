@@ -17,7 +17,7 @@ namespace EShop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts([FromQuery] ProductQuery? query)
+        public async Task<IActionResult> GetProducts([FromQuery] ProductQuery query)
         {
             List<ProductResponse> products = await productService.GetProductsAsync(query);
             return Ok(products);

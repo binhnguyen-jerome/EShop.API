@@ -32,17 +32,18 @@ namespace EShop.CustomerFe.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.username),
                     new Claim("UserId", user.userId.ToString()),
-                    new Claim("JWT", user.token)
+                    new Claim("access_token", user.token)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var authProperties = new AuthenticationProperties
                 {
-                    IsPersistent = true
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
                 };
-
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
+                _logger.LogInformation("User {Name} logged in at {Time}", user.username, DateTime.UtcNow);
                 return RedirectToAction("Index", "Home");
             }
             return View();

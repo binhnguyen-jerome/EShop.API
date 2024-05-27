@@ -236,7 +236,7 @@
                             <ul class="dropdown-menu">
                             @foreach(var category in Model)
                             {
-                                <li><a class="dropdown-item" asp-controller="Shop" asp-action="Page" asp-route-categoryId="@category.Id">@category.Name</a></li>
+                                <li><a class="dropdown-item" asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a></li>
                             }
 
                             </ul>

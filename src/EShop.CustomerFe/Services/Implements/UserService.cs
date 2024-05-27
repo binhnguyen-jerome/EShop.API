@@ -6,31 +6,28 @@ namespace EShop.CustomerFe.Services.Implements
 {
     public class UserService : IUserService
     {
-        Uri uri = new Uri("https://localhost:7045/api");
         private readonly HttpClient _httpClient;
 
         public UserService(HttpClient httpClient)
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = uri;
+            _httpClient = httpClient;
         }
         public async Task<LoginResponse> AuthenticateAsync(LoginRequest loginRequest)
         {
-            var response = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress + "/v1/userManager/login", loginRequest);
+            var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/login", loginRequest);
 
             response.EnsureSuccessStatusCode();
             if (response.IsSuccessStatusCode)
             {
                 var user = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<LoginResponse>(user);
-                //return token;
             }
             return null;
         }
 
         public async Task<bool> RegisterAsync(RegisterRequest registerRequest)
         {
-            var response = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress + "/v1/userManager/register", registerRequest);
+            var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/register", registerRequest);
             if (response.IsSuccessStatusCode)
             {
                 return true;
