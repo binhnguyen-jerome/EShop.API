@@ -20,6 +20,7 @@ namespace EShop.API.Extensions
             //Inject Query 
             services.AddScoped<IProductQueries, ProductQueries>();
             services.AddScoped<IOrderQueries, OrderQueries>();
+            services.AddScoped<IProductReviewQueries, ProductReviewQueries>();
             // Inject Service Repositories
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -116,6 +117,21 @@ namespace EShop.API.Extensions
                 });
             });
         }
-
+        public static IServiceCollection ConfigureCORS(this IServiceCollection services)
+        {
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                                       policy =>
+                                       {
+                                           policy
+                                           .AllowAnyOrigin()
+                                           .AllowAnyHeader()
+                                           .AllowAnyMethod();
+                                       });
+            });
+            return services;
+        }
     }
 }
