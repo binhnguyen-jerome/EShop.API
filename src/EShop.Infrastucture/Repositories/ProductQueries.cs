@@ -16,13 +16,11 @@ namespace EShop.Infrastucture.Repositories
             return await dbSet
                 .Where(p => p.Id == id)
                 .Include(p => p.Category)
-                .Include(p => p.ProductReviews)
                 .Include(p => p.ProductImages)
-                .ThenInclude(p => p.Image)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Product>> GetFilteredProductsAsync(ProductQuery query)
+        public async Task<List<Product>> GetFilteredProductsAsync(ProductQuery? query)
         {
             var data = dbSet.AsQueryable();
             if (query.CategoryId != null)
@@ -40,7 +38,6 @@ namespace EShop.Infrastucture.Repositories
             return await data
                 .Include(p => p.Category)
                 .Include(p => p.ProductImages)
-                .ThenInclude(p => p.Image)
                 .Skip((query.PageNumber - 1) * query.PageSize)
                 .Take(query.PageSize)
                 .ToListAsync();

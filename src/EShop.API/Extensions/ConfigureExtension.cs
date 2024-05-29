@@ -1,4 +1,6 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Application.Services.Implements;
+using EShop.Application.Services.Interfaces;
+using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Services.Implements;
 using EShop.Core.Services.Interfaces;
@@ -21,6 +23,7 @@ namespace EShop.API.Extensions
             services.AddScoped<IProductQueries, ProductQueries>();
             services.AddScoped<IOrderQueries, OrderQueries>();
             services.AddScoped<IProductReviewQueries, ProductReviewQueries>();
+            services.AddScoped<ICartQueries, CartQueries>();
             // Inject Service Repositories
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -29,6 +32,7 @@ namespace EShop.API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICartService, CartService>();
             // Connect to Database
             var connectDB = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>

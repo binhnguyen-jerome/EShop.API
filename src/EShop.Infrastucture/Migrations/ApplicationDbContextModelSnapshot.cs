@@ -108,6 +108,30 @@ namespace EShop.Infrastucture.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("EShop.Core.Domain.Entities.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Carts");
+                });
+
             modelBuilder.Entity("EShop.Core.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -119,8 +143,7 @@ namespace EShop.Infrastucture.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -131,47 +154,20 @@ namespace EShop.Infrastucture.Migrations
                         {
                             Id = new Guid("ce284d5a-1eba-4967-8d51-1d541a8025d2"),
                             Description = "Test",
-                            Name = "Men Shirt"
+                            Name = "Clean"
                         },
                         new
                         {
                             Id = new Guid("91052f64-008c-4f54-a344-154d3f1ce37a"),
                             Description = "Test",
-                            Name = "Men Pant"
+                            Name = "Daily"
                         },
                         new
                         {
                             Id = new Guid("09d05933-a638-4694-8c1d-f3e5c998124c"),
                             Description = "Test",
-                            Name = "Accessory"
+                            Name = "Pet"
                         });
-                });
-
-            modelBuilder.Entity("EShop.Core.Domain.Entities.Comment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ApplicationUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("EShop.Core.Domain.Entities.Order", b =>
@@ -229,24 +225,21 @@ namespace EShop.Infrastucture.Migrations
 
             modelBuilder.Entity("EShop.Core.Domain.Entities.OrderItem", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -290,32 +283,6 @@ namespace EShop.Infrastucture.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b0d83c5a-1b71-4e1c-97ec-c59de6bc5c67"),
-                            CategoryId = new Guid("ce284d5a-1eba-4967-8d51-1d541a8025d2"),
-                            CreateDate = new DateTime(2024, 5, 16, 13, 13, 44, 989, DateTimeKind.Local).AddTicks(8019),
-                            Description = "Shirt12",
-                            Name = "Shirt12",
-                            Price = 200m,
-                            PriceDiscount = 0m,
-                            Stock = 12,
-                            Summary = "Shirt12"
-                        },
-                        new
-                        {
-                            Id = new Guid("15256d5c-9038-4e98-89f2-664010a847d8"),
-                            CategoryId = new Guid("ce284d5a-1eba-4967-8d51-1d541a8025d2"),
-                            CreateDate = new DateTime(2024, 5, 16, 13, 13, 44, 989, DateTimeKind.Local).AddTicks(8026),
-                            Description = "Shirt13",
-                            Name = "Shirt13",
-                            Price = 300m,
-                            PriceDiscount = 0m,
-                            Stock = 100,
-                            Summary = "Shirt13"
-                        });
                 });
 
             modelBuilder.Entity("EShop.Core.Domain.Entities.ProductImage", b =>
@@ -335,7 +302,57 @@ namespace EShop.Infrastucture.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images");
+                    b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("EShop.Core.Domain.Entities.ProductReview", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductReviews");
+                });
+
+            modelBuilder.Entity("EShop.Core.Domain.Entities.ProductReviewImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ProductReviewId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductReviewId");
+
+                    b.ToTable("ProductReviewImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -364,6 +381,22 @@ namespace EShop.Infrastucture.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cc6b8705-6ce1-4233-8e73-56255932c8cb"),
+                            ConcurrencyStamp = "cc6b8705-6ce1-4233-8e73-56255932c8cb",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = new Guid("d6059475-8e7f-42ac-8194-027f5d2a594e"),
+                            ConcurrencyStamp = "d6059475-8e7f-42ac-8194-027f5d2a594e",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -469,16 +502,16 @@ namespace EShop.Infrastucture.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("EShop.Core.Domain.Entities.Comment", b =>
+            modelBuilder.Entity("EShop.Core.Domain.Entities.Cart", b =>
                 {
                     b.HasOne("EShop.Core.Domain.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany("Comments")
-                        .HasForeignKey("Id")
+                        .WithMany("Carts")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EShop.Core.Domain.Entities.Product", "Product")
-                        .WithMany("Comments")
+                        .WithMany("Carts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -522,7 +555,9 @@ namespace EShop.Infrastucture.Migrations
                 {
                     b.HasOne("EShop.Core.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });
@@ -531,9 +566,41 @@ namespace EShop.Infrastucture.Migrations
                 {
                     b.HasOne("EShop.Core.Domain.Entities.Product", "Product")
                         .WithMany("ProductImages")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("EShop.Core.Domain.Entities.ProductReview", b =>
+                {
+                    b.HasOne("EShop.Core.Domain.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany("ProductReviews")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EShop.Core.Domain.Entities.Product", "Product")
+                        .WithMany("ProductReviews")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("EShop.Core.Domain.Entities.ProductReviewImage", b =>
+                {
+                    b.HasOne("EShop.Core.Domain.Entities.ProductReview", "ProductReview")
+                        .WithMany("ProductReviewImages")
+                        .HasForeignKey("ProductReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductReview");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -589,9 +656,11 @@ namespace EShop.Infrastucture.Migrations
 
             modelBuilder.Entity("EShop.Core.Domain.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Carts");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("ProductReviews");
                 });
 
             modelBuilder.Entity("EShop.Core.Domain.Entities.Category", b =>
@@ -606,9 +675,16 @@ namespace EShop.Infrastucture.Migrations
 
             modelBuilder.Entity("EShop.Core.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Carts");
 
                     b.Navigation("ProductImages");
+
+                    b.Navigation("ProductReviews");
+                });
+
+            modelBuilder.Entity("EShop.Core.Domain.Entities.ProductReview", b =>
+                {
+                    b.Navigation("ProductReviewImages");
                 });
 #pragma warning restore 612, 618
         }

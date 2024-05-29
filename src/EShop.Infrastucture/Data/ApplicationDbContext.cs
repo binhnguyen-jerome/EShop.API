@@ -18,9 +18,10 @@ namespace EShop.Infrastucture.Data
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<ProductReviewImage> ProductReviewImages { get; set; }
 
-        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+        public virtual DbSet<Cart> Carts { get; set; }
 
 
 
@@ -37,7 +38,7 @@ namespace EShop.Infrastucture.Data
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
             modelBuilder.ApplyConfiguration(new ProductReviewImageConfiguration());
-            modelBuilder.ApplyConfiguration(new ImageConfiguration());
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
 
         }
     }

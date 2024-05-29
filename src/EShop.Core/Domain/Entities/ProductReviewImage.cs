@@ -2,8 +2,7 @@
 {
     public class ProductReviewImage : BaseModel
     {
-        public Guid ImageId { get; set; }
-        public virtual Image Image { get; set; }
+        public string ImageUrl { get; set; }
 
         public Guid ProductReviewId { get; set; }
         public virtual ProductReview ProductReview { get; set; }

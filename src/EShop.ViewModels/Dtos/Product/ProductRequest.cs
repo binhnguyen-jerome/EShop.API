@@ -20,12 +20,11 @@ namespace EShop.ViewModels.ProductViewModel
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
         public Guid CategoryId { get; set; }
-        public List<ProductImageRequest> ProductImages { get; set; }
+        public List<ProductImageRequest>? ProductImages { get; set; }
     }
     public class ProductImageRequest
     {
         public string ImageUrl { get; set; }
-        public string PublicId { get; set; }
     }
     public class UpdateProductRequest
     {
@@ -43,6 +42,6 @@ namespace EShop.ViewModels.ProductViewModel
         public DateTime? UpdateDate { get; set; } = DateTime.Now;
 
         public Guid CategoryId { get; set; }
-        public List<ProductImageRequest> ProductImages { get; set; }
+        public List<ProductImageRequest>? ProductImages { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace EShop.Core.Services.Implements
     public class ProductService : IProductService
     {
         private readonly IGenericRepository<Product> productRepository;
-        private readonly IGenericRepository<Image> imageRepository;
         private readonly IGenericRepository<ProductImage> productImageRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IProductQueries productQueries;
@@ -20,7 +19,6 @@ namespace EShop.Core.Services.Implements
             this.unitOfWork = unitOfWork;
             this.productQueries = productQueries;
             productRepository = unitOfWork.GetBaseRepo<Product>();
-            imageRepository = unitOfWork.GetBaseRepo<Image>();
             productImageRepository = unitOfWork.GetBaseRepo<ProductImage>();
         }
         public async Task<List<ProductResponse>> GetProductsAsync(ProductQuery query)
@@ -45,9 +43,11 @@ namespace EShop.Core.Services.Implements
 
             if (createProduct.ProductImages != null && createProduct.ProductImages.Count > 0)
             {
-                var (newImages, newProductImages) = HandleNewImages(createProduct.ProductImages, product.Id);
-                imageRepository.AddRange(newImages);
-                productImageRepository.AddRange(newProductImages);
+                productImageRepository.AddRange(createProduct.ProductImages.Select(p => new ProductImage
+                {
+                    ImageUrl = p.ImageUrl,
+                    ProductId = product.Id
+                }));
             }
 
             await unitOfWork.CompleteAsync();
@@ -73,7 +73,7 @@ namespace EShop.Core.Services.Implements
             product.CategoryId = updateProduct.CategoryId;
 
             //Get Current Images
-            var currentImages = product.ProductImages.Select(p => p.Image).ToList();
+            var currentImages = product.ProductImages.ToList();
 
             // Get New Images
             var newImages = updateProduct.ProductImages.ToList();
@@ -91,8 +91,8 @@ namespace EShop.Core.Services.Implements
             if (product == null)
                 throw new KeyNotFoundException("Can not find product");
             // Delete Images 
-            var images = product.ProductImages.Select(p => p.Image).ToList();
-            imageRepository.RemoveRange(images);
+            var images = product.ProductImages.ToList();
+            productImageRepository.RemoveRange(images);
             // Delete Product
             productRepository.Remove(product);
 
@@ -100,27 +100,7 @@ namespace EShop.Core.Services.Implements
             return true;
 
         }
-        private static (List<Image>, List<ProductImage>) HandleNewImages(IEnumerable<ProductImageRequest> imageRequests, Guid productId)
-        {
-            List<Image> imageList = new List<Image>();
-            List<ProductImage> productImageList = new List<ProductImage>();
-            foreach (var image in imageRequests)
-            {
-                var img = new Image
-                {
-                    ImageUrl = image.ImageUrl,
-                    PublicId = image.PublicId
-                };
-                imageList.Add(img);
-                productImageList.Add(new ProductImage
-                {
-                    Image = img,
-                    ProductId = productId
-                });
-            }
-            return (imageList, productImageList);
-        }
-        private async Task UpdateProductImagesAsync(Product product, List<Image> currentImages, List<ProductImageRequest> newImages)
+        private async Task UpdateProductImagesAsync(Product product, List<ProductImage> currentImages, List<ProductImageRequest> newImages)
         {
             // Tìm các hình ảnh cần xóa
             var removeImages = currentImages.Where(c => !newImages.Any(n => n.ImageUrl == c.ImageUrl)).ToList();
@@ -128,7 +108,7 @@ namespace EShop.Core.Services.Implements
             // Xóa các hình ảnh cần xóa
             if (removeImages.Any())
             {
-                imageRepository.RemoveRange(removeImages);
+                productImageRepository.RemoveRange(removeImages);
             }
 
             // Tìm các hình ảnh cần thêm mới
@@ -136,9 +116,11 @@ namespace EShop.Core.Services.Implements
 
             if (addImages.Any())
             {
-                var (newImagesList, newProductImagesList) = HandleNewImages(addImages, product.Id);
-                imageRepository.AddRange(newImagesList);
-                productImageRepository.AddRange(newProductImagesList);
+                productImageRepository.AddRange(addImages.Select(p => new ProductImage
+                {
+                    ImageUrl = p.ImageUrl,
+                    ProductId = product.Id
+                }));
             }
         }
     }

@@ -22,8 +22,7 @@ namespace EShop.Core.Mappers
                 CategoryName = product.Category.Name,
                 Images = product.ProductImages.Select(x => new ProductImageResponse
                 {
-                    ImageUrl = x.Image.ImageUrl,
-                    PublicId = x.Image.PublicId
+                    ImageUrl = x.ImageUrl,
                 }).ToList(),
 
             };

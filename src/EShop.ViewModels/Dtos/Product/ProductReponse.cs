@@ -22,6 +22,5 @@ namespace EShop.ViewModels.ProductViewModel
     public class ProductImageResponse
     {
         public string ImageUrl { get; set; }
-        public string PublicId { get; set; }
     }
 }
