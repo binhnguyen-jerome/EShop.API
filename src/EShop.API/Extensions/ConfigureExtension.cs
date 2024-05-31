@@ -41,7 +41,7 @@ namespace EShop.API.Extensions
             services.AddIdentityApiEndpoints<ApplicationUser>()
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            // Check password 
+            // Check password IdentityOptions
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;

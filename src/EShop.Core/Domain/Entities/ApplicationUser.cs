@@ -14,6 +14,7 @@ namespace EShop.Core.Domain.Entities
 
         public virtual ICollection<ProductReview>? ProductReviews { get; set; }
         public virtual ICollection<Order>? Orders { get; set; }
+        public virtual ICollection<Cart>? Carts { get; set; }
 
     }
 }
