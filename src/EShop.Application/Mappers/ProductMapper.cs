@@ -20,7 +20,7 @@ namespace EShop.Core.Mappers
                 UpdateDate = product.UpdateDate,
                 CategoryId = product.CategoryId,
                 CategoryName = product.Category.Name,
-                Images = product.ProductImages.Select(x => new ProductImageResponse
+                ProductImages = product.ProductImages.Select(x => new ProductImageResponse
                 {
                     ImageUrl = x.ImageUrl,
                 }).ToList(),

@@ -55,6 +55,16 @@ namespace EShop.CustomerFe.Services
                 queryString += $"maxPrice={query.MaxPrice}&";
             }
 
+            if (query.MinPrice != null)
+            {
+                queryString += $"minPrice={query.MinPrice}&";
+            }
+
+            if (query.PageNumber != null)
+            {
+                queryString += $"pageNumber={query.PageNumber}&";
+            }
+
             queryString = queryString.TrimEnd('&');
 
             return queryString;

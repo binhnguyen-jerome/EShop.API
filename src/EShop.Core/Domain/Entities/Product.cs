@@ -22,8 +22,10 @@ namespace EShop.Core.Domain.Entities
         public Guid CategoryId { get; set; }
         public virtual Category? Category { get; set; }
 
-        public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
-        public virtual ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
+        public virtual ICollection<ProductImage>? ProductImages { get; set; }
+        public virtual ICollection<ProductReview>? ProductReviews { get; set; }
+
+        public virtual ICollection<Cart>? Carts { get; set; }
 
     }
 }

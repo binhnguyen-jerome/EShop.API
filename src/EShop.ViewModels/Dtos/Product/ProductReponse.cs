@@ -17,7 +17,7 @@ namespace EShop.ViewModels.ProductViewModel
         public DateTime? UpdateDate { get; set; }
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public List<ProductImageResponse>? Images { get; set; }
+        public List<ProductImageResponse>? ProductImages { get; set; }
     }
     public class ProductImageResponse
     {
