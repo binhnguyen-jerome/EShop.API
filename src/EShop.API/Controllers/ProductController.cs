@@ -1,6 +1,6 @@
 ﻿using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.Dtos.Product;
-using EShop.ViewModels.ProductViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
@@ -15,14 +15,14 @@ namespace EShop.API.Controllers
         {
             this.productService = productService;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetProducts([FromQuery] ProductQuery query)
         {
             List<ProductResponse> products = await productService.GetProductsAsync(query);
             return Ok(products);
         }
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct([FromRoute] Guid id)
         {
@@ -36,7 +36,7 @@ namespace EShop.API.Controllers
             return CreatedAtAction(nameof(CreateProduct), new { id = productResponse.Id }, productResponse);
         }
 
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, [FromBody] UpdateProductRequest productRequest)
         {
             ProductResponse productResponse = await productService.UpdateProductAsync(id, productRequest);

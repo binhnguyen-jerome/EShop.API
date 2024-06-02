@@ -1,5 +1,6 @@
 ﻿using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.Dtos.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.API.Controllers
@@ -14,18 +15,21 @@ namespace EShop.API.Controllers
         {
             this.userService = userService;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             var users = await userService.GetUsersAsync();
             return Ok(users);
         }
+        [Authorize(Roles = "Admin, Customer")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] Guid id)
         {
             var user = await userService.GetUserAsync(id);
             return Ok(user);
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
@@ -36,6 +40,7 @@ namespace EShop.API.Controllers
             }
             return BadRequest();
         }
+        [Authorize(Roles = "Admin, Customer")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UserRequest updateUser)
         {
@@ -43,6 +48,7 @@ namespace EShop.API.Controllers
             return Ok(userReponse);
 
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/role")]
         public async Task<IActionResult> UpdateUserRole([FromRoute] Guid id, [FromBody] string newRole)
         {

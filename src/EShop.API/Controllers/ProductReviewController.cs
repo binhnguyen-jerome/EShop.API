@@ -30,12 +30,14 @@ namespace EShop.API.Controllers
             ProductReviewResponse productReview = await productReviewService.CreateProductReviewAsync(productReviewRequest);
             return Ok(productReview);
         }
+        [Authorize(Roles = "Admin, Customer")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProductReview([FromRoute] Guid id, [FromBody] UpdateProductReviewRequest updateProductReviewRequest)
         {
             ProductReviewResponse productReview = await productReviewService.UpdateProductReviewAsync(id, updateProductReviewRequest);
             return Ok(productReview);
         }
+        [Authorize(Roles = "Admin, Customer")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductReview([FromRoute] Guid id)
         {
