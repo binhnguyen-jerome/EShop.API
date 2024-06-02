@@ -1,6 +1,5 @@
 ﻿using EShop.CustomerFe.Services.Interface;
 using EShop.ViewModels.Dtos.Product;
-using EShop.ViewModels.ProductViewModel;
 using Newtonsoft.Json;
 
 namespace EShop.CustomerFe.Services

@@ -29,7 +29,7 @@ namespace EShop.CustomerFe.Extensions
 
                 if (claimsPrincipal != null && claimsPrincipal.Identity is ClaimsIdentity identity)
                 {
-                    var accessToken = identity.FindFirst("access_token")?.Value;
+                    var accessToken = identity.FindFirst("token")?.Value;
 
                     client.BaseAddress = new Uri(configuration["HttpClientSettings:BaseAddress"]);
                     if (!string.IsNullOrEmpty(accessToken))
@@ -43,6 +43,8 @@ namespace EShop.CustomerFe.Extensions
             services.AddHttpClient<ICategoryService, CategoryService>(configureClient);
             services.AddHttpClient<IProductReviewService, ProductReviewService>(configureClient);
             services.AddHttpClient<IUserService, UserService>(configureClient);
+            services.AddHttpClient<ICartService, CartService>(configureClient);
+            services.AddHttpClient<IAuthService, AuthService>(configureClient);
             return services;
         }
     }
