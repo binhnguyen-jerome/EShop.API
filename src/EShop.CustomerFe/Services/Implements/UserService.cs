@@ -12,27 +12,13 @@ namespace EShop.CustomerFe.Services.Implements
         {
             _httpClient = httpClient;
         }
-        public async Task<LoginResponse> AuthenticateAsync(LoginRequest loginRequest)
-        {
-            var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/login", loginRequest);
 
+        public async Task<UserReponse> GetUserById(Guid userId)
+        {
+            var response = await _httpClient.GetAsync($"/api/v1/users/{userId}");
             response.EnsureSuccessStatusCode();
-            if (response.IsSuccessStatusCode)
-            {
-                var user = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<LoginResponse>(user);
-            }
-            return null;
-        }
-
-        public async Task<bool> RegisterAsync(RegisterRequest registerRequest)
-        {
-            var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/register", registerRequest);
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-            return false;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserReponse>(content);
         }
     }
 }

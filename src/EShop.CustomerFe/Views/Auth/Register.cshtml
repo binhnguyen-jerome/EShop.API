@@ -1,16 +1,14 @@
-﻿@model EShop.ViewModels.Dtos.User.RegisterRequest
-<!--Login Section-->
+﻿@using EShop.ViewModels.Dtos.User
+@model RegisterRequest
+@{
+    ViewData["Title"] = "Register";
+}
 <section class="my-lg-14 my-8">
     <div class="container">
-        <!-- row -->
         <div class="row justify-content-center align-items-center">
             <div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
-                <!-- img -->
-                <img src="~/images/svg-graphics/signin-g.svg"
-                     alt=""
-                     class="img-fluid" />
+                <img src="~/images/svg-graphics/signin-g.svg" alt="" class="img-fluid" />
             </div>
-            <!-- col -->
             <div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
                 <div class="mb-lg-9 mb-5">
                     <h1 class="mb-1 h2 fw-bold">Sign in to FreshCart</h1>
@@ -18,11 +16,9 @@
                         Welcome back to EverydayGroceries! Enter your email to get started.
                     </p>
                 </div>
-
                 <form class="needs-validation" novalidate asp-action="Register" method="post">
                     <div class="row g-3">
                         <div class="col">
-                            <!-- input -->
                             <label for="formSignupfname"
                                    class="form-label visually-hidden" asp-for="FirstName">First Name</label>
                             <input type="text"
@@ -33,9 +29,8 @@
                             <div class="invalid-feedback">Please enter first name.</div>
                         </div>
                         <div class="col">
-                            <!-- input -->
                             <label for="formSignuplname"
-                                   class="form-label visually-hidden"asp-for="LastName" >Last Name</label>
+                                   class="form-label visually-hidden" asp-for="LastName">Last Name</label>
                             <input type="text"
                                    class="form-control"
                                    id="formSignuplname"
@@ -43,9 +38,7 @@
                                    required />
                             <div class="invalid-feedback">Please enter last name.</div>
                         </div>
-                        <!--Phone Number-->
                         <div class="col-12">
-                            <!-- input -->
                             <label for="formSignupPhoneNumber"
                                    class="form-label visually-hidden">PhoneNumber</label>
                             <input asp-for="PhoneNumber"
@@ -56,54 +49,40 @@
                                    required />
                             <div class="invalid-feedback">Please enter your phone number.</div>
                         </div>
-                        <!--Street Address-->
                         <div class="col-12">
-                            <!-- input -->
                             <label for="formSignupStreetAddress"
                                    class="form-label visually-hidden">Street Address</label>
                             <input asp-for="PhoneNumber"
                                    type="number"
                                    class="form-control"
                                    id="formSignupStreetAddress"
-                                   placeholder="Street Address"
-                                    />
+                                   placeholder="Street Address" />
                         </div>
-                        <!--City-->
                         <div class="col">
-                            <!-- input -->
                             <label for="formSignupState"
                                    class="form-label visually-hidden" asp-for="State">State</label>
                             <input type="text"
                                    class="form-control"
                                    id="formSignupState"
-                                   placeholder="State"
-                                    />
+                                   placeholder="State" />
                         </div>
-                        <!--City-->
                         <div class="col">
-                            <!-- input -->
                             <label for="formSignupCity"
                                    class="form-label visually-hidden" asp-for="City">City</label>
                             <input type="text"
                                    class="form-control"
                                    id="formSignupCity"
-                                   placeholder="City"
-                                    />
+                                   placeholder="City" />
                         </div>
-                        <!--Postal Code-->
                         <div class="col">
-                            <!-- input -->
                             <label for="formSignupfname"
                                    class="form-label visually-hidden" asp-for="PostalCode">Postal Code</label>
                             <input type="number"
                                    class="form-control"
                                    id="formSignupPostalCode"
-                                   placeholder="Postal Code"
-                                    />
+                                   placeholder="Postal Code" />
                         </div>
-                        <!-- row -->
                         <div class="col-12">
-                            <!-- input -->
                             <label for="formSignupEmail"
                                    class="form-label visually-hidden">Email address</label>
                             <input asp-for="Email"
@@ -115,7 +94,6 @@
                             <div class="invalid-feedback">Please enter name.</div>
                         </div>
                         <div class="col-12">
-                            <!-- input -->
                             <div class="password-field position-relative">
                                 <label for="formSigninPassword"
                                        class="form-label visually-hidden">Password</label>
@@ -135,13 +113,11 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- btn -->
                         <div class="col-12 d-grid">
                             <button type="submit" class="btn btn-primary">
                                 Register
                             </button>
                         </div>
-                        <!--Text-->
                         <p>
                             <small>
                                 By continuing, you agree to our
@@ -150,12 +126,10 @@
                                 <a href="#!">Privacy Policy</a>
                             </small>
                         </p>
-                        <!-- link -->
                         <div>
-                             If you have an account?
+                            If you have an account?
                             <a href="../pages/signup.html">Sign In</a>
                         </div>
-
                     </div>
                 </form>
             </div>

@@ -4,7 +4,6 @@ namespace EShop.CustomerFe.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<LoginResponse> AuthenticateAsync(LoginRequest loginRequest);
-        Task<bool> RegisterAsync(RegisterRequest registerRequest);
+        Task<UserReponse> GetUserById(Guid userId);
     }
 }

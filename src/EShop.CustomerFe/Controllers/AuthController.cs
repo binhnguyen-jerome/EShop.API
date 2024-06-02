@@ -7,15 +7,15 @@ using System.Security.Claims;
 
 namespace EShop.CustomerFe.Controllers
 {
-    public class UserController : Controller
+    public class AuthController : Controller
     {
         private readonly ILogger<ProductController> _logger;
-        private readonly IUserService userService;
+        private readonly IAuthService authService;
 
-        public UserController(ILogger<ProductController> logger, IUserService userService)
+        public AuthController(ILogger<ProductController> logger, IAuthService authService)
         {
             _logger = logger;
-            this.userService = userService;
+            this.authService = authService;
         }
         [HttpGet]
         public IActionResult Login()
@@ -25,21 +25,21 @@ namespace EShop.CustomerFe.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var user = await userService.AuthenticateAsync(loginRequest);
+            var user = await authService.AuthenticateAsync(loginRequest);
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.username),
-                    new Claim("UserId", user.userId.ToString()),
-                    new Claim("access_token", user.token)
+                    new Claim(ClaimTypes.NameIdentifier, user.userId.ToString()),
+                    new Claim("token", user.token)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var authProperties = new AuthenticationProperties
                 {
                     IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(15)
                 };
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
@@ -56,7 +56,7 @@ namespace EShop.CustomerFe.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
-            var result = await userService.RegisterAsync(registerRequest);
+            var result = await authService.RegisterAsync(registerRequest);
             if (result)
             {
                 return RedirectToAction("Login");
