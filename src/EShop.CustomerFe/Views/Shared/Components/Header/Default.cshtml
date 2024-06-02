@@ -1,108 +1,12 @@
-﻿@model IEnumerable<EShop.ViewModels.Dtos.Category.CategoryResponse>
+﻿@using EShop.ViewModels.Dtos.Category
+@model IEnumerable<CategoryResponse>
+<header>
     <div class="border-bottom">
         <div class="bg-light py-1 text-dark">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-12 text-center text-md-start">
                         <span>Super Value Deals - Save more with coupons</span>
-                    </div>
-                    <div class="col-6 text-end d-none d-md-block">
-                        <div class="dropdown selectBox pl-1">
-                            <a class="dropdown-toggle selectValue text-reset"
-                               href="javascript:void(0)"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                <span class="me-2">
-                                    <svg width="16"
-                                         height="13"
-                                         viewBox="0 0 16 13"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#selectedlang)">
-                                            <path d="M0 0.5H16V12.5H0V0.5Z" fill="#012169" />
-                                            <path d="M1.875 0.5L7.975 5.025L14.05 0.5H16V2.05L10 6.525L16 10.975V12.5H14L8 8.025L2.025 12.5H0V11L5.975 6.55L0 2.1V0.5H1.875Z"
-                                                  fill="white" />
-                                            <path d="M10.6 7.525L16 11.5V12.5L9.225 7.525H10.6ZM6 8.025L6.15 8.9L1.35 12.5H0L6 8.025ZM16 0.5V0.575L9.775 5.275L9.825 4.175L14.75 0.5H16ZM0 0.5L5.975 4.9H4.475L0 1.55V0.5Z"
-                                                  fill="#C8102E" />
-                                            <path d="M6.025 0.5V12.5H10.025V0.5H6.025ZM0 4.5V8.5H16V4.5H0Z"
-                                                  fill="white" />
-                                            <path d="M0 5.325V7.725H16V5.325H0ZM6.825 0.5V12.5H9.225V0.5H6.825Z"
-                                                  fill="#C8102E" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="selectedlang">
-                                                <rect width="16"
-                                                      height="12"
-                                                      fill="white"
-                                                      transform="translate(0 0.5)" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
-                                </span>
-                                English
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <span class="me-2">
-                                            <svg width="16"
-                                                 height="13"
-                                                 viewBox="0 0 16 13"
-                                                 fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#selectedlang)">
-                                                    <path d="M0 0.5H16V12.5H0V0.5Z" fill="#012169" />
-                                                    <path d="M1.875 0.5L7.975 5.025L14.05 0.5H16V2.05L10 6.525L16 10.975V12.5H14L8 8.025L2.025 12.5H0V11L5.975 6.55L0 2.1V0.5H1.875Z"
-                                                          fill="white" />
-                                                    <path d="M10.6 7.525L16 11.5V12.5L9.225 7.525H10.6ZM6 8.025L6.15 8.9L1.35 12.5H0L6 8.025ZM16 0.5V0.575L9.775 5.275L9.825 4.175L14.75 0.5H16ZM0 0.5L5.975 4.9H4.475L0 1.55V0.5Z"
-                                                          fill="#C8102E" />
-                                                    <path d="M6.025 0.5V12.5H10.025V0.5H6.025ZM0 4.5V8.5H16V4.5H0Z"
-                                                          fill="white" />
-                                                    <path d="M0 5.325V7.725H16V5.325H0ZM6.825 0.5V12.5H9.225V0.5H6.825Z"
-                                                          fill="#C8102E" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="selectedlang">
-                                                        <rect width="16"
-                                                              height="12"
-                                                              fill="white"
-                                                              transform="translate(0 0.5)" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                        </span>
-                                        English
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <span class="me-2">
-                                            <svg width="16"
-                                                 height="13"
-                                                 viewBox="0 0 16 13"
-                                                 fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_5543_19751)">
-                                                    <path d="M0 8.5H16V12.5H0V8.5Z" fill="#FFCE00" />
-                                                    <path d="M0 0.5H16V4.5H0V0.5Z" fill="black" />
-                                                    <path d="M0 4.5H16V8.5H0V4.5Z" fill="#DD0000" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_5543_19751">
-                                                        <rect width="16"
-                                                              height="12"
-                                                              fill="white"
-                                                              transform="translate(0 0.5)" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                        </span>
-                                        Vietnamese
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -113,16 +17,15 @@
                     <div class="col-xxl-2 col-lg-3 col-md-6 col-5">
                         <a class="navbar-brand d-none d-lg-block" asp-action="Index">
                             <img src="~/images/logo/freshcart-logo.svg"
-                                 alt="eCommerce HTML Template" />
+                                 alt="eCommerce" />
                         </a>
                         <div class="d-flex justify-content-between w-100 d-lg-none">
                             <a class="navbar-brand" asp-action="Index">
                                 <img src="~/images/logo/freshcart-logo.svg"
-                                     alt="eCommerce HTML Template" />
+                                     alt="eCommerce" />
                             </a>
                         </div>
                     </div>
-                    <!--Form search-->
                     <div class="col-xxl-5 col-lg-5 d-none d-lg-block">
                         <form action="#">
                             <div class="input-group">
@@ -132,91 +35,24 @@
                                 <span class="input-group-append">
                                     <button class="btn bg-white border border-start-0 ms-n10 rounded-0 rounded-end"
                                             type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                             width="16"
-                                             height="16"
-                                             viewBox="0 0 24 24"
-                                             fill="none"
-                                             stroke="currentColor"
-                                             stroke-width="2"
-                                             stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="feather feather-search">
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                        </svg>
+                                        <i data-feather="search"></i>
                                     </button>
                                 </span>
                             </div>
                         </form>
                     </div>
                     <div class="col-md-2 col-xxl-3 d-none d-lg-block">
-                        <!-- Button trigger modal -->
-                        <button type="button"
-                                class="btn btn-outline-gray-400 text-muted"
-                                data-bs-toggle="modal"
-                                data-bs-target="#locationModal">
-                            <i class="feather-icon icon-map-pin me-2"></i>
-                            Location
-                        </button>
+                        <button type="button" class="btn btn-outline-gray-400 text-muted"
+                  <i class="feather-icon icon-map-pin me-2"></i> Location
+                  </button>
                     </div>
-                    <!-- Wishlist and Card and UserLogin -->
+                    <!--Card WishList and Account-->
                     <div class="col-lg-2 col-xxl-2 text-end col-md-6 col-7">
-                        <div class="list-inline">
-                            <div class="list-inline-item me-5">
-                                <a href="./pages/shop-wishlist.html"
-                                   class="text-muted position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         width="20"
-                                         height="20"
-                                         viewBox="0 0 24 24"
-                                         fill="none"
-                                         stroke="currentColor"
-                                         stroke-width="2"
-                                         stroke-linecap="round"
-                                         stroke-linejoin="round"
-                                         class="feather feather-heart">
-                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                    </svg>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        2
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
-                                </a>
-                            </div>
-                            <a class="text-muted position-relative"
-                               data-bs-toggle="offcanvas"
-                               data-bs-target="#offcanvasRight"
-                               href="#offcanvasExample"
-                               role="button"
-                               aria-controls="offcanvasRight">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width="20"
-                                     height="20"
-                                     viewBox="0 0 24 24"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     stroke-width="2"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round"
-                                     class="feather feather-shopping-bag">
-                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                </svg>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    2
-                                    <span class="visually-hidden">unread messages</span>
-                                </span>
-                            </a>
-                        </div>
+                        <partial name="_AccountPartial" />
                     </div>
                 </div>
             </div>
-            <div>
-            </div>
         </div>
-
         <!-- Nav bar -->
         <nav class="navbar navbar-expand-lg bg-body pb-2 bg-body">
             <div class="container">
@@ -234,11 +70,10 @@
                                 Shop
                             </a>
                             <ul class="dropdown-menu">
-                            @foreach(var category in Model)
-                            {
-                                <li><a class="dropdown-item" asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a></li>
-                            }
-
+                                @foreach (var category in Model)
+                                {
+                                    <li><a class="dropdown-item" asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a></li>
+                                }
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -250,185 +85,9 @@
                         <li class="nav-item">
                             <a class="nav-link">Contact</a>
                         </li>
-                        <partial name="_LoginPartial" />
                     </ul>
                 </div>
             </div>
         </nav>
-    </div>
-    <!--Product Cart-->
-    <div class="offcanvas offcanvas-end"
-         tabindex="-1"
-         id="offcanvasRight"
-         aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header border-bottom">
-            <div class="text-start">
-                <h5 id="offcanvasRightLabel" class="mb-0 fs-4">Shop Cart</h5>
-                <small>Location in 382480</small>
-            </div>
-            <button type="button"
-                    class="btn-close text-reset"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div>
-                <!-- alert -->
-                <div class="alert alert-danger p-2" role="alert">
-                    You’ve got FREE delivery. Start
-                    <a href="#!" class="alert-link">checkout now!</a>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <!-- list group -->
-                    <li class="list-group-item py-3 ps-0">
-                        <!-- row -->
-                        <div class="row align-items-center">
-                            <div class="col-6 col-md-6 col-lg-7">
-                                <div class="d-flex">
-                                    <img src="./assets/images/products/product-img-2.jpg"
-                                         alt="Ecommerce"
-                                         class="icon-shape icon-xxl" />
-                                    <div class="ms-3">
-                                        <a href="./pages/shop-single.html" class="text-inherit">
-                                            <h6 class="mb-0">NutriChoice Digestive</h6>
-                                        </a>
-                                        <span><small class="text-muted">250g</small></span>
-                                        <!-- text -->
-                                        <div class="mt-2 small lh-1">
-                                            <a href="#!" class="text-decoration-none text-inherit">
-                                                <span class="me-1 align-text-bottom">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         width="14"
-                                                         height="14"
-                                                         viewBox="0 0 24 24"
-                                                         fill="none"
-                                                         stroke="currentColor"
-                                                         stroke-width="2"
-                                                         stroke-linecap="round"
-                                                         stroke-linejoin="round"
-                                                         class="feather feather-trash-2 text-success">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                    </svg>
-                                                </span>
-                                                <span class="text-muted">Remove</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- input group -->
-                            <div class="col-4 col-md-3 col-lg-3">
-                                <!-- input -->
-                                <!-- input -->
-                                <div class="input-group input-spinner">
-                                    <input type="button"
-                                           value="-"
-                                           class="button-minus btn btn-sm"
-                                           data-field="quantity" />
-                                    <input type="number"
-                                           step="1"
-                                           max="10"
-                                           value="1"
-                                           name="quantity"
-                                           class="quantity-field form-control-sm form-input" />
-                                    <input type="button"
-                                           value="+"
-                                           class="button-plus btn btn-sm"
-                                           data-field="quantity" />
-                                </div>
-                            </div>
-                            <!-- price -->
-                            <div class="col-2 text-lg-end text-start text-md-end col-md-2">
-                                <span class="fw-bold text-danger">$20.00</span>
-                                <div class="text-decoration-line-through text-muted small">
-                                    $26.00
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <!-- list group -->
-                    <li class="list-group-item py-3 ps-0 border-bottom">
-                        <!-- row -->
-                        <div class="row align-items-center">
-                            <div class="col-6 col-md-6 col-lg-7">
-                                <div class="d-flex">
-                                    <img src="./assets/images/products/product-img-5.jpg"
-                                         alt="Ecommerce"
-                                         class="icon-shape icon-xxl" />
-                                    <div class="ms-3">
-                                        <!-- title -->
-                                        <a href="./pages/shop-single.html" class="text-inherit">
-                                            <h6 class="mb-0">Salted Instant Popcorn</h6>
-                                        </a>
-                                        <span><small class="text-muted">100g</small></span>
-                                        <!-- text -->
-                                        <div class="mt-2 small lh-1">
-                                            <a href="#!" class="text-decoration-none text-inherit">
-                                                <span class="me-1 align-text-bottom">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         width="14"
-                                                         height="14"
-                                                         viewBox="0 0 24 24"
-                                                         fill="none"
-                                                         stroke="currentColor"
-                                                         stroke-width="2"
-                                                         stroke-linecap="round"
-                                                         stroke-linejoin="round"
-                                                         class="feather feather-trash-2 text-success">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                    </svg>
-                                                </span>
-                                                <span class="text-muted">Remove</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- input group -->
-                            <div class="col-4 col-md-3 col-lg-3">
-                                <!-- input -->
-                                <!-- input -->
-                                <div class="input-group input-spinner">
-                                    <input type="button"
-                                           value="-"
-                                           class="button-minus btn btn-sm"
-                                           data-field="quantity" />
-                                    <input type="number"
-                                           step="1"
-                                           max="10"
-                                           value="1"
-                                           name="quantity"
-                                           class="quantity-field form-control-sm form-input" />
-                                    <input type="button"
-                                           value="+"
-                                           class="button-plus btn btn-sm"
-                                           data-field="quantity" />
-                                </div>
-                            </div>
-                            <!-- price -->
-                            <div class="col-2 text-lg-end text-start text-md-end col-md-2">
-                                <span class="fw-bold">$15.00</span>
-                                <div class="text-decoration-line-through text-muted small">
-                                    $25.00
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <!-- btn -->
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="#!" class="btn btn-primary">Continue Shopping</a>
-                    <a href="#!" class="btn btn-dark">Update Cart</a>
-                </div>
-            </div>
-        </div>
     </div>
 </header>

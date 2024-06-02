@@ -1,0 +1,40 @@
+﻿<div class="list-inline">
+    <div class="list-inline-item me-5">
+        <a href="./pages/shop-wishlist.html"
+           class="text-muted position-relative" type="button">
+            <i data-feather="heart"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                2
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        </a>
+    </div>
+    <div class="list-inline-item me-5">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="dropdown">
+                <a class="text-muted position-relative dropdown-toggle" href="#" role="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i data-feather="user"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userMenu">
+                    <li><a class="dropdown-item" asp-controller="Auth" asp-action="Profile">Profile</a></li>
+                    <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Logout</a></li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <a class="text-muted position-relative" asp-controller="Auth" asp-action="Login">
+                <i data-feather="user"></i>
+            </a>
+        }
+    </div>
+    <div class="list-inline-item me-5">
+        <a class="text-muted position-relative" asp-controller="Cart" asp-action="Index">
+            <i data-feather="shopping-bag"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                2
+            </span>
+        </a>
+    </div>
+</div>
