@@ -1,5 +1,4 @@
 ﻿using EShop.ViewModels.Dtos.Product;
-using EShop.ViewModels.ProductViewModel;
 
 namespace EShop.Core.Services.Interfaces
 {

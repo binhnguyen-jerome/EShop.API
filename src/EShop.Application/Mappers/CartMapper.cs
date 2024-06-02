@@ -1,6 +1,6 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.ViewModels.Dtos.Cart;
-using EShop.ViewModels.ProductViewModel;
+using EShop.ViewModels.Dtos.Product;
 
 namespace EShop.Application.Mappers
 {
@@ -28,11 +28,10 @@ namespace EShop.Application.Mappers
                     Id = cart.Product.Id,
                     Name = cart.Product.Name,
                     Price = cart.Product.Price,
-                    Description = cart.Product.Description,
                     ProductImages = cart.Product.ProductImages.Select(pi => new ProductImageResponse
                     {
                         ImageUrl = pi.ImageUrl
-                    }).ToList()
+                    }).ToList(),
                 }
             };
         }

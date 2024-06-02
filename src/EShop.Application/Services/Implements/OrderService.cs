@@ -44,11 +44,13 @@ namespace EShop.Core.Services.Implements
                 OrderId = newOrder.Id,
                 ProductId = x.ProductId,
                 Quantity = x.Quantity,
+                Price = x.Price
             }));
             await unitOfWork.CompleteAsync();
-            return newOrder.ToOrderResponse();
 
+            return newOrder.ToOrderResponse();
         }
+
         public Task<OrderResponse> UpdateOrderAsync(Guid id, OrderRequest order)
         {
             throw new NotImplementedException();
