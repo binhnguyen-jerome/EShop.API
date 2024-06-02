@@ -1,4 +1,4 @@
-﻿using EShop.ViewModels.ProductViewModel;
+﻿using EShop.ViewModels.Dtos.Product;
 
 namespace EShop.ViewModels.Dtos.Cart
 {

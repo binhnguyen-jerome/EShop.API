@@ -1,6 +1,5 @@
 ﻿using EShop.ViewModels.Dtos.Category;
 using EShop.ViewModels.Dtos.Product;
-using EShop.ViewModels.ProductViewModel;
 
 namespace EShop.ViewModels.ViewModel
 {
