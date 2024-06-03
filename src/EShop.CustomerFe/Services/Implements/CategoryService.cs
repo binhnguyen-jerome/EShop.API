@@ -15,9 +15,12 @@ namespace EShop.CustomerFe.Services.Implement
         public async Task<List<CategoryResponse>> GetAllCategoriesAsync()
         {
             var response = await _httpClient.GetAsync("/api/v1/categories");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<CategoryResponse>>(content);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<CategoryResponse>>(content);
+            }
+            return [];
         }
     }
 }

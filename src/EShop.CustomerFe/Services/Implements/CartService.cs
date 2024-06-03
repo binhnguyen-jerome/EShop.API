@@ -13,22 +13,29 @@ namespace EShop.CustomerFe.Services.Implements
             _httpClient = httpClient;
 
         }
-        public async Task<CartResponse> AddToCartAsync(CartRequest? cartRequest)
+        public async Task<CartResponse> AddToCartAsync(CartRequest cartRequest)
         {
             var json = JsonConvert.SerializeObject(cartRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("/api/v1/carts", content);
-            response.EnsureSuccessStatusCode();
-            var responseContent = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<CartResponse>(responseContent);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<CartResponse>(responseContent);
+            }
+            return null;
         }
 
         public async Task<List<CartResponse>> GetCartByUserIdAsync(Guid userId)
         {
             var response = await _httpClient.GetAsync($"/api/v1/carts/{userId}");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<CartResponse>>(content);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<CartResponse>>(content);
+            }
+            return [];
+
         }
 
         public Task<bool> MinusAsync(Guid cartId)

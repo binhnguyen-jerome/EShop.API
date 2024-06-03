@@ -17,17 +17,23 @@ namespace EShop.CustomerFe.Services
         {
 
             var response = await _httpClient.GetAsync($"/api/v1/products?");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<ProductResponse>>(content);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<ProductResponse>>(content);
+            }
+            return [];
         }
 
         public async Task<ProductResponse> GetProductByIdAsync(Guid productId)
         {
             var response = await _httpClient.GetAsync($"/api/v1/products/{productId}");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ProductResponse>(content);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<ProductResponse>(content);
+            }
+            return null;
         }
         public async Task<List<ProductResponse>> GetFilterProducts(ProductQuery query)
         {
@@ -35,9 +41,12 @@ namespace EShop.CustomerFe.Services
             var url = $"/api/v1/products{queryString}";
 
             var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<ProductResponse>>(content);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<ProductResponse>>(content);
+            }
+            return [];
         }
 
         private string BuildQueryString(ProductQuery query)

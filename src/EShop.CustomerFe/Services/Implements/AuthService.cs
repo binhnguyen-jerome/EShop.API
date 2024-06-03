@@ -16,7 +16,6 @@ namespace EShop.CustomerFe.Services.Implements
         {
             var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/login", loginRequest);
 
-            response.EnsureSuccessStatusCode();
             if (response.IsSuccessStatusCode)
             {
                 var user = await response.Content.ReadAsStringAsync();

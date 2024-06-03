@@ -16,9 +16,12 @@ namespace EShop.CustomerFe.Services.Implements
         public async Task<UserReponse> GetUserById(Guid userId)
         {
             var response = await _httpClient.GetAsync($"/api/v1/users/{userId}");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<UserReponse>(content);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<UserReponse>(content);
+            }
+            return null;
         }
     }
 }
