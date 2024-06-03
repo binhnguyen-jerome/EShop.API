@@ -17,12 +17,8 @@ namespace EShop.Core.Services.Implements
             this.productReviewQueries = productReviewQueries;
             productReviewRepository = unitOfWork.GetBaseRepo<ProductReview>();
         }
-        public async Task<ProductReviewResponse> CreateProductReviewAsync(ProductReviewRequest? productReviewRequest)
+        public async Task<ProductReviewResponse> CreateProductReviewAsync(ProductReviewRequest productReviewRequest)
         {
-            if (productReviewRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productReviewRequest));
-            }
             ProductReview productReview = productReviewRequest.ToProductReview();
             productReviewRepository.Add(productReview);
             await unitOfWork.CompleteAsync();
@@ -46,12 +42,8 @@ namespace EShop.Core.Services.Implements
             return productReviews.Select(p => p.ToProductReviewResponse()).ToList();
         }
 
-        public async Task<ProductReviewResponse> UpdateProductReviewAsync(Guid id, UpdateProductReviewRequest? updateProductReviewRequest)
+        public async Task<ProductReviewResponse> UpdateProductReviewAsync(Guid id, UpdateProductReviewRequest updateProductReviewRequest)
         {
-            if (updateProductReviewRequest == null)
-            {
-                throw new ArgumentNullException(nameof(updateProductReviewRequest));
-            }
             var productReview = await productReviewRepository.Get(p => p.Id == id);
             if (productReview == null)
             {

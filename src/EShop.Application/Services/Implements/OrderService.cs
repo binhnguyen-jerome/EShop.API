@@ -26,17 +26,15 @@ namespace EShop.Core.Services.Implements
             return orders.Select(x => x.ToOrderResponse()).ToList();
         }
 
-        public async Task<OrderDetailResponse?> GetOrderDetailByIdAsync(Guid id)
+        public async Task<OrderDetailResponse> GetOrderDetailByIdAsync(Guid id)
         {
             var order = await orderQueries.GetOrderDetailByIdAsync(id);
             if (order == null)
                 throw new KeyNotFoundException(nameof(order));
             return order.ToOrderDetailResponse();
         }
-        public async Task<OrderResponse> CreateOrderAsync(OrderRequest? order)
+        public async Task<OrderResponse> CreateOrderAsync(OrderRequest order)
         {
-            if (order == null)
-                throw new ArgumentNullException(nameof(order));
             Order newOrder = order.ToCreateOrder();
             orderRepository.Add(newOrder);
             orderItem.AddRange(order.OrderItems.Select(x => new OrderItem

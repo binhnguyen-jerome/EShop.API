@@ -27,7 +27,7 @@ namespace EShop.Core.Services.Implements
             return categories.Select(c => c.ToCategoryResponse()).ToList();
         }
 
-        public async Task<CategoryResponse?> GetCategoryByIdAsync(Guid id)
+        public async Task<CategoryResponse> GetCategoryByIdAsync(Guid id)
         {
             logger.LogInformation("Get category by id");
 
@@ -38,12 +38,9 @@ namespace EShop.Core.Services.Implements
             }
             return category.ToCategoryResponse();
         }
-        public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest? categoryRequest)
+        public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest categoryRequest)
         {
             logger.LogInformation("Create category");
-
-            if (categoryRequest == null)
-                throw new ApplicationException(nameof(categoryRequest));
 
             Category category = categoryRequest.ToCategory();
             categoryRepository.Add(category);
@@ -65,11 +62,9 @@ namespace EShop.Core.Services.Implements
             return category.ToCategoryResponse();
         }
 
-        public async Task<CategoryResponse> UpdateCategoryAsync(Guid id, CategoryRequest? categoryRequest)
+        public async Task<CategoryResponse> UpdateCategoryAsync(Guid id, CategoryRequest categoryRequest)
         {
             logger.LogInformation("Update category");
-            if (categoryRequest == null)
-                throw new ArgumentNullException(nameof(categoryRequest));
             var category = await categoryRepository.Get(c => c.Id == id);
             if (category == null)
             {

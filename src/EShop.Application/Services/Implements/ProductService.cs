@@ -26,17 +26,15 @@ namespace EShop.Core.Services.Implements
             return products.Select(p => p.ToProductResponse()).ToList();
         }
 
-        public async Task<ProductResponse?> GetProductByIdAsync(Guid id)
+        public async Task<ProductResponse> GetProductByIdAsync(Guid id)
         {
             var product = await productQueries.GetByIdAsync(id);
             if (product == null)
                 throw new KeyNotFoundException("Product can not found");
             return product.ToProductResponse();
         }
-        public async Task<ProductResponse> CreateProductAsync(CreateProductRequest? createProduct)
+        public async Task<ProductResponse> CreateProductAsync(CreateProductRequest createProduct)
         {
-            if (createProduct == null)
-                throw new ArgumentNullException(nameof(createProduct));
             Product product = createProduct.ToCreateProduct();
             productRepository.Add(product);
 
@@ -53,10 +51,8 @@ namespace EShop.Core.Services.Implements
             var newProduct = await productQueries.GetByIdAsync(product.Id);
             return newProduct.ToProductResponse();
         }
-        public async Task<ProductResponse> UpdateProductAsync(Guid id, UpdateProductRequest? updateProduct)
+        public async Task<ProductResponse> UpdateProductAsync(Guid id, UpdateProductRequest updateProduct)
         {
-            if (updateProduct == null)
-                throw new ArgumentNullException(nameof(updateProduct));
             var product = await productQueries.GetByIdAsync(id);
             if (product == null)
             {
@@ -71,10 +67,8 @@ namespace EShop.Core.Services.Implements
             product.UpdateDate = updateProduct.UpdateDate;
             product.CategoryId = updateProduct.CategoryId;
 
-            //Get Current Images
             var currentImages = product.ProductImages.ToList();
 
-            // Get New Images
             var newImages = updateProduct.ProductImages.ToList();
 
             await UpdateProductImagesAsync(product, currentImages, newImages);
@@ -89,10 +83,10 @@ namespace EShop.Core.Services.Implements
             var product = await productQueries.GetByIdAsync(id);
             if (product == null)
                 throw new KeyNotFoundException("Can not find product");
-            // Delete Images 
+
             var images = product.ProductImages.ToList();
+
             productImageRepository.RemoveRange(images);
-            // Delete Product
             productRepository.Remove(product);
 
             await unitOfWork.CompleteAsync();
@@ -101,16 +95,13 @@ namespace EShop.Core.Services.Implements
         }
         private async Task UpdateProductImagesAsync(Product product, List<ProductImage> currentImages, List<ProductImageRequest> newImages)
         {
-            // Tìm các hình ảnh cần xóa
             var removeImages = currentImages.Where(c => !newImages.Any(n => n.ImageUrl == c.ImageUrl)).ToList();
 
-            // Xóa các hình ảnh cần xóa
             if (removeImages.Any())
             {
                 productImageRepository.RemoveRange(removeImages);
             }
 
-            // Tìm các hình ảnh cần thêm mới
             var addImages = newImages.Where(n => !currentImages.Any(c => c.ImageUrl == n.ImageUrl)).ToList();
 
             if (addImages.Any())

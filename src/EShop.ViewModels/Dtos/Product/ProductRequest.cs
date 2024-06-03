@@ -28,6 +28,7 @@ namespace EShop.ViewModels.Dtos.Product
     }
     public class UpdateProductRequest
     {
+        [Required]
         public string Name { get; set; }
         public string? Description { get; set; }
 

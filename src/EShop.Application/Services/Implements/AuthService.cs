@@ -23,7 +23,12 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<bool> RegisterUser(RegisterRequest registerRequest)
         {
-            var User = new ApplicationUser
+            var existingUser = await userManager.FindByEmailAsync(registerRequest.Email);
+            if (existingUser != null)
+            {
+                throw new ApplicationException("Email invalid");
+            }
+            var user = new ApplicationUser
             {
                 Email = registerRequest.Email,
                 UserName = registerRequest.Email,
@@ -35,14 +40,15 @@ namespace EShop.Core.Services.Implements
                 State = registerRequest.State,
                 PostalCode = registerRequest.PostalCode
             };
-            var result = await userManager.CreateAsync(User, registerRequest.Password);
+
+            var result = await userManager.CreateAsync(user, registerRequest.Password);
             if (result.Succeeded)
             {
                 if (registerRequest.Role == null)
                 {
-                    await userManager.AddToRoleAsync(User, "Customer");
+                    await userManager.AddToRoleAsync(user, "Customer");
                 }
-                await userManager.AddToRoleAsync(User, registerRequest.Role.ToString());
+                await userManager.AddToRoleAsync(user, registerRequest.Role.ToString());
             }
             return result.Succeeded;
         }
@@ -72,11 +78,9 @@ namespace EShop.Core.Services.Implements
         {
             var claims = await GetClaims(user.Email);
 
-            // After having identity information, we will configure using algorithms to encrypt 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            // Create token 
             var token = new JwtSecurityToken(
                 configuration["Jwt:Issuer"],
                 configuration["Jwt:Audience"],

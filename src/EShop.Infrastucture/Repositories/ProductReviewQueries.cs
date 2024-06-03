@@ -14,11 +14,8 @@ namespace EShop.Infrastucture.Repositories
         public async Task<List<ProductReview>> GetFilteredProductReviewsAsync(ProductReviewQuery query)
         {
             var queryable = dbSet.AsQueryable();
-            if (query.ProductId.HasValue)
-            {
-                queryable = queryable.Where(p => p.ProductId == query.ProductId);
-            }
             return await queryable
+                .Where(p => p.ProductId == query.ProductId)
                 .Skip((query.PageNumber - 1) * query.PageSize)
                 .Take(query.PageSize)
                 .Include(p => p.ApplicationUser)

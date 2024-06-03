@@ -31,23 +31,23 @@ namespace EShop.API.Controllers
         }
         [Authorize(Roles = "Admin, Customer")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveFromCart([FromRoute] Guid? id)
+        public async Task<IActionResult> RemoveFromCart([FromRoute] Guid id)
         {
-            bool result = await cartService.RemoveFromCartAsync(id.Value);
+            bool result = await cartService.RemoveFromCartAsync(id);
             return Ok(result);
         }
         [Authorize(Roles = "Admin, Customer")]
         [HttpPut("minus/{id}")]
-        public async Task<IActionResult> Minus([FromRoute] Guid? id)
+        public async Task<IActionResult> Minus([FromRoute] Guid id)
         {
-            bool result = await cartService.MinusAsync(id.Value);
+            bool result = await cartService.MinusAsync(id);
             return Ok(result);
         }
         [Authorize(Roles = "Admin, Customer")]
         [HttpPut("plus/{id}")]
-        public async Task<IActionResult> Plus([FromRoute] Guid? id)
+        public async Task<IActionResult> Plus([FromRoute] Guid id)
         {
-            bool result = await cartService.PlusAsync(id.Value);
+            bool result = await cartService.PlusAsync(id);
             return Ok(result);
         }
 

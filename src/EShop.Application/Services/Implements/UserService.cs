@@ -38,7 +38,7 @@ namespace EShop.Core.Services.Implements
             }
             return userReponses;
         }
-        public async Task<UserReponse?> GetUserAsync(Guid id)
+        public async Task<UserReponse> GetUserAsync(Guid id)
         {
             var user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)

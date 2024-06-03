@@ -1,7 +1,10 @@
-﻿namespace EShop.ViewModels.Dtos.Review
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EShop.ViewModels.Dtos.Review
 {
     public class ProductReviewRequest
     {
+        [Required]
         public int Rate { get; set; }
         public string? Content { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
@@ -12,6 +15,7 @@
     }
     public class UpdateProductReviewRequest
     {
+        [Required]
         public int Rate { get; set; }
         public string? Content { get; set; }
     }

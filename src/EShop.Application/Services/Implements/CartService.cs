@@ -19,10 +19,8 @@ namespace EShop.Application.Services.Implements
             cartRepository = unitOfWork.GetBaseRepo<Cart>();
 
         }
-        public async Task<CartResponse> AddToCartAsync(CartRequest? cartRequest)
+        public async Task<CartResponse> AddToCartAsync(CartRequest cartRequest)
         {
-            if (cartRequest == null)
-                throw new ArgumentNullException(nameof(cartRequest));
             if (cartRequest.Quantity <= 0)
                 throw new ApplicationException("Quantity must be greater than 0");
             Cart cart = cartRequest.ToAddToCart();

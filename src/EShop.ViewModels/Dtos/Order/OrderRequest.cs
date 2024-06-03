@@ -5,6 +5,7 @@ namespace EShop.ViewModels.Dtos.Order
 {
     public class OrderRequest
     {
+        [Required]
         public Guid ApplicationUserId { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
