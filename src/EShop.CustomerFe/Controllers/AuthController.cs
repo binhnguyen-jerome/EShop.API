@@ -44,9 +44,14 @@ namespace EShop.CustomerFe.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
                 _logger.LogInformation("User {Name} logged in at {Time}", user.username, DateTime.UtcNow);
+
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+            else
+            {
+                TempData["LoginMessage"] = "Invalid login username or password is not correct";
+                return View();
+            }
         }
         public IActionResult Logout()
         {
