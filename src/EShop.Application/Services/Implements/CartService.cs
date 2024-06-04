@@ -23,11 +23,21 @@ namespace EShop.Application.Services.Implements
         {
             if (cartRequest.Quantity <= 0)
                 throw new ApplicationException("Quantity must be greater than 0");
-            Cart cart = cartRequest.ToAddToCart();
-            cartRepository.Add(cart);
+            Cart cart;
+            var existingCart = await cartQueries.GetCartByUserIdAndProductIdAsync(cartRequest.ApplicationUserId, cartRequest.ProductId);
+            if (existingCart != null)
+            {
+                existingCart.Quantity += cartRequest.Quantity;
+                cartRepository.Update(existingCart);
+                cart = await cartRepository.Get(c => c.Id == existingCart.Id);
+            }
+            else
+            {
+                cart = cartRequest.ToAddToCart();
+                cartRepository.Add(cart);
+            }
             await unitOfWork.CompleteAsync();
-            var newCart = await cartQueries.GetByIdAsync(cart.Id);
-            return newCart.ToCartResponse();
+            return cart.ToCartResponse();
         }
 
         public async Task<List<CartResponse>> GetUserCartsAsync(Guid applicationUserId)
@@ -42,6 +52,12 @@ namespace EShop.Application.Services.Implements
             if (cart == null)
                 throw new KeyNotFoundException("Cart not found");
             cart.Quantity--;
+            if (cart.Quantity <= 0)
+            {
+                cartRepository.Remove(cart);
+                await unitOfWork.CompleteAsync();
+                return true;
+            }
             cartRepository.Update(cart);
             await unitOfWork.CompleteAsync();
             return true;

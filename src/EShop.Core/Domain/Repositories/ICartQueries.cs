@@ -7,5 +7,7 @@ namespace EShop.Core.Domain.Repositories
         Task<List<Cart>> GetUserCartsAsync(Guid applicationUserId);
 
         Task<Cart?> GetByIdAsync(Guid id);
+
+        Task<Cart?> GetCartByUserIdAndProductIdAsync(Guid applicationUserId, Guid productId);
     }
 }

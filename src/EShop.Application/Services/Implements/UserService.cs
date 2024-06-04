@@ -1,4 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
+using EShop.Core.Domain.Extensions;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.Dtos.User;
@@ -40,11 +41,8 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<UserReponse> GetUserAsync(Guid id)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
-            if (user == null)
-            {
-                throw new KeyNotFoundException("User not found");
-            }
+            var user = await userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
+
             var roles = await userManager.GetRolesAsync(user);
             return new UserReponse
             {
@@ -62,21 +60,15 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<bool> DeleteUserAsync(Guid id)
         {
-            var user = userManager.FindByIdAsync(id.ToString());
-            if (user == null)
-            {
-                throw new KeyNotFoundException("User not found");
-            }
+            var user = userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
+
             await userManager.DeleteAsync(user.Result);
             return true;
         }
         public async Task<UserReponse> UpdateUserAsync(Guid id, UserRequest userRequest)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
-            if (user == null)
-            {
-                throw new KeyNotFoundException("User not found");
-            }
+            var user = await userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
+
             user.Email = userRequest.Email;
             user.FirstName = userRequest.FirstName;
             user.LastName = userRequest.LastName;
@@ -85,16 +77,13 @@ namespace EShop.Core.Services.Implements
             user.City = userRequest.City;
             user.State = userRequest.State;
             user.PostalCode = userRequest.PostalCode;
+
             await userManager.UpdateAsync(user);
             return user.ToUserReponse();
         }
         public async Task<bool> UpdateUserRoleAsync(Guid id, string newRole)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
-            if (user == null)
-            {
-                throw new KeyNotFoundException("User not found");
-            }
+            var user = await userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
 
             var currentRoles = await userManager.GetRolesAsync(user);
             var removeResult = await userManager.RemoveFromRolesAsync(user, currentRoles);

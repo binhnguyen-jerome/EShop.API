@@ -24,7 +24,7 @@ namespace EShop.Infrastucture.Repositories
             dbSet.AddRange(entities);
         }
 
-        public virtual async Task<T> Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
+        public virtual async Task<T?> Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
             IQueryable<T> query;
             if (tracked)
@@ -46,7 +46,7 @@ namespace EShop.Infrastucture.Repositories
                     query = query.Include(includeProp);
                 }
             }
-            return await query.FirstAsync();
+            return await query.FirstOrDefaultAsync();
 
         }
 

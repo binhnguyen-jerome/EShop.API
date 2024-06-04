@@ -1,4 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
+using EShop.Core.Domain.Extensions;
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
@@ -28,9 +29,7 @@ namespace EShop.Core.Services.Implements
 
         public async Task<OrderDetailResponse> GetOrderDetailByIdAsync(Guid id)
         {
-            var order = await orderQueries.GetOrderDetailByIdAsync(id);
-            if (order == null)
-                throw new KeyNotFoundException(nameof(order));
+            var order = await orderQueries.GetOrderDetailByIdAsync(id).ThrowIfNull($"Order with ID {id} not found");
             return order.ToOrderDetailResponse();
         }
         public async Task<OrderResponse> CreateOrderAsync(OrderRequest order)
@@ -55,9 +54,7 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<bool> DeleteOrderAsync(Guid id)
         {
-            var order = await orderRepository.Get(o => o.Id == id);
-            if (order == null)
-                throw new KeyNotFoundException(nameof(order));
+            var order = await orderRepository.Get(o => o.Id == id).ThrowIfNull($"Order with ID {id} not found"); ;
             orderRepository.Remove(order);
             await unitOfWork.CompleteAsync();
             return true;

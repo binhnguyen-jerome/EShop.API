@@ -1,4 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
+using EShop.Core.Domain.Extensions;
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
@@ -28,9 +29,7 @@ namespace EShop.Core.Services.Implements
 
         public async Task<ProductResponse> GetProductByIdAsync(Guid id)
         {
-            var product = await productQueries.GetByIdAsync(id);
-            if (product == null)
-                throw new KeyNotFoundException("Product can not found");
+            var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found"); ;
             return product.ToProductResponse();
         }
         public async Task<ProductResponse> CreateProductAsync(CreateProductRequest createProduct)
@@ -53,11 +52,8 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<ProductResponse> UpdateProductAsync(Guid id, UpdateProductRequest updateProduct)
         {
-            var product = await productQueries.GetByIdAsync(id);
-            if (product == null)
-            {
-                throw new KeyNotFoundException("Product not found");
-            }
+            var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found");
+
             product.Name = updateProduct.Name;
             product.Description = updateProduct.Description;
             product.Summary = updateProduct.Summary;
@@ -80,9 +76,7 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<bool> DeleteProductAsync(Guid id)
         {
-            var product = await productQueries.GetByIdAsync(id);
-            if (product == null)
-                throw new KeyNotFoundException("Can not find product");
+            var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found");
 
             var images = product.ProductImages.ToList();
 
