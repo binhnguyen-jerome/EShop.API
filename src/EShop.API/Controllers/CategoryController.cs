@@ -46,8 +46,8 @@ namespace EShop.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            CategoryResponse categoryResponse = await categoryService.DeleteCategoryAsync(id);
-            return Ok(categoryResponse);
+            var result = await categoryService.DeleteCategoryAsync(id);
+            return Ok(result);
         }
     }
 }

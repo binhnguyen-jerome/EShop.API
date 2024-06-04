@@ -8,6 +8,6 @@ namespace EShop.Core.Services.Interfaces
         Task<CategoryResponse> GetCategoryByIdAsync(Guid id);
         Task<CategoryResponse> CreateCategoryAsync(CategoryRequest category);
         Task<CategoryResponse> UpdateCategoryAsync(Guid id, CategoryRequest? category);
-        Task<CategoryResponse> DeleteCategoryAsync(Guid id);
+        Task<bool> DeleteCategoryAsync(Guid id);
     }
 }
