@@ -21,7 +21,7 @@ namespace EShop.CustomerFe.Controllers
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
             {
-                RedirectToAction("Login", "User");
+                return RedirectToAction("Login", "Auth");
             }
             var carts = await cartService.GetCartByUserIdAsync(new Guid(userId));
             CartVM cartVM = new()
@@ -54,18 +54,19 @@ namespace EShop.CustomerFe.Controllers
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
             {
-                RedirectToAction("Login", "User");
+                return RedirectToAction("Login", "Auth");
             }
             cartVM.CartItems = await cartService.GetCartByUserIdAsync(new Guid(userId));
             cartVM.OrderRequest.ApplicationUserId = new Guid(userId);
             return RedirectToAction("Index");
         }
-        public async void AddToCart(Guid productId, int quantity)
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(Guid productId, int quantity)
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
             {
-                RedirectToAction("Login", "User");
+                RedirectToAction("Login", "Auth");
             }
             var cartRequest = new CartRequest
             {
@@ -73,19 +74,36 @@ namespace EShop.CustomerFe.Controllers
                 ProductId = productId,
                 Quantity = quantity
             };
-            await cartService.AddToCartAsync(cartRequest);
+            var result = await cartService.AddToCartAsync(cartRequest);
+            return Ok(result);
         }
-        public async Task<bool> Remove(Guid cartId)
+        [HttpDelete]
+        public async Task<IActionResult> Remove(Guid cartId)
         {
-            return await cartService.RemoveFromCartAsync(cartId);
+            var result = await cartService.RemoveFromCartAsync(cartId);
+            if (!result)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction("Index");
+
         }
-        public async Task<bool> Minus(Guid cartId)
+        [HttpPost]
+        public async Task<IActionResult> UpdateCart(Guid productId, int quantity)
         {
-            return await cartService.MinusAsync(cartId);
-        }
-        public async Task<bool> Plus(Guid cartId)
-        {
-            return await cartService.PlusAsync(cartId);
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var cartRequest = new CartRequest
+            {
+                ApplicationUserId = new Guid(userId),
+                ProductId = productId,
+                Quantity = quantity
+            };
+            var result = await cartService.UpdateCartAsync(cartRequest);
+            if (!result)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
         }
     }
 

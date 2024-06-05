@@ -41,7 +41,8 @@
                                                     <h6 class="mb-0">@item.Product.Name</h6>
                                                 </a>
                                                 <div class="mt-2 small lh-1">
-                                                    <a href="#!" class="text-decoration-none text-inherit">
+                                                    <input type="hidden" id="cardId" value="@item.Id" />
+                                                    <a class="text-decoration-none text-inherit" asp-action="Remove" asp-route-cartId="@item.Id">
                                                         <span class="me-1 align-text-bottom">
                                                             <i data-feather="trash"
                                                                class="text-success"
@@ -56,20 +57,24 @@
                                     </div>
                                     <div class="col-4 col-md-4 col-lg-3">
                                         <div class="input-group input-spinner">
+                                            <input type="hidden" class="productId" value="@item.Product.Id"/>
                                             <input type="button"
                                                    value="-"
-                                                   class="button-minus btn btn-sm"
-                                                   data-field="quantity" />
+                                                   class="button-minus btn btn-sm updateCart"
+                                                   data-field="quantity"
+
+                                                   />
                                             <input type="number"
                                                    step="1"
                                                    max="10"
                                                    value="@item.Quantity"
                                                    name="quantity"
-                                                   class="quantity-field form-control-sm form-input" />
+                                                   class="quantity-field form-control-sm form-input quantity" />
                                             <input type="button"
                                                    value="+"
-                                                   class="button-plus btn btn-sm"
-                                                   data-field="quantity" />
+                                                   class="button-plus btn btn-sm updateCart"
+                                                   data-field="quantity"
+                                                   />
                                         </div>
                                     </div>
                                     <div class="col-2 text-lg-end text-start text-md-end col-md-2">

@@ -38,19 +38,28 @@ namespace EShop.CustomerFe.Services.Implements
 
         }
 
-        public Task<bool> MinusAsync(Guid cartId)
+        public async Task<bool> UpdateCartAsync(CartRequest cartRequest)
         {
-            throw new NotImplementedException();
+            var json = JsonConvert.SerializeObject(cartRequest);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"/api/v1/carts", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var reponseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<bool>(reponseContent);
+            }
+            return false;
         }
 
-        public Task<bool> PlusAsync(Guid cartId)
+        public async Task<bool> RemoveFromCartAsync(Guid cartId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> RemoveFromCartAsync(Guid cartId)
-        {
-            throw new NotImplementedException();
+            var response = await _httpClient.DeleteAsync($"/api/v1/carts/{cartId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<bool>(content);
+            }
+            return false;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace EShop.CustomerFe.Controllers
             this.productService = productService;
             this.categoryService = categoryService;
         }
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var products = await productService.GetAllProductsAsync();
@@ -31,12 +32,13 @@ namespace EShop.CustomerFe.Controllers
             ViewBag.Categories = categories;
             return View(viewModel);
         }
-
+        [HttpGet]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

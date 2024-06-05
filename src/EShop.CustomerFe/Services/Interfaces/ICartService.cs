@@ -8,7 +8,6 @@ namespace EShop.CustomerFe.Services.Interfaces
         Task<CartResponse> AddToCartAsync(CartRequest cartRequest);
         Task<bool> RemoveFromCartAsync(Guid cartId);
 
-        Task<bool> MinusAsync(Guid cartId);
-        Task<bool> PlusAsync(Guid cartId);
+        Task<bool> UpdateCartAsync(CartRequest cartRequest);
     }
 }

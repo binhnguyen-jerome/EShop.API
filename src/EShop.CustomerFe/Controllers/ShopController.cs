@@ -18,6 +18,7 @@ namespace EShop.CustomerFe.Controllers
             this.productService = productService;
             this.categoryService = categoryService;
         }
+        [HttpGet]
         public async Task<IActionResult> Index(Guid categoryId)
         {
             var query = new ProductQuery { CategoryId = categoryId };

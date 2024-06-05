@@ -24,9 +24,7 @@
                 <span class="text-decoration-line-through text-muted">$@Model.Price</span>
             </div>
             <div>
-                <input type="hidden" id="productId" value="@Model.Id" />
-                <input type="hidden" id="quantity" value="1"/>
-                <button class="btn btn-primary btn-sm" id="addToCartButton">
+                <button class="btn btn-primary btn-sm" onclick='addToCart("@Model.Id", "1")'>
                     <i data-feather="plus" width="16" height="16"></i>
                     Add
                 </button>
