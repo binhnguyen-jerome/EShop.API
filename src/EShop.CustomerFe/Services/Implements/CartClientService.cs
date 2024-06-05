@@ -5,15 +5,15 @@ using System.Text;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class CartService : ICartService
+    public class CartClientService : ICartClientService
     {
         private readonly HttpClient _httpClient;
-        public CartService(HttpClient httpClient)
+        public CartClientService(HttpClient httpClient)
         {
             _httpClient = httpClient;
 
         }
-        public async Task<CartResponse> AddToCartAsync(CartRequest cartRequest)
+        public async Task<CartResponse?> AddToCartAsync(CartRequest cartRequest)
         {
             var json = JsonConvert.SerializeObject(cartRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -26,7 +26,7 @@ namespace EShop.CustomerFe.Services.Implements
             return null;
         }
 
-        public async Task<List<CartResponse>> GetCartByUserIdAsync(Guid userId)
+        public async Task<List<CartResponse>?> GetCartByUserIdAsync(Guid userId)
         {
             var response = await _httpClient.GetAsync($"/api/v1/carts/{userId}");
             if (response.IsSuccessStatusCode)

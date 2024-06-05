@@ -5,15 +5,15 @@ using System.Text;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class OrderService : IOrderService
+    public class OrderClientService : IOrderClientService
     {
         private readonly HttpClient _httpClient;
 
-        public OrderService(HttpClient httpClient)
+        public OrderClientService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-        public async Task<OrderResponse> CreateOrderAsync(OrderRequest orderRequest)
+        public async Task<OrderResponse?> CreateOrderAsync(OrderRequest orderRequest)
         {
             var json = JsonConvert.SerializeObject(orderRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

@@ -2,8 +2,8 @@
 
 namespace EShop.CustomerFe.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserClientService
     {
-        Task<UserReponse> GetUserById(Guid userId);
+        Task<UserReponse?> GetUserById(Guid userId);
     }
 }

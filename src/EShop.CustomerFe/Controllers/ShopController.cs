@@ -9,10 +9,10 @@ namespace EShop.CustomerFe.Controllers
     {
 
         private readonly ILogger<HomeController> _logger;
-        private readonly IProductService productService;
-        private readonly ICategoryService categoryService;
+        private readonly IProductClientService productService;
+        private readonly ICategoryClientService categoryService;
 
-        public ShopController(ILogger<HomeController> logger, IProductService productService, ICategoryService categoryService)
+        public ShopController(ILogger<HomeController> logger, IProductClientService productService, ICategoryClientService categoryService)
         {
             _logger = logger;
             this.productService = productService;

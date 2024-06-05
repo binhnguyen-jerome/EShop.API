@@ -4,16 +4,16 @@ using Newtonsoft.Json;
 
 namespace EShop.CustomerFe.Services
 {
-    public class ProductService : IProductService
+    public class ProductClientService : IProductClientService
     {
 
         private readonly HttpClient _httpClient;
 
-        public ProductService(HttpClient httpClient)
+        public ProductClientService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-        public async Task<List<ProductResponse>> GetAllProductsAsync()
+        public async Task<List<ProductResponse>?> GetAllProductsAsync()
         {
 
             var response = await _httpClient.GetAsync($"/api/v1/products?");
@@ -25,7 +25,7 @@ namespace EShop.CustomerFe.Services
             return [];
         }
 
-        public async Task<ProductResponse> GetProductByIdAsync(Guid productId)
+        public async Task<ProductResponse?> GetProductByIdAsync(Guid productId)
         {
             var response = await _httpClient.GetAsync($"/api/v1/products/{productId}");
             if (response.IsSuccessStatusCode)
@@ -35,7 +35,7 @@ namespace EShop.CustomerFe.Services
             }
             return null;
         }
-        public async Task<List<ProductResponse>> GetFilterProducts(ProductQuery query)
+        public async Task<List<ProductResponse>?> GetFilterProducts(ProductQuery query)
         {
             var queryString = BuildQueryString(query);
             var url = $"/api/v1/products{queryString}";
@@ -68,7 +68,7 @@ namespace EShop.CustomerFe.Services
                 queryString += $"minPrice={query.MinPrice}&";
             }
 
-            if (query.PageNumber != null)
+            if (query.PageNumber > 0)
             {
                 queryString += $"pageNumber={query.PageNumber}&";
             }

@@ -5,9 +5,9 @@ namespace EShop.CustomerFe.Components
 {
     public class HeaderViewComponent : ViewComponent
     {
-        private readonly ICategoryService categoryService;
+        private readonly ICategoryClientService categoryService;
 
-        public HeaderViewComponent(ICategoryService categoryService)
+        public HeaderViewComponent(ICategoryClientService categoryService)
         {
             this.categoryService = categoryService;
         }

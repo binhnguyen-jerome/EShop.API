@@ -2,10 +2,10 @@
 
 namespace EShop.CustomerFe.Services.Interfaces
 {
-    public interface ICartService
+    public interface ICartClientService
     {
-        Task<List<CartResponse>> GetCartByUserIdAsync(Guid userId);
-        Task<CartResponse> AddToCartAsync(CartRequest cartRequest);
+        Task<List<CartResponse>?> GetCartByUserIdAsync(Guid userId);
+        Task<CartResponse?> AddToCartAsync(CartRequest cartRequest);
         Task<bool> RemoveFromCartAsync(Guid cartId);
 
         Task<bool> UpdateCartAsync(CartRequest cartRequest);

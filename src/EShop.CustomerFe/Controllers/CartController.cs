@@ -8,10 +8,10 @@ namespace EShop.CustomerFe.Controllers
 {
     public class CartController : Controller
     {
-        private readonly ICartService cartService;
-        private readonly IUserService userService;
+        private readonly ICartClientService cartService;
+        private readonly IUserClientService userService;
 
-        public CartController(ICartService cartService, IUserService userService)
+        public CartController(ICartClientService cartService, IUserClientService userService)
         {
             this.cartService = cartService;
             this.userService = userService;

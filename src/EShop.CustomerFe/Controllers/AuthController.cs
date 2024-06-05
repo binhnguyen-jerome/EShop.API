@@ -10,9 +10,9 @@ namespace EShop.CustomerFe.Controllers
     public class AuthController : Controller
     {
         private readonly ILogger<ProductController> _logger;
-        private readonly IAuthService authService;
+        private readonly IAuthClientService authService;
 
-        public AuthController(ILogger<ProductController> logger, IAuthService authService)
+        public AuthController(ILogger<ProductController> logger, IAuthClientService authService)
         {
             _logger = logger;
             this.authService = authService;

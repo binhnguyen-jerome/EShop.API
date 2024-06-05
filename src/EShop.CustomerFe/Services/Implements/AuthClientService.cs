@@ -4,11 +4,11 @@ using Newtonsoft.Json;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class AuthService : IAuthService
+    public class AuthClientService : IAuthClientService
     {
         private readonly HttpClient _httpClient;
 
-        public AuthService(HttpClient httpClient)
+        public AuthClientService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

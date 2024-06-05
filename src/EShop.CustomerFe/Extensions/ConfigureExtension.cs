@@ -39,12 +39,12 @@ namespace EShop.CustomerFe.Extensions
                 }
             });
             //Inject Service Repositories
-            services.AddHttpClient<IProductService, ProductService>(configureClient);
-            services.AddHttpClient<ICategoryService, CategoryService>(configureClient);
-            services.AddHttpClient<IProductReviewService, ProductReviewService>(configureClient);
-            services.AddHttpClient<IUserService, UserService>(configureClient);
-            services.AddHttpClient<ICartService, CartService>(configureClient);
-            services.AddHttpClient<IAuthService, AuthService>(configureClient);
+            services.AddHttpClient<IProductClientService, ProductClientService>(configureClient);
+            services.AddHttpClient<ICategoryClientService, CategoryClientService>(configureClient);
+            services.AddHttpClient<IProductReviewClientService, ProductReviewClientService>(configureClient);
+            services.AddHttpClient<IUserClientService, UserClientService>(configureClient);
+            services.AddHttpClient<ICartClientService, CartClientService>(configureClient);
+            services.AddHttpClient<IAuthClientService, AuthClientService>(configureClient);
             return services;
         }
     }

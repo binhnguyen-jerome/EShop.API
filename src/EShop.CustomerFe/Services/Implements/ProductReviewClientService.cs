@@ -5,15 +5,15 @@ using System.Text;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class ProductReviewService : IProductReviewService
+    public class ProductReviewClientService : IProductReviewClientService
     {
         private readonly HttpClient _httpClient;
 
-        public ProductReviewService(HttpClient httpClient)
+        public ProductReviewClientService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-        public async Task<List<ProductReviewUserResponse>> GetProductReviewsAsync(Guid productId)
+        public async Task<List<ProductReviewUserResponse>?> GetProductReviewsAsync(Guid productId)
         {
             var response = await _httpClient.GetAsync($"/api/v1/productReviews?productId={productId}");
             if (response.IsSuccessStatusCode)
@@ -23,7 +23,7 @@ namespace EShop.CustomerFe.Services.Implements
             }
             return [];
         }
-        public async Task<ProductReviewResponse> CreateProductReviewAsync(ProductReviewRequest request)
+        public async Task<ProductReviewResponse?> CreateProductReviewAsync(ProductReviewRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
