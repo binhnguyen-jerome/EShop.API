@@ -1,6 +1,7 @@
 ﻿using EShop.Application.Mappers;
 using EShop.Application.Services.Interfaces;
 using EShop.Core.Domain.Entities;
+using EShop.Core.Domain.Extensions;
 using EShop.Core.Domain.Repositories;
 using EShop.ViewModels.Dtos.Cart;
 
@@ -46,29 +47,14 @@ namespace EShop.Application.Services.Implements
             return userCarts.Select(c => c.ToCartResponse()).ToList();
         }
 
-        public async Task<bool> MinusAsync(Guid cartId)
+        public async Task<bool> UpdateCartAsync(CartRequest cartRequest)
         {
-            var cart = await cartRepository.Get(c => c.Id == cartId);
-            if (cart == null)
-                throw new KeyNotFoundException("Cart not found");
-            cart.Quantity--;
-            if (cart.Quantity <= 0)
-            {
-                cartRepository.Remove(cart);
-                await unitOfWork.CompleteAsync();
-                return true;
-            }
-            cartRepository.Update(cart);
-            await unitOfWork.CompleteAsync();
-            return true;
-        }
+            if (cartRequest.Quantity <= 0)
+                throw new ApplicationException("Quantity must be greater than 0");
 
-        public async Task<bool> PlusAsync(Guid cartId)
-        {
-            var cart = await cartRepository.Get(c => c.Id == cartId);
-            if (cart == null)
-                throw new KeyNotFoundException("Cart not found");
-            cart.Quantity++;
+            var cart = await cartQueries.GetCartByUserIdAndProductIdAsync(cartRequest.ApplicationUserId, cartRequest.ProductId).ThrowIfNull("Product In Cart Not Found");
+
+            cart.Quantity = cartRequest.Quantity;
             cartRepository.Update(cart);
             await unitOfWork.CompleteAsync();
             return true;
@@ -76,9 +62,7 @@ namespace EShop.Application.Services.Implements
 
         public async Task<bool> RemoveFromCartAsync(Guid cartId)
         {
-            var cart = await cartRepository.Get(c => c.Id == cartId);
-            if (cart == null)
-                throw new KeyNotFoundException("Cart not found");
+            var cart = await cartRepository.Get(c => c.Id == cartId).ThrowIfNull($"Cart {cartId} not founded");
             cartRepository.Remove(cart);
             await unitOfWork.CompleteAsync();
             return true;

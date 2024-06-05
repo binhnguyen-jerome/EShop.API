@@ -26,5 +26,13 @@ namespace EShop.Infrastucture.Repositories
                 .ThenInclude(c => c.ProductImages)
                 .FirstOrDefaultAsync();
         }
+        public async Task<Cart?> GetCartByUserIdAndProductIdAsync(Guid applicationUserId, Guid productId)
+        {
+            return await dbSet
+                .Where(c => c.ApplicationUserId == applicationUserId && c.ProductId == productId)
+                .Include(c => c.Product)
+                    .ThenInclude(p => p.ProductImages)
+                .FirstOrDefaultAsync();
+        }
     }
 }

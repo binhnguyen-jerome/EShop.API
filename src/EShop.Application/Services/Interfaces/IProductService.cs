@@ -6,7 +6,7 @@ namespace EShop.Core.Services.Interfaces
     {
         Task<List<ProductResponse>> GetProductsAsync(ProductQuery query);
         Task<ProductResponse> GetProductByIdAsync(Guid id);
-        Task<ProductResponse> CreateProductAsync(CreateProductRequest product);
+        Task<bool> CreateProductAsync(CreateProductRequest product);
         Task<ProductResponse> UpdateProductAsync(Guid id, UpdateProductRequest product);
         Task<bool> DeleteProductAsync(Guid id);
     }

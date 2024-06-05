@@ -32,23 +32,22 @@ namespace EShop.Core.Services.Implements
             var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found"); ;
             return product.ToProductResponse();
         }
-        public async Task<ProductResponse> CreateProductAsync(CreateProductRequest createProduct)
+        public async Task<bool> CreateProductAsync(CreateProductRequest createProduct)
         {
             Product product = createProduct.ToCreateProduct();
             productRepository.Add(product);
 
             if (createProduct.ProductImages != null && createProduct.ProductImages.Count > 0)
             {
-                productImageRepository.AddRange(createProduct.ProductImages.Select(p => new ProductImage
+                productImageRepository.AddRange(createProduct.ProductImages.Select(pI => new ProductImage
                 {
-                    ImageUrl = p.ImageUrl,
+                    ImageUrl = pI.ImageUrl,
                     ProductId = product.Id
                 }));
             }
 
             await unitOfWork.CompleteAsync();
-            var newProduct = await productQueries.GetByIdAsync(product.Id);
-            return newProduct.ToProductResponse();
+            return true;
         }
         public async Task<ProductResponse> UpdateProductAsync(Guid id, UpdateProductRequest updateProduct)
         {

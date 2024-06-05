@@ -29,28 +29,26 @@ namespace EShop.API.Controllers
             ProductResponse? product = await productService.GetProductByIdAsync(id);
             return Ok(product);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest productRequest)
         {
-            ProductResponse productResponse = await productService.CreateProductAsync(productRequest);
-            return CreatedAtAction(nameof(CreateProduct), new { id = productResponse.Id }, productResponse);
+            var result = await productService.CreateProductAsync(productRequest);
+            return CreatedAtAction(nameof(CreateProduct), result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, [FromBody] UpdateProductRequest productRequest)
         {
             ProductResponse productResponse = await productService.UpdateProductAsync(id, productRequest);
             return Ok(productResponse);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
         {
-            if (await productService.DeleteProductAsync(id))
-            {
-                return Ok();
-            }
-            return NoContent();
+            var result = await productService.DeleteProductAsync(id);
+            return Ok(result);
         }
     }
 }

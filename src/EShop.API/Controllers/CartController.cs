@@ -37,17 +37,10 @@ namespace EShop.API.Controllers
             return Ok(result);
         }
         [Authorize(Roles = "Admin, Customer")]
-        [HttpPut("minus/{id}")]
-        public async Task<IActionResult> Minus([FromRoute] Guid id)
+        [HttpPut]
+        public async Task<IActionResult> UpdateCart([FromBody] CartRequest cartRequest)
         {
-            bool result = await cartService.MinusAsync(id);
-            return Ok(result);
-        }
-        [Authorize(Roles = "Admin, Customer")]
-        [HttpPut("plus/{id}")]
-        public async Task<IActionResult> Plus([FromRoute] Guid id)
-        {
-            bool result = await cartService.PlusAsync(id);
+            bool result = await cartService.UpdateCartAsync(cartRequest);
             return Ok(result);
         }
 

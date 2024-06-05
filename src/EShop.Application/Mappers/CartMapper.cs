@@ -28,6 +28,8 @@ namespace EShop.Application.Mappers
                     Id = cart.Product.Id,
                     Name = cart.Product.Name,
                     Price = cart.Product.Price,
+                    PriceDiscount = cart.Product.PriceDiscount,
+                    Description = cart.Product.Description,
                     ProductImages = cart.Product.ProductImages.Select(pi => new ProductImageResponse
                     {
                         ImageUrl = pi.ImageUrl
