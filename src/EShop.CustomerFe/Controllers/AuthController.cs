@@ -39,7 +39,7 @@ namespace EShop.CustomerFe.Controllers
                 var authProperties = new AuthenticationProperties
                 {
                     IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(15)
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
                 };
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
@@ -58,13 +58,18 @@ namespace EShop.CustomerFe.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
             var result = await authService.RegisterAsync(registerRequest);
             if (result)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Auth");
             }
             return View();
         }

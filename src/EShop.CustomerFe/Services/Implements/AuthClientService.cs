@@ -12,7 +12,7 @@ namespace EShop.CustomerFe.Services.Implements
         {
             _httpClient = httpClient;
         }
-        public async Task<LoginResponse> AuthenticateAsync(LoginRequest loginRequest)
+        public async Task<LoginResponse?> AuthenticateAsync(LoginRequest loginRequest)
         {
             var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/login", loginRequest);
 
