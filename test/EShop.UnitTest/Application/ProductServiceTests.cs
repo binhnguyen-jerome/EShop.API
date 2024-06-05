@@ -6,7 +6,7 @@ using EShop.Core.Services.Implements;
 using EShop.ViewModels.Dtos.Product;
 using Moq;
 
-namespace EShop.UnitTest
+namespace EShop.UnitTest.Application
 {
     public class ProductServiceTests
     {
@@ -15,13 +15,10 @@ namespace EShop.UnitTest
         private readonly Mock<IGenericRepository<ProductImage>> _mockProductImageRepository;
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IProductQueries> _mockProductQueries;
-        private readonly Fixture _fixture;
+        private readonly CustomFixture _fixture;
         public ProductServiceTests()
         {
-            _fixture = new Fixture();
-            _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-                .ForEach(b => _fixture.Behaviors.Remove(b));
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            _fixture = new CustomFixture();
 
             _mockProductRepository = new Mock<IGenericRepository<Product>>();
             _mockProductImageRepository = new Mock<IGenericRepository<ProductImage>>();
@@ -29,6 +26,7 @@ namespace EShop.UnitTest
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockUnitOfWork.Setup(u => u.GetBaseRepo<Product>()).Returns(_mockProductRepository.Object);
             _mockUnitOfWork.Setup(u => u.GetBaseRepo<ProductImage>()).Returns(_mockProductImageRepository.Object);
+
             _ProductService = new ProductService(_mockUnitOfWork.Object, _mockProductQueries.Object);
         }
         #region GetProductAsync
@@ -67,10 +65,6 @@ namespace EShop.UnitTest
         [Fact]
         public async Task GetById_InvalidId_ReturnNull()
         {
-            //Arrange
-            _mockProductQueries.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((Product?)null);
-
             await Assert.ThrowsAsync<KeyNotFoundException>(() => _ProductService.GetProductByIdAsync(Guid.NewGuid()));
 
         }

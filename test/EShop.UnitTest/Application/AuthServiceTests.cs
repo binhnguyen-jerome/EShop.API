@@ -6,20 +6,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Moq;
 
-namespace EShop.UnitTest
+namespace EShop.UnitTest.Application
 {
     public class AuthServiceTests
     {
         private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
         private readonly Mock<IConfiguration> _configurationMock;
         private readonly AuthService _authService;
-        private readonly Fixture _fixture;
+        private readonly CustomFixture _fixture;
         public AuthServiceTests()
         {
-            _fixture = new Fixture();
-            _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-                .ForEach(b => _fixture.Behaviors.Remove(b));
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            _fixture = new CustomFixture();
 
             var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
             _userManagerMock = new Mock<UserManager<ApplicationUser>>(

@@ -7,17 +7,17 @@ using EShop.ViewModels.Dtos.Category;
 using Moq;
 using System.Linq.Expressions;
 
-namespace EShop.Api.UnitTest
+namespace EShop.UnitTest.Application
 {
     public class CategoryServiceTests
     {
         private readonly CategoryService _categoryService;
         private readonly Mock<IGenericRepository<Category>> _mockCategoryRepository;
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
-        private readonly Fixture _fixture;
+        private readonly CustomFixture _fixture;
         public CategoryServiceTests()
         {
-            _fixture = new Fixture();
+            _fixture = new CustomFixture();
             _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
                 .ForEach(b => _fixture.Behaviors.Remove(b));
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
@@ -67,9 +67,6 @@ namespace EShop.Api.UnitTest
         [Fact]
         public async Task GetById_InvalidId_ReturnNull()
         {
-            _mockCategoryRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Category, bool>>>(), null, false))
-                .ReturnsAsync((Category?)null);
-
             await Assert.ThrowsAsync<KeyNotFoundException>(() => _categoryService.GetCategoryByIdAsync(Guid.NewGuid()));
         }
         #endregion
