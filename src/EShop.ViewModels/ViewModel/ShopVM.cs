@@ -5,10 +5,25 @@ namespace EShop.ViewModels.ViewModel
 {
     public class ShopVM
     {
-        public List<ProductResponse> Products { get; set; }
+        public PagedResult<ProductResponse> Products { get; set; }
         public List<CategoryResponse> Categories { get; set; }
-        public string CategoryName { get; set; }
+
+        public CategoryResponse SelectedCategory { get; set; }
 
         public ProductQuery ProductQuery { get; set; }
+    }
+    public class PagedResult<T>
+    {
+        public List<T> Items { get; set; } = new List<T>();
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; set; }
+        public int TotalPages
+        {
+            get
+            {
+                return (int)Math.Ceiling((double)TotalItems / PageSize);
+            }
+        }
     }
 }

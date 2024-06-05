@@ -1,4 +1,5 @@
 ﻿using EShop.ViewModels.Dtos.Product;
+using EShop.ViewModels.ViewModel;
 
 namespace EShop.CustomerFe.Services.Interface
 {
@@ -7,6 +8,6 @@ namespace EShop.CustomerFe.Services.Interface
         Task<List<ProductResponse>?> GetAllProductsAsync();
         Task<ProductResponse?> GetProductByIdAsync(Guid productId);
 
-        Task<List<ProductResponse>?> GetFilterProducts(ProductQuery query);
+        Task<PagedResult<ProductResponse>?> GetFilterProductsAsync(ProductQuery query);
     }
 }

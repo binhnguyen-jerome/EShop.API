@@ -1,7 +1,6 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
 using EShop.Infrastucture.Data;
-using EShop.ViewModels.Dtos.Product;
 using Microsoft.EntityFrameworkCore;
 
 namespace EShop.Infrastucture.Repositories
@@ -20,26 +19,11 @@ namespace EShop.Infrastucture.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Product>> GetFilteredProductsAsync(ProductQuery? query)
+        public async Task<List<Product>> GetProductsAsync()
         {
-            var data = dbSet.AsQueryable();
-            if (query.CategoryId != null)
-            {
-                data = data.Where(p => p.CategoryId == query.CategoryId);
-            }
-            if (query.MinPrice != null)
-            {
-                data = data.Where(p => p.Price >= query.MinPrice);
-            }
-            if (query.MaxPrice != null)
-            {
-                data = dbSet.Where(p => p.Price <= query.MaxPrice);
-            }
-            return await data
+            return await dbSet
                 .Include(p => p.Category)
                 .Include(p => p.ProductImages)
-                .Skip((query.PageNumber - 1) * query.PageSize)
-                .Take(query.PageSize)
                 .ToListAsync();
         }
     }

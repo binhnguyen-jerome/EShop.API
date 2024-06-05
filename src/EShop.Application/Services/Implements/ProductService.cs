@@ -21,9 +21,9 @@ namespace EShop.Core.Services.Implements
             productRepository = unitOfWork.GetBaseRepo<Product>();
             productImageRepository = unitOfWork.GetBaseRepo<ProductImage>();
         }
-        public async Task<List<ProductResponse>> GetProductsAsync(ProductQuery query)
+        public async Task<List<ProductResponse>> GetProductsAsync()
         {
-            var products = await productQueries.GetFilteredProductsAsync(query);
+            var products = await productQueries.GetProductsAsync();
             return products.Select(p => p.ToProductResponse()).ToList();
         }
 

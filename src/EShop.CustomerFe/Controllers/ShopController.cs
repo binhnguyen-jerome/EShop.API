@@ -19,17 +19,17 @@ namespace EShop.CustomerFe.Controllers
             this.categoryService = categoryService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(Guid categoryId)
+        public async Task<IActionResult> Index(ProductQuery productQuery)
         {
-            var query = new ProductQuery { CategoryId = categoryId };
-            var products = await productService.GetFilterProducts(query);
-            var category = products.FirstOrDefault()?.CategoryName;
+            var products = await productService.GetFilterProductsAsync(productQuery);
             var categories = await categoryService.GetAllCategoriesAsync();
+
             var shopViewModel = new ShopVM
             {
                 Products = products,
-                CategoryName = category,
-                Categories = categories
+                SelectedCategory = categories.FirstOrDefault(c => c.Id == productQuery.CategoryId),
+                Categories = categories,
+                ProductQuery = productQuery
             };
             return View(shopViewModel);
         }

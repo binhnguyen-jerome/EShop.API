@@ -24,7 +24,11 @@ function addToCart(productId, quantity) {
             alert('Product added to cart successfully!');
         },
         error: function (xhr, status, error) {
-            alert('An error occurred while adding the product to cart!');
+            if (xhr.status === 401) {
+                window.location.href = "/auth/login";
+            } else {
+                alert('An error occurred while adding the product to cart!');
+            }
         }
     });
 }
@@ -46,11 +50,15 @@ function updateCart(productId, quantity) {
             productId: productId,
             quantity: quantity
         },
-        success: function (data) {
-            console.log('Success:', data);
+        success: function (response) {
+            console.log(response);
         },
-        error: function (error) {
-            console.error('Error:', error);
+        error: function (xhr, status, error) {
+            if (xhr.status === 401) {
+                window.location.href = "/auth/login";
+            } else {
+                alert('An error occurred while adding the product to cart!');
+            }
         }
     });
 }
