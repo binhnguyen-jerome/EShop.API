@@ -23,14 +23,10 @@ namespace EShop.CustomerFe.Controllers
         {
             var products = await productService.GetFilterProductsAsync(productQuery);
             var categories = await categoryService.GetAllCategoriesAsync();
+            var selectedCategory = categories.FirstOrDefault(c => c.Id == productQuery.CategoryId);
 
-            var shopViewModel = new ShopVM
-            {
-                Products = products,
-                SelectedCategory = categories.FirstOrDefault(c => c.Id == productQuery.CategoryId),
-                Categories = categories,
-                ProductQuery = productQuery
-            };
+            var shopViewModel = ShopVM.Create(products, categories, selectedCategory, productQuery);
+
             return View(shopViewModel);
         }
     }

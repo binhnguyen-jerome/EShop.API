@@ -11,5 +11,14 @@ namespace EShop.ViewModels.Dtos.Cart
         [Required]
 
         public int Quantity { get; set; }
+        public static CartRequest Create(string userId, Guid productId, int quantity)
+        {
+            return new CartRequest
+            {
+                ApplicationUserId = new Guid(userId),
+                ProductId = productId,
+                Quantity = quantity
+            };
+        }
     }
 }

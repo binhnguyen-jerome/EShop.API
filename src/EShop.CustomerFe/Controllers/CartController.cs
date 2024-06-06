@@ -24,10 +24,7 @@ namespace EShop.CustomerFe.Controllers
                 return RedirectToAction("Login", "Auth");
             }
             var carts = await cartService.GetCartByUserIdAsync(new Guid(userId));
-            CartVM cartVM = new()
-            {
-                CartItems = carts,
-            };
+            var cartVM = CartVM.Create(carts, new());
             return View(cartVM);
         }
         public async Task<IActionResult> Summary()
@@ -37,19 +34,11 @@ namespace EShop.CustomerFe.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
-            CartVM cartVM = new()
-            {
-                CartItems = await cartService.GetCartByUserIdAsync(new Guid(userId)),
-                OrderRequest = new(),
-            };
+            var carts = await cartService.GetCartByUserIdAsync(new Guid(userId));
             var user = await userService.GetUserById(new Guid(userId));
-            cartVM.OrderRequest.FirstName = user.FirstName;
-            cartVM.OrderRequest.LastName = user.LastName;
-            cartVM.OrderRequest.PhoneNumber = user.PhoneNumber;
-            cartVM.OrderRequest.StreetAddress = user.StreetAddress;
-            cartVM.OrderRequest.PostalCode = user.PostalCode;
-            cartVM.OrderRequest.City = user.City;
-            cartVM.OrderRequest.OrderTotal = cartVM.TotalPrice;
+
+            var cartVM = CartVM.Create(carts, new(), user);
+
             return View(cartVM);
         }
         [HttpPost]
@@ -73,12 +62,7 @@ namespace EShop.CustomerFe.Controllers
                 return Unauthorized();
             }
 
-            var cartRequest = new CartRequest
-            {
-                ApplicationUserId = new Guid(userId),
-                ProductId = productId,
-                Quantity = quantity
-            };
+            var cartRequest = CartRequest.Create(userId, productId, quantity);
 
             var result = await cartService.AddToCartAsync(cartRequest);
             return Ok(result);
@@ -97,12 +81,8 @@ namespace EShop.CustomerFe.Controllers
         public async Task<IActionResult> UpdateCart(Guid productId, int quantity)
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var cartRequest = new CartRequest
-            {
-                ApplicationUserId = new Guid(userId),
-                ProductId = productId,
-                Quantity = quantity
-            };
+            var cartRequest = CartRequest.Create(userId, productId, quantity);
+
             var result = await cartService.UpdateCartAsync(cartRequest);
             if (!result)
             {

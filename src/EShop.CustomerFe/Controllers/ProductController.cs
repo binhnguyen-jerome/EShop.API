@@ -23,21 +23,7 @@ namespace EShop.CustomerFe.Controllers
         {
             var product = await productService.GetProductByIdAsync(productId);
             var reviews = await productReviewService.GetProductReviewsAsync(productId);
-            var productDetailViewModel = new ProductDetailVM
-            {
-                Product = product,
-                Reviews = reviews
-            };
-            if (reviews.Any())
-            {
-                double averageRating = reviews.Average(r => r.Rate);
-                int roundedAverageRating = (int)Math.Floor(averageRating);
-                ViewBag.AverageRating = roundedAverageRating;
-            }
-            else
-            {
-                ViewBag.AverageRating = 0;
-            }
+            var productDetailViewModel = ProductDetailVM.Create(product, reviews);
             return View(productDetailViewModel);
         }
         [HttpPost]

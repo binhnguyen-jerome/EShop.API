@@ -24,12 +24,7 @@ namespace EShop.CustomerFe.Controllers
             var products = await productService.GetAllProductsAsync();
             var categories = await categoryService.GetAllCategoriesAsync();
 
-            HomeVM viewModel = new()
-            {
-                Products = products,
-                Categories = categories
-            };
-            ViewBag.Categories = categories;
+            var viewModel = HomeVM.Create(categories, products);
             return View(viewModel);
         }
         [HttpGet]

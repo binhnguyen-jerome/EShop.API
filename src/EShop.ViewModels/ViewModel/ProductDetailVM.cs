@@ -12,5 +12,17 @@ namespace EShop.ViewModels.ViewModel
         public ProductReviewRequest NewReview { get; set; } = new();
 
         public CartRequest CartRequest { get; set; } = new();
+
+        public int AverageRating { get; set; }
+
+        public static ProductDetailVM Create(ProductResponse product, List<ProductReviewUserResponse> reviews)
+        {
+            return new ProductDetailVM
+            {
+                Product = product,
+                Reviews = reviews,
+                AverageRating = reviews.Any() ? (int)Math.Floor(reviews.Average(r => r.Rate)) : 0
+            };
+        }
     }
 }

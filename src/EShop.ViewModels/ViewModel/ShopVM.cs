@@ -11,6 +11,17 @@ namespace EShop.ViewModels.ViewModel
         public CategoryResponse SelectedCategory { get; set; }
 
         public ProductQuery ProductQuery { get; set; }
+
+        public static ShopVM Create(PagedResult<ProductResponse> products, List<CategoryResponse> categories, CategoryResponse selectedCategory, ProductQuery productQuery)
+        {
+            return new ShopVM
+            {
+                Products = products,
+                Categories = categories,
+                SelectedCategory = selectedCategory,
+                ProductQuery = productQuery
+            };
+        }
     }
     public class PagedResult<T>
     {
