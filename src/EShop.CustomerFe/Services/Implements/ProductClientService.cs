@@ -1,7 +1,7 @@
 ﻿using EShop.CustomerFe.Services.Interface;
+using EShop.CustomerFe.Services.Interfaces;
 using EShop.ViewModels.Dtos.Product;
 using EShop.ViewModels.ViewModel;
-using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Reflection;
 
@@ -11,19 +11,21 @@ namespace EShop.CustomerFe.Services
     {
 
         private readonly HttpClient _httpClient;
-        private readonly IMemoryCache _cache;
+        private readonly ICacheClientService _cacheService;
         private readonly string _cacheKey = "AllProducts";
 
-        public ProductClientService(HttpClient httpClient, IMemoryCache cache)
+        public ProductClientService(HttpClient httpClient, ICacheClientService cacheService)
         {
             _httpClient = httpClient;
-            _cache = cache;
+            _cacheService = cacheService;
         }
         public async Task<List<ProductResponse>?> GetAllProductsAsync()
         {
-            if (!_cache.TryGetValue(_cacheKey, out List<ProductResponse>? products))
+            var products = _cacheService.Get<List<ProductResponse>>(_cacheKey);
+
+            if (products == null)
             {
-                var url = $"/api/v1/products";
+                var url = "/api/v1/products";
                 var response = await _httpClient.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
@@ -31,9 +33,7 @@ namespace EShop.CustomerFe.Services
                     var content = await response.Content.ReadAsStringAsync();
                     products = JsonConvert.DeserializeObject<List<ProductResponse>>(content);
 
-                    var cacheEntryOptions = new MemoryCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromMinutes(60)); // Cache for 60 minutes
-                    _cache.Set(_cacheKey, products, cacheEntryOptions);
+                    _cacheService.Set(_cacheKey, products, TimeSpan.FromMinutes(60));
                 }
             }
 

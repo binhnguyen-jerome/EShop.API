@@ -38,6 +38,7 @@ namespace EShop.CustomerFe.Extensions
                     }
                 }
             });
+            services.AddScoped<ICacheClientService, CacheClientService>();
             //Inject Service Repositories
             services.AddHttpClient<IProductClientService, ProductClientService>(configureClient);
             services.AddHttpClient<ICategoryClientService, CategoryClientService>(configureClient);
