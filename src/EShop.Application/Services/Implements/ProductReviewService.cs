@@ -1,4 +1,5 @@
 ﻿using EShop.Core.Domain.Entities;
+using EShop.Core.Domain.Extensions;
 using EShop.Core.Domain.Repositories;
 using EShop.Core.Mappers;
 using EShop.Core.Services.Interfaces;
@@ -27,11 +28,7 @@ namespace EShop.Core.Services.Implements
 
         public async Task<bool> DeleteProductReviewAsync(Guid productReviewId)
         {
-            var productReview = await productReviewRepository.Get(p => p.Id == productReviewId);
-            if (productReview == null)
-            {
-                throw new KeyNotFoundException("Can not find product review");
-            }
+            var productReview = await productReviewRepository.Get(p => p.Id == productReviewId).ThrowIfNull($"Can not found Id {productReviewId} Product Review"); ;
             productReviewRepository.Remove(productReview);
             await unitOfWork.CompleteAsync();
             return true;
@@ -44,11 +41,7 @@ namespace EShop.Core.Services.Implements
 
         public async Task<ProductReviewResponse> UpdateProductReviewAsync(Guid id, UpdateProductReviewRequest updateProductReviewRequest)
         {
-            var productReview = await productReviewRepository.Get(p => p.Id == id);
-            if (productReview == null)
-            {
-                throw new KeyNotFoundException("Can not find product review");
-            }
+            var productReview = await productReviewRepository.Get(p => p.Id == id).ThrowIfNull($"Can not found Id {id} Product Review");
             productReview.Rate = updateProductReviewRequest.Rate;
             productReview.Content = updateProductReviewRequest.Content;
 

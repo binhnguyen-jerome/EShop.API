@@ -41,6 +41,14 @@ namespace EShop.Core.Mappers
                 ApplicationUserId = productReviewRequest.ApplicationUserId
             };
         }
+        public static ProductReview ToProductReview(this UpdateProductReviewRequest updateProductReviewRequest)
+        {
+            return new ProductReview
+            {
+                Rate = updateProductReviewRequest.Rate,
+                Content = updateProductReviewRequest.Content
+            };
+        }
 
     }
 }

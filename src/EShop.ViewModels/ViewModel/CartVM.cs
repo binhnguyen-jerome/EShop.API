@@ -22,6 +22,7 @@ namespace EShop.ViewModels.ViewModel
                     PhoneNumber = user.PhoneNumber,
                     StreetAddress = user.StreetAddress,
                     PostalCode = user.PostalCode,
+                    State = user.State,
                     City = user.City,
                     OrderTotal = cartItems.Sum(x => x.Product.PriceDiscount * x.Quantity)
                 }
