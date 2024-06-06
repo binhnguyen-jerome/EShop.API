@@ -18,9 +18,6 @@ namespace EShop.UnitTest.Application
         public CategoryServiceTests()
         {
             _fixture = new CustomFixture();
-            _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-                .ForEach(b => _fixture.Behaviors.Remove(b));
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
             _mockCategoryRepository = new Mock<IGenericRepository<Category>>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();

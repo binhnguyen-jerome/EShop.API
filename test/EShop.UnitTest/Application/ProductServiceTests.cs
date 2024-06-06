@@ -35,11 +35,11 @@ namespace EShop.UnitTest.Application
         {
             //Arrange
             var products = _fixture.Create<List<Product>>();
-            _mockProductQueries.Setup(repo => repo.GetFilteredProductsAsync(It.IsAny<ProductQuery>()))
+            _mockProductQueries.Setup(repo => repo.GetProductsAsync())
                 .ReturnsAsync(products);
 
             // Act
-            var result = await _ProductService.GetProductsAsync(new ProductQuery());
+            var result = await _ProductService.GetProductsAsync();
 
             // Assert
             Assert.NotNull(result);
