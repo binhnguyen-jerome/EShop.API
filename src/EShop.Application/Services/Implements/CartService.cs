@@ -7,19 +7,10 @@ using EShop.ViewModels.Dtos.Cart;
 
 namespace EShop.Application.Services.Implements
 {
-    public class CartService : ICartService
+    public class CartService(IUnitOfWork unitOfWork, ICartQueries cartQueries) : ICartService
     {
-        private readonly IGenericRepository<Cart> cartRepository;
-        private readonly IUnitOfWork unitOfWork;
-        private readonly ICartQueries cartQueries;
+        private readonly IGenericRepository<Cart> cartRepository = unitOfWork.GetBaseRepo<Cart>();
 
-        public CartService(IUnitOfWork unitOfWork, ICartQueries cartQueries)
-        {
-            this.unitOfWork = unitOfWork;
-            this.cartQueries = cartQueries;
-            cartRepository = unitOfWork.GetBaseRepo<Cart>();
-
-        }
         public async Task<CartResponse> AddToCartAsync(CartRequest cartRequest)
         {
             if (cartRequest.Quantity <= 0)
@@ -30,7 +21,7 @@ namespace EShop.Application.Services.Implements
             {
                 existingCart.Quantity += cartRequest.Quantity;
                 cartRepository.Update(existingCart);
-                cart = await cartRepository.Get(c => c.Id == existingCart.Id);
+                cart = await cartRepository.GetAsync(c => c.Id == existingCart.Id);
             }
             else
             {
@@ -62,7 +53,7 @@ namespace EShop.Application.Services.Implements
 
         public async Task<bool> RemoveFromCartAsync(Guid cartId)
         {
-            var cart = await cartRepository.Get(c => c.Id == cartId).ThrowIfNull($"Cart {cartId} not founded");
+            var cart = await cartRepository.GetAsync(c => c.Id == cartId).ThrowIfNull($"Cart {cartId} not founded");
             cartRepository.Remove(cart);
             await unitOfWork.CompleteAsync();
             return true;

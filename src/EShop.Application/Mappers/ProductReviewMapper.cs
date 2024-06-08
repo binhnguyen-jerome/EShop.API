@@ -1,7 +1,7 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.ViewModels.Dtos.Review;
 
-namespace EShop.Core.Mappers
+namespace EShop.Application.Mappers
 {
     public static class ProductReviewMapper
     {

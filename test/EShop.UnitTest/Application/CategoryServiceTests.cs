@@ -1,8 +1,8 @@
 ﻿using AutoFixture;
+using EShop.Application.Mappers;
+using EShop.Application.Services.Implements;
 using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Core.Mappers;
-using EShop.Core.Services.Implements;
 using EShop.ViewModels.Dtos.Category;
 using Moq;
 using System.Linq.Expressions;
@@ -30,7 +30,7 @@ namespace EShop.UnitTest.Application
         {
             //Arrange
             var categories = _fixture.Create<List<Category>>();
-            _mockCategoryRepository.Setup(repo => repo.GetAll(It.IsAny<Expression<Func<Category, bool>>>(), null))
+            _mockCategoryRepository.Setup(repo => repo.GetAllAsync(It.IsAny<Expression<Func<Category, bool>>>(), null))
                 .ReturnsAsync(categories);
 
             // Act
@@ -48,7 +48,7 @@ namespace EShop.UnitTest.Application
         {
             //Arrange
             var category = _fixture.Create<Category>();
-            _mockCategoryRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Category, bool>>>(), null, false))
+            _mockCategoryRepository.Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<Category, bool>>>(), null, false))
                 .ReturnsAsync(category);
 
             // Act
@@ -95,7 +95,7 @@ namespace EShop.UnitTest.Application
             //Arrange
             var categoryRequest = _fixture.Create<CategoryRequest>();
             var category = categoryRequest.ToCategory();
-            _mockCategoryRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Category, bool>>>(), null, false))
+            _mockCategoryRepository.Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<Category, bool>>>(), null, false))
                 .ReturnsAsync(category);
             _mockCategoryRepository.Setup(repo => repo.Update(category));
             _mockUnitOfWork.Setup(u => u.CompleteAsync());
@@ -114,7 +114,7 @@ namespace EShop.UnitTest.Application
         {
             //Arrange
             var category = _fixture.Create<Category>();
-            _mockCategoryRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Category, bool>>>(), null, false))
+            _mockCategoryRepository.Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<Category, bool>>>(), null, false))
                 .ReturnsAsync(category);
             _mockCategoryRepository.Setup(repo => repo.Remove(category));
             _mockUnitOfWork.Setup(u => u.CompleteAsync());

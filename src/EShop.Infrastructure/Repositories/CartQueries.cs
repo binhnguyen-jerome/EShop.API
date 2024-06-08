@@ -1,9 +1,9 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Infrastucture.Data;
+using EShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Infrastucture.Repositories
+namespace EShop.Infrastructure.Repositories
 {
     public class CartQueries : BaseQuery<Cart>, ICartQueries
     {

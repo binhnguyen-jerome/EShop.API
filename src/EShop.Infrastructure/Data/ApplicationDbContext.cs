@@ -1,10 +1,10 @@
 ﻿using EShop.Core.Domain.Entities;
-using EShop.Infrastucture.Data.Configuration;
+using EShop.Infrastructure.Data.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Infrastucture.Data
+namespace EShop.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {

@@ -17,12 +17,12 @@
                     <div class="col-xxl-2 col-lg-3 col-md-6 col-5">
                         <a class="navbar-brand d-none d-lg-block" asp-action="Index">
                             <img src="~/images/logo/freshcart-logo.svg"
-                                 alt="eCommerce" />
+                                 alt="eCommerce"/>
                         </a>
                         <div class="d-flex justify-content-between w-100 d-lg-none">
                             <a class="navbar-brand" asp-action="Index">
                                 <img src="~/images/logo/freshcart-logo.svg"
-                                     alt="eCommerce" />
+                                     alt="eCommerce"/>
                             </a>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             <div class="input-group">
                                 <input class="form-control rounded"
                                        type="search"
-                                       placeholder="Search for products" />
+                                       placeholder="Search for products"/>
                                 <span class="input-group-append">
                                     <button class="btn bg-white border border-start-0 ms-n10 rounded-0 rounded-end"
                                             type="button">
@@ -42,13 +42,13 @@
                         </form>
                     </div>
                     <div class="col-md-2 col-xxl-3 d-none d-lg-block">
-                        <button type="button" class="btn btn-outline-gray-400 text-muted"
-                  <i class="feather-icon icon-map-pin me-2"></i> Location
-                  </button>
+                        <button type="button" class="btn btn-outline-gray-400 text-muted">
+                            <i class="feather-icon icon-map-pin me-2"></i> Location
+                        </button>
                     </div>
                     <!--Card WishList and Account-->
                     <div class="col-lg-2 col-xxl-2 text-end col-md-6 col-7">
-                        <partial name="_AccountPartial" />
+                        <partial name="_AccountPartial"/>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,9 @@
                             <ul class="dropdown-menu">
                                 @foreach (var category in Model)
                                 {
-                                    <li><a class="dropdown-item" asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a>
+                                    </li>
                                 }
                             </ul>
                         </li>

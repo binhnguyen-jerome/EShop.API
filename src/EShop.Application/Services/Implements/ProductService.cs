@@ -1,26 +1,17 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Application.Mappers;
+using EShop.Application.Services.Interfaces;
+using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Extensions;
 using EShop.Core.Domain.Repositories;
-using EShop.Core.Mappers;
-using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.Dtos.Product;
 
-namespace EShop.Core.Services.Implements
+namespace EShop.Application.Services.Implements
 {
-    public class ProductService : IProductService
+    public class ProductService(IUnitOfWork unitOfWork, IProductQueries productQueries) : IProductService
     {
-        private readonly IGenericRepository<Product> productRepository;
-        private readonly IGenericRepository<ProductImage> productImageRepository;
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IProductQueries productQueries;
+        private readonly IGenericRepository<Product> productRepository = unitOfWork.GetBaseRepo<Product>();
+        private readonly IGenericRepository<ProductImage> productImageRepository = unitOfWork.GetBaseRepo<ProductImage>();
 
-        public ProductService(IUnitOfWork unitOfWork, IProductQueries productQueries)
-        {
-            this.unitOfWork = unitOfWork;
-            this.productQueries = productQueries;
-            productRepository = unitOfWork.GetBaseRepo<Product>();
-            productImageRepository = unitOfWork.GetBaseRepo<ProductImage>();
-        }
         public async Task<List<ProductResponse>> GetProductsAsync()
         {
             var products = await productQueries.GetProductsAsync();
@@ -34,10 +25,10 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<bool> CreateProductAsync(CreateProductRequest createProduct)
         {
-            Product product = createProduct.ToCreateProduct();
+            var product = createProduct.ToCreateProduct();
             productRepository.Add(product);
 
-            if (createProduct.ProductImages != null && createProduct.ProductImages.Count > 0)
+            if (createProduct.ProductImages is { Count: > 0 })
             {
                 productImageRepository.AddRange(createProduct.ProductImages.Select(pI => new ProductImage
                 {
@@ -62,11 +53,17 @@ namespace EShop.Core.Services.Implements
             product.UpdateDate = updateProduct.UpdateDate;
             product.CategoryId = updateProduct.CategoryId;
 
-            var currentImages = product.ProductImages.ToList();
+            if (product.ProductImages != null)
+            {
+                var currentImages = product.ProductImages.ToList();
 
-            var newImages = updateProduct.ProductImages.ToList();
+                if (updateProduct.ProductImages != null)
+                {
+                    var newImages = updateProduct.ProductImages.ToList();
 
-            await UpdateProductImagesAsync(product, currentImages, newImages);
+                    await UpdateProductImagesAsync(product, currentImages, newImages);
+                }
+            }
 
             productRepository.Update(product);
 
@@ -77,25 +74,29 @@ namespace EShop.Core.Services.Implements
         {
             var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found");
 
-            var images = product.ProductImages.ToList();
+            if (product.ProductImages != null)
+            {
+                var images = product.ProductImages.ToList();
 
-            productImageRepository.RemoveRange(images);
+                productImageRepository.RemoveRange(images);
+            }
+
             productRepository.Remove(product);
 
             await unitOfWork.CompleteAsync();
             return true;
 
         }
-        private async Task UpdateProductImagesAsync(Product product, List<ProductImage> currentImages, List<ProductImageRequest> newImages)
+        private Task UpdateProductImagesAsync(Product product, List<ProductImage> currentImages, List<ProductImageRequest> newImages)
         {
-            var removeImages = currentImages.Where(c => !newImages.Any(n => n.ImageUrl == c.ImageUrl)).ToList();
+            var removeImages = currentImages.Where(c => newImages.All(n => n.ImageUrl != c.ImageUrl)).ToList();
 
             if (removeImages.Any())
             {
                 productImageRepository.RemoveRange(removeImages);
             }
 
-            var addImages = newImages.Where(n => !currentImages.Any(c => c.ImageUrl == n.ImageUrl)).ToList();
+            var addImages = newImages.Where(n => currentImages.All(c => c.ImageUrl != n.ImageUrl)).ToList();
 
             if (addImages.Any())
             {
@@ -105,6 +106,8 @@ namespace EShop.Core.Services.Implements
                     ProductId = product.Id
                 }));
             }
+
+            return Task.CompletedTask;
         }
     }
 }

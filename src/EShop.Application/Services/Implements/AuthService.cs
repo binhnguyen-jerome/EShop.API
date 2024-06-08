@@ -1,6 +1,6 @@
-﻿using EShop.Core.Domain.Entities;
-using EShop.Core.Mappers;
-using EShop.Core.Services.Interfaces;
+﻿using EShop.Application.Mappers;
+using EShop.Application.Services.Interfaces;
+using EShop.Core.Domain.Entities;
 using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -8,19 +8,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using EShop.Core.Domain.Extensions;
 
-namespace EShop.Core.Services.Implements
+namespace EShop.Application.Services.Implements
 {
-    public class AuthService : IAuthService
+    public class AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        : IAuthService
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IConfiguration configuration;
-
-        public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
-        {
-            this.userManager = userManager;
-            this.configuration = configuration;
-        }
         public async Task<bool> RegisterUser(RegisterRequest registerRequest)
         {
             var existingUser = await userManager.FindByEmailAsync(registerRequest.Email);
@@ -42,14 +36,8 @@ namespace EShop.Core.Services.Implements
             };
 
             var result = await userManager.CreateAsync(user, registerRequest.Password);
-            if (result.Succeeded)
-            {
-                if (registerRequest.Role == null)
-                {
-                    await userManager.AddToRoleAsync(user, "Customer");
-                }
-                await userManager.AddToRoleAsync(user, registerRequest.Role.ToString());
-            }
+            if (!result.Succeeded) return result.Succeeded;
+            await userManager.AddToRoleAsync(user, registerRequest.Role.ToString());
             return result.Succeeded;
         }
 
@@ -61,7 +49,7 @@ namespace EShop.Core.Services.Implements
                 var isPasswordCorrect = await userManager.CheckPasswordAsync(user, loginRequest.Password);
                 if (isPasswordCorrect)
                 {
-                    var userResponse = user.ToUserReponse();
+                    var userResponse = user.ToUserResponse();
                     return userResponse;
                 }
                 else
@@ -74,11 +62,11 @@ namespace EShop.Core.Services.Implements
                 throw new KeyNotFoundException("User not found");
             }
         }
-        public async Task<string> CreateJWTToken(LoginRequest user)
+        public async Task<string> CreateJwtToken(LoginRequest user)
         {
             var claims = await GetClaims(user.Email);
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? string.Empty));
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
@@ -92,16 +80,13 @@ namespace EShop.Core.Services.Implements
         }
         private async Task<List<Claim>> GetClaims(string email)
         {
-            var user = await userManager.FindByEmailAsync(email);
+            var user = await userManager.FindByEmailAsync(email).ThrowIfNull($"Can not find {email}");
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Email, user.Email),
             };
             var roles = await userManager.GetRolesAsync(user);
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             return claims;
         }
     }

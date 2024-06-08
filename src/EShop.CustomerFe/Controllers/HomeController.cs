@@ -1,8 +1,8 @@
 using EShop.CustomerFe.Models;
-using EShop.CustomerFe.Services.Interface;
 using EShop.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using EShop.CustomerFe.Services.Interfaces;
 
 namespace EShop.CustomerFe.Controllers
 {

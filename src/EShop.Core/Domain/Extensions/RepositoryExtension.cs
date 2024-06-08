@@ -1,7 +1,7 @@
 ﻿
 namespace EShop.Core.Domain.Extensions
 {
-    public static class RepositortExtensions
+    public static class RepositoryExtension
     {
         public static async Task<T> ThrowIfNull<T>(this Task<T?> task, string errorMessage) where T : class
         {

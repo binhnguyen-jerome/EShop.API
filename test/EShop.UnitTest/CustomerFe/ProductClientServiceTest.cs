@@ -7,6 +7,7 @@ using Moq.Protected;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using EShop.CustomerFe.Services.Implements;
 
 namespace EShop.UnitTest.CustomerFe
 {

@@ -77,7 +77,7 @@ namespace EShop.UnitTest.Application
         {
             var cart = _fixture.Create<Cart>();
 
-            _mockCartRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Cart, bool>>>(), null, false))
+            _mockCartRepository.Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<Cart, bool>>>(), null, false))
                 .ReturnsAsync(cart);
 
             _mockCartRepository.Setup(repo => repo.Remove(cart));
@@ -98,7 +98,7 @@ namespace EShop.UnitTest.Application
         {
             var cart = _fixture.Create<Cart>();
 
-            _mockCartRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Cart, bool>>>(), null, false))
+            _mockCartRepository.Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<Cart, bool>>>(), null, false))
                 .ReturnsAsync((Cart)null);
 
             // Act and Assert

@@ -3,22 +3,13 @@ using System.Net;
 
 namespace EShop.API.Middleware
 {
-    public class ExceptionHandlingMiddleware
+    public class ExceptionHandlingMiddleWare(RequestDelegate next, ILogger<ExceptionHandlingMiddleWare> logger)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-
-        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
-        {
-            _next = next;
-            _logger = logger;
-        }
-
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next(context);
+                await next(context);
             }
             catch (System.Exception ex)
             {
@@ -28,7 +19,7 @@ namespace EShop.API.Middleware
 
         private async Task HandleExceptionAsync(HttpContext context, System.Exception exception)
         {
-            _logger.LogError(exception, "An unexpected error occurred.");
+            logger.LogError(exception, "An unexpected error occurred.");
 
             //More log stuff        
 

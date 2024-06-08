@@ -1,15 +1,13 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Infrastucture.Data;
+using EShop.Infrastructure.Data;
+using EShop.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Infrastucture.Repositories
+namespace EShop.Infrastructure.Repositories
 {
-    public class ProductQueries : BaseQuery<Product>, IProductQueries
+    public class ProductQueries(ApplicationDbContext db) : BaseQuery<Product>(db), IProductQueries
     {
-        public ProductQueries(ApplicationDbContext db) : base(db)
-        { }
-
         public async Task<Product?> GetByIdAsync(Guid id)
         {
             return await dbSet

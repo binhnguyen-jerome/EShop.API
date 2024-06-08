@@ -1,6 +1,6 @@
 ﻿using EShop.ViewModels.Dtos.User;
 
-namespace EShop.Core.Services.Interfaces
+namespace EShop.Application.Services.Interfaces
 {
     public interface IUserService
     {

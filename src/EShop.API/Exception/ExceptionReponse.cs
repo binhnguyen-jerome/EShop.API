@@ -2,15 +2,9 @@
 
 namespace EShop.API.Exception
 {
-    public class ExceptionResponse
+    public class ExceptionResponse(HttpStatusCode statusCode, string message)
     {
-        public HttpStatusCode StatusCode { get; }
-        public string Message { get; }
-
-        public ExceptionResponse(HttpStatusCode statusCode, string message)
-        {
-            StatusCode = statusCode;
-            Message = message;
-        }
+        public HttpStatusCode StatusCode { get; } = statusCode;
+        public string Message { get; } = message;
     }
 }

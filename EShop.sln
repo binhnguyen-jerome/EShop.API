@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Core", "src\EShop.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.CustomerFe", "src\EShop.CustomerFe\EShop.CustomerFe.csproj", "{900B2D7C-AF96-49DF-9690-A8D6F1A683E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Infrastucture", "src\EShop.Infrastucture\EShop.Infrastucture.csproj", "{1B857176-1015-4013-9E1F-AF73DD896FF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Infrastructure", "src\EShop.Infrastructure\EShop.Infrastructure.csproj", "{1B857176-1015-4013-9E1F-AF73DD896FF1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.ViewModels", "src\EShop.ViewModels\EShop.ViewModels.csproj", "{7043FE41-DE22-4F6D-9BCF-D74F331C2EED}"
 EndProject

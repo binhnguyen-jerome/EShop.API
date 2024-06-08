@@ -1,11 +1,12 @@
 ﻿using AutoFixture;
-using EShop.CustomerFe.Services.Implement;
 using EShop.ViewModels.Dtos.Category;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using EShop.CustomerFe.Services.Implements;
+
 namespace EShop.UnitTest.CustomerFe
 {
     public class CategoryClientServiceTests

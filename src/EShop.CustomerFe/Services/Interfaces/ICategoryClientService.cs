@@ -1,6 +1,6 @@
 ﻿using EShop.ViewModels.Dtos.Category;
 
-namespace EShop.CustomerFe.Services.Interface
+namespace EShop.CustomerFe.Services.Interfaces
 {
     public interface ICategoryClientService
     {

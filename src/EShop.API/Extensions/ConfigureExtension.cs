@@ -2,16 +2,14 @@
 using EShop.Application.Services.Interfaces;
 using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Core.Services.Implements;
-using EShop.Core.Services.Interfaces;
-using EShop.Infrastucture.Data;
-using EShop.Infrastucture.Repositories;
+using EShop.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using EShop.Infrastructure.Repositories;
 
 namespace EShop.API.Extensions
 {
@@ -34,9 +32,9 @@ namespace EShop.API.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICartService, CartService>();
             // Connect to Database
-            var connectDB = configuration.GetConnectionString("DefaultConnection");
+            var connectDb = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
-                           options.UseSqlServer(connectDB));
+                           options.UseSqlServer(connectDb));
             // Add Identity
             services.AddIdentityApiEndpoints<ApplicationUser>()
                 .AddRoles<IdentityRole<Guid>>()
@@ -67,7 +65,7 @@ namespace EShop.API.Extensions
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? throw new InvalidOperationException()))
                     };
                 });
 
@@ -86,11 +84,15 @@ namespace EShop.API.Extensions
                 "\n\n" +
                 $"* Last updated at: __{startTime}__ \n\n";
 
-                OpenApiInfo apiInfo = new OpenApiInfo
+                var apiInfo = new OpenApiInfo
                 {
                     Title = "Ecommerce Swagger UI",
                     Description = swaggerDescription,
-                    Version = "development"
+                    Version = "development",
+                    TermsOfService = null,
+                    Contact = null,
+                    License = null,
+                    Extensions = null
                 };
                 options.SwaggerDoc("v1", apiInfo);
                 // Add JWT bearer token support
@@ -121,12 +123,12 @@ namespace EShop.API.Extensions
                 });
             });
         }
-        public static IServiceCollection ConfigureCORS(this IServiceCollection services)
+        public static IServiceCollection ConfigureCors(this IServiceCollection services)
         {
-            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
             services.AddCors(options =>
             {
-                options.AddPolicy(MyAllowSpecificOrigins,
+                options.AddPolicy(myAllowSpecificOrigins,
                                        policy =>
                                        {
                                            policy

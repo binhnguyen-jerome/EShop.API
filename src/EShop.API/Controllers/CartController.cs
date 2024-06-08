@@ -7,40 +7,34 @@ namespace EShop.API.Controllers
 {
     [Route("api/v1/carts/")]
     [ApiController]
-    public class CartController : ControllerBase
+    public class CartController(ICartService cartService) : ControllerBase
     {
-        private readonly ICartService cartService;
-
-        public CartController(ICartService cartService)
-        {
-            this.cartService = cartService;
-        }
         [Authorize(Roles = "Admin, Customer")]
-        [HttpGet("{applicationUserId}")]
+        [HttpGet("{applicationUserId:guid}")]
         public async Task<IActionResult> GetUserCarts([FromRoute] Guid applicationUserId)
         {
-            List<CartResponse> carts = await cartService.GetUserCartsAsync(applicationUserId);
+            var carts = await cartService.GetUserCartsAsync(applicationUserId);
             return Ok(carts);
         }
         [Authorize(Roles = "Admin, Customer")]
         [HttpPost]
         public async Task<IActionResult> AddToCart([FromBody] CartRequest cartRequest)
         {
-            CartResponse cart = await cartService.AddToCartAsync(cartRequest);
-            return CreatedAtAction(nameof(AddToCart), new { id = cart.Id }, cart);
+            var cart = await cartService.AddToCartAsync(cartRequest);
+            return Ok(cart);
         }
         [Authorize(Roles = "Admin, Customer")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> RemoveFromCart([FromRoute] Guid id)
         {
-            bool result = await cartService.RemoveFromCartAsync(id);
+            var result = await cartService.RemoveFromCartAsync(id);
             return Ok(result);
         }
         [Authorize(Roles = "Admin, Customer")]
         [HttpPut]
         public async Task<IActionResult> UpdateCart([FromBody] CartRequest cartRequest)
         {
-            bool result = await cartService.UpdateCartAsync(cartRequest);
+            var result = await cartService.UpdateCartAsync(cartRequest);
             return Ok(result);
         }
 

@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 // Inject Service
 builder.Services.ConfigureService(builder.Configuration);
 builder.Services.ConfigureSwagger();
-builder.Services.ConfigureCORS();
+builder.Services.ConfigureCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +23,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("_myAllowSpecificOrigins");
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleWare>();
 
 app.UseAuthentication();
 app.UseAuthorization();

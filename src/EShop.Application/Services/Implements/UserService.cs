@@ -1,29 +1,23 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Application.Mappers;
+using EShop.Application.Services.Interfaces;
+using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Extensions;
-using EShop.Core.Mappers;
-using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Core.Services.Implements
+namespace EShop.Application.Services.Implements
 {
-    public class UserService : IUserService
+    public class UserService(UserManager<ApplicationUser> userManager) : IUserService
     {
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public UserService(UserManager<ApplicationUser> userManager)
-        {
-            this.userManager = userManager;
-        }
         public async Task<List<UserReponse>> GetUsersAsync()
         {
             var users = await userManager.Users.ToListAsync();
-            var userReponses = new List<UserReponse>();
+            var userResponses = new List<UserReponse>();
             foreach (var user in users)
             {
                 var roles = await userManager.GetRolesAsync(user);
-                userReponses.Add(new UserReponse
+                userResponses.Add(new UserReponse
                 {
                     Id = user.Id,
                     Email = user.Email,
@@ -37,7 +31,7 @@ namespace EShop.Core.Services.Implements
                     Role = roles.FirstOrDefault(),
                 });
             }
-            return userReponses;
+            return userResponses;
         }
         public async Task<UserReponse> GetUserAsync(Guid id)
         {
@@ -79,7 +73,7 @@ namespace EShop.Core.Services.Implements
             user.PostalCode = userRequest.PostalCode;
 
             await userManager.UpdateAsync(user);
-            return user.ToUserReponse();
+            return user.ToUserResponse();
         }
         public async Task<bool> UpdateUserRoleAsync(Guid id, string newRole)
         {

@@ -1,7 +1,5 @@
 ﻿using EShop.CustomerFe.Services;
-using EShop.CustomerFe.Services.Implement;
 using EShop.CustomerFe.Services.Implements;
-using EShop.CustomerFe.Services.Interface;
 using EShop.CustomerFe.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net.Http.Headers;

@@ -1,4 +1,4 @@
-﻿using EShop.Core.Services.Interfaces;
+﻿using EShop.Application.Services.Interfaces;
 using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,21 +6,15 @@ namespace EShop.API.Controllers
 {
     [Route("api/v1/auth/")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController(IAuthService authService) : ControllerBase
     {
-        private readonly IAuthService authService;
-
-        public AuthController(IAuthService authService)
-        {
-            this.authService = authService;
-        }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
             var result = await authService.RegisterUser(registerRequest);
             if (result)
             {
-                return Ok("Successfull register user");
+                return Ok("Successfully register user");
             }
             return BadRequest();
         }
@@ -33,9 +27,9 @@ namespace EShop.API.Controllers
                 return BadRequest();
             }
             var user = await authService.Login(loginRequest);
-            if (user != null)
+            if (true)
             {
-                var jwt = await authService.CreateJWTToken(loginRequest);
+                var jwt = await authService.CreateJwtToken(loginRequest);
 
                 return Ok(new
                 {

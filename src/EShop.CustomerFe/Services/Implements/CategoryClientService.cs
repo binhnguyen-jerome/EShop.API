@@ -1,8 +1,8 @@
-﻿using EShop.CustomerFe.Services.Interface;
+﻿using EShop.CustomerFe.Services.Interfaces;
 using EShop.ViewModels.Dtos.Category;
 using Newtonsoft.Json;
 
-namespace EShop.CustomerFe.Services.Implement
+namespace EShop.CustomerFe.Services.Implements
 {
     public class CategoryClientService : ICategoryClientService
     {

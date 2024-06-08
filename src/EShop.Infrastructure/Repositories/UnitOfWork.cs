@@ -1,17 +1,12 @@
 ﻿using EShop.Core.Domain.Repositories;
-using EShop.Infrastucture.Data;
+using EShop.Infrastructure.Data;
 
-namespace EShop.Infrastucture.Repositories
+namespace EShop.Infrastructure.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork(ApplicationDbContext db) : IUnitOfWork
     {
-        private readonly ApplicationDbContext _db;
         private readonly Dictionary<Type, object> _repositories = new();
 
-        public UnitOfWork(ApplicationDbContext db)
-        {
-            _db = db;
-        }
         public IGenericRepository<T> GetBaseRepo<T>() where T : class
         {
             if (_repositories.TryGetValue(typeof(T), out var repository))
@@ -19,18 +14,18 @@ namespace EShop.Infrastucture.Repositories
                 return (IGenericRepository<T>)repository;
             }
 
-            var newRepository = new GenericRepository<T>(_db);
+            var newRepository = new GenericRepository<T>(db);
             _repositories[typeof(T)] = newRepository;
             return newRepository;
         }
         public async Task CompleteAsync()
         {
-            await _db.SaveChangesAsync();
+            await db.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            _db.Dispose();
+            db.Dispose();
         }
 
     }

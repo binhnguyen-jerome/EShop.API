@@ -1,4 +1,4 @@
-﻿using EShop.CustomerFe.Services.Interface;
+﻿using EShop.CustomerFe.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.CustomerFe.Components

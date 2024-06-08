@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Cart";
 }
-@Html.Partial("_Breadcrumb", "Cart")
+
+@await Html.PartialAsync("_Breadcrumb", "Cart")
 <section class="mb-lg-14 mb-8 mt-8">
     <div class="container">
         <div class="row">

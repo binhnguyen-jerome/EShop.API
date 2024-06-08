@@ -1,16 +1,12 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Repositories;
-using EShop.Infrastucture.Data;
+using EShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Infrastucture.Repositories
+namespace EShop.Infrastructure.Repositories
 {
-    public class OrderQueries : BaseQuery<Order>, IOrderQueries
+    public class OrderQueries(ApplicationDbContext db) : BaseQuery<Order>(db), IOrderQueries
     {
-        public OrderQueries(ApplicationDbContext db) : base(db)
-        {
-        }
-
         public async Task<Order?> GetOrderDetailByIdAsync(Guid id)
         {
             return await dbSet

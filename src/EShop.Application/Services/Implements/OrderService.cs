@@ -1,29 +1,20 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Application.Mappers;
+using EShop.Application.Services.Interfaces;
+using EShop.Core.Domain.Entities;
 using EShop.Core.Domain.Extensions;
 using EShop.Core.Domain.Repositories;
-using EShop.Core.Mappers;
-using EShop.Core.Services.Interfaces;
 using EShop.ViewModels.Dtos.Order;
 
-namespace EShop.Core.Services.Implements
+namespace EShop.Application.Services.Implements
 {
-    public class OrderService : IOrderService
+    public class OrderService(IUnitOfWork unitOfWork, IOrderQueries orderQueries) : IOrderService
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IOrderQueries orderQueries;
-        private readonly IGenericRepository<Order> orderRepository;
-        private readonly IGenericRepository<OrderItem> orderItem;
-        public OrderService(IUnitOfWork unitOfWork, IOrderQueries orderQueries)
-        {
-            this.unitOfWork = unitOfWork;
-            this.orderQueries = orderQueries;
-            orderRepository = unitOfWork.GetBaseRepo<Order>();
-            orderItem = unitOfWork.GetBaseRepo<OrderItem>();
-        }
+        private readonly IGenericRepository<Order> orderRepository = unitOfWork.GetBaseRepo<Order>();
+        private readonly IGenericRepository<OrderItem> orderItem = unitOfWork.GetBaseRepo<OrderItem>();
 
         public async Task<List<OrderResponse>> GetAllOrderAsync()
         {
-            var orders = await orderRepository.GetAll();
+            var orders = await orderRepository.GetAllAsync();
             return orders.Select(x => x.ToOrderResponse()).ToList();
         }
 
@@ -34,7 +25,7 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<OrderResponse> CreateOrderAsync(OrderRequest order)
         {
-            Order newOrder = order.ToCreateOrder();
+            var newOrder = order.ToCreateOrder();
             orderRepository.Add(newOrder);
             orderItem.AddRange(order.OrderItems.Select(x => new OrderItem
             {
@@ -54,7 +45,7 @@ namespace EShop.Core.Services.Implements
         }
         public async Task<bool> DeleteOrderAsync(Guid id)
         {
-            var order = await orderRepository.Get(o => o.Id == id).ThrowIfNull($"Order with ID {id} not found"); ;
+            var order = await orderRepository.GetAsync(o => o.Id == id).ThrowIfNull($"Order with ID {id} not found"); ;
             orderRepository.Remove(order);
             await unitOfWork.CompleteAsync();
             return true;

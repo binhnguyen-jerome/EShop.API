@@ -1,41 +1,26 @@
-﻿using EShop.CustomerFe.Services.Interface;
+﻿using System.Reflection;
 using EShop.CustomerFe.Services.Interfaces;
 using EShop.ViewModels.Dtos.Product;
 using EShop.ViewModels.ViewModel;
 using Newtonsoft.Json;
-using System.Reflection;
 
-namespace EShop.CustomerFe.Services
+namespace EShop.CustomerFe.Services.Implements
 {
-    public class ProductClientService : IProductClientService
+    public class ProductClientService(HttpClient httpClient, ICacheClientService cacheService) : IProductClientService
     {
-
-        private readonly HttpClient _httpClient;
-        private readonly ICacheClientService _cacheService;
         private readonly string _cacheKey = "AllProducts";
 
-        public ProductClientService(HttpClient httpClient, ICacheClientService cacheService)
-        {
-            _httpClient = httpClient;
-            _cacheService = cacheService;
-        }
         public async Task<List<ProductResponse>?> GetAllProductsAsync()
         {
-            var products = _cacheService.Get<List<ProductResponse>>(_cacheKey);
+            var products = cacheService.Get<List<ProductResponse>>(_cacheKey);
+            
+            var response = await httpClient.GetAsync("/api/v1/products");
 
-            if (products == null)
-            {
-                var url = "/api/v1/products";
-                var response = await _httpClient.GetAsync(url);
+            if (!response.IsSuccessStatusCode) return [];
+            var content = await response.Content.ReadAsStringAsync();
+            products = JsonConvert.DeserializeObject<List<ProductResponse>>(content);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    products = JsonConvert.DeserializeObject<List<ProductResponse>>(content);
-
-                    _cacheService.Set(_cacheKey, products, TimeSpan.FromMinutes(60));
-                }
-            }
+            cacheService.Set(_cacheKey, products, TimeSpan.FromMinutes(60));
 
             return products;
         }
@@ -45,7 +30,7 @@ namespace EShop.CustomerFe.Services
 
             if (query.CategoryId.HasValue)
             {
-                allProducts = allProducts.Where(p => p.CategoryId == query.CategoryId.Value).ToList();
+                allProducts = allProducts?.Where(p => p.CategoryId == query.CategoryId.Value).ToList();
             }
 
             if (!string.IsNullOrEmpty(query.SortBy))
@@ -53,13 +38,14 @@ namespace EShop.CustomerFe.Services
                 var propertyInfo = typeof(ProductResponse).GetProperty(query.SortBy, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                 if (propertyInfo != null)
                 {
-                    allProducts = query.SortDescending
-                        ? allProducts.OrderByDescending(p => propertyInfo.GetValue(p, null)).ToList()
-                        : allProducts.OrderBy(p => propertyInfo.GetValue(p, null)).ToList();
+                    if (allProducts != null)
+                        allProducts = query.SortDescending
+                            ? allProducts.OrderByDescending(p => propertyInfo.GetValue(p, null)).ToList()
+                            : allProducts.OrderBy(p => propertyInfo.GetValue(p, null)).ToList();
                 }
             }
 
-            int skip = (query.PageNumber - 1) * query.PageSize;
+            var skip = (query.PageNumber - 1) * query.PageSize;
             var pagedProducts = allProducts.Skip(skip).Take(query.PageSize).ToList();
             return new PagedResult<ProductResponse>
             {
@@ -71,13 +57,10 @@ namespace EShop.CustomerFe.Services
         }
         public async Task<ProductResponse?> GetProductByIdAsync(Guid productId)
         {
-            var response = await _httpClient.GetAsync($"/api/v1/products/{productId}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ProductResponse>(content);
-            }
-            return null;
+            var response = await httpClient.GetAsync($"/api/v1/products/{productId}");
+            if (!response.IsSuccessStatusCode) return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ProductResponse>(content);
         }
     }
 }

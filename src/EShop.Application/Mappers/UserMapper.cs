@@ -1,11 +1,11 @@
 ﻿using EShop.Core.Domain.Entities;
 using EShop.ViewModels.Dtos.User;
 
-namespace EShop.Core.Mappers
+namespace EShop.Application.Mappers
 {
     public static class UserMapper
     {
-        public static UserReponse ToUserReponse(this ApplicationUser user)
+        public static UserReponse ToUserResponse(this ApplicationUser user)
         {
             return new UserReponse()
             {
