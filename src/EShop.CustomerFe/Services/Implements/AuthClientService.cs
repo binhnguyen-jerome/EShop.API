@@ -4,34 +4,21 @@ using Newtonsoft.Json;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class AuthClientService : IAuthClientService
+    public class AuthClientService(HttpClient httpClient) : IAuthClientService
     {
-        private readonly HttpClient _httpClient;
-
-        public AuthClientService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
         public async Task<LoginResponse?> AuthenticateAsync(LoginRequest loginRequest)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/login", loginRequest);
+            var response = await httpClient.PostAsJsonAsync("/api/v1/auth/login", loginRequest);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var user = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<LoginResponse>(user);
-            }
-            return null;
+            if (!response.IsSuccessStatusCode) return null;
+            var user = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<LoginResponse>(user);
         }
 
         public async Task<bool> RegisterAsync(RegisterRequest registerRequest)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/v1/auth/register", registerRequest);
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-            return false;
+            var response = await httpClient.PostAsJsonAsync("/api/v1/auth/register", registerRequest);
+            return response.IsSuccessStatusCode;
         }
     }
 }

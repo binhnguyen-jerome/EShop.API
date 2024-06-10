@@ -4,29 +4,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.CustomerFe.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController(
+        ILogger<ProductController> logger,
+        IProductClientService productService,
+        IProductReviewClientService productReviewService)
+        : Controller
     {
-        private readonly ILogger<ProductController> _logger;
-        private readonly IProductClientService productService;
-        private readonly IProductReviewClientService productReviewService;
-
-        public ProductController(ILogger<ProductController> logger, IProductClientService productService, IProductReviewClientService productReviewService)
-        {
-            _logger = logger;
-            this.productService = productService;
-            this.productReviewService = productReviewService;
-        }
+        private readonly ILogger<ProductController> _logger = logger;
 
         [HttpGet]
         public async Task<IActionResult> Detail(Guid productId)
         {
             var product = await productService.GetProductByIdAsync(productId);
             var reviews = await productReviewService.GetProductReviewsAsync(productId);
-            var productDetailViewModel = ProductDetailVM.Create(product, reviews);
+            var productDetailViewModel = ProductDetailVm.Create(product, reviews);
             return View(productDetailViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateReview(ProductDetailVM model)
+        public async Task<IActionResult> CreateReview(ProductDetailVm model)
         {
             await productReviewService.CreateProductReviewAsync(model.NewReview);
             return RedirectToAction("Detail", new { productId = model.NewReview.ProductId });

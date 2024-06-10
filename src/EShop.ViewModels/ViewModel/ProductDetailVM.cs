@@ -4,10 +4,10 @@ using EShop.ViewModels.Dtos.Review;
 
 namespace EShop.ViewModels.ViewModel
 {
-    public class ProductDetailVM
+    public class ProductDetailVm
     {
         public ProductResponse Product { get; set; } = new();
-        public List<ProductReviewUserResponse> Reviews { get; set; } = new();
+        public List<ProductReviewUserResponse> Reviews { get; set; } = [];
 
         public ProductReviewRequest NewReview { get; set; } = new();
 
@@ -15,13 +15,13 @@ namespace EShop.ViewModels.ViewModel
 
         public int AverageRating { get; set; }
 
-        public static ProductDetailVM Create(ProductResponse product, List<ProductReviewUserResponse> reviews)
+        public static ProductDetailVm Create(ProductResponse product, List<ProductReviewUserResponse> reviews)
         {
-            return new ProductDetailVM
+            return new ProductDetailVm
             {
                 Product = product,
                 Reviews = reviews,
-                AverageRating = reviews.Any() ? (int)Math.Floor(reviews.Average(r => r.Rate)) : 0
+                AverageRating = reviews.Count != 0 ? (int)Math.Floor(reviews.Average(r => r.Rate)) : 0
             };
         }
     }

@@ -11,7 +11,6 @@ namespace EShop.UnitTest.Application
     public class AuthServiceTests
     {
         private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
-        private readonly Mock<IConfiguration> _configurationMock;
         private readonly AuthService _authService;
         private readonly CustomFixture _fixture;
         public AuthServiceTests()
@@ -23,8 +22,8 @@ namespace EShop.UnitTest.Application
                 userStoreMock.Object,
                 null, null, null, null, null, null, null, null);
 
-            _configurationMock = new Mock<IConfiguration>();
-            _authService = new AuthService(_userManagerMock.Object, _configurationMock.Object);
+            Mock<IConfiguration> configurationMock = new();
+            _authService = new AuthService(_userManagerMock.Object, configurationMock.Object);
         }
         #region RegisterUser
         [Fact]

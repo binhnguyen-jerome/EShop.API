@@ -3,19 +3,13 @@ using EShop.ViewModels.Dtos.Cart;
 using EShop.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using EShop.ViewModels.Dtos.Order;
 
 namespace EShop.CustomerFe.Controllers
 {
-    public class CartController : Controller
+    public class CartController(ICartClientService cartService, IUserClientService userService)
+        : Controller
     {
-        private readonly ICartClientService cartService;
-        private readonly IUserClientService userService;
-
-        public CartController(ICartClientService cartService, IUserClientService userService)
-        {
-            this.cartService = cartService;
-            this.userService = userService;
-        }
         public async Task<IActionResult> Index()
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -24,7 +18,7 @@ namespace EShop.CustomerFe.Controllers
                 return RedirectToAction("Login", "Auth");
             }
             var carts = await cartService.GetCartByUserIdAsync(new Guid(userId));
-            var cartVM = CartVM.Create(carts, new());
+            var cartVM = CartVM.Create(carts, new OrderRequest());
             return View(cartVM);
         }
         public async Task<IActionResult> Summary()

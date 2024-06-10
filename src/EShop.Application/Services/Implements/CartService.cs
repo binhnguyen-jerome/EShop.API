@@ -15,23 +15,30 @@ namespace EShop.Application.Services.Implements
         {
             if (cartRequest.Quantity <= 0)
                 throw new ApplicationException("Quantity must be greater than 0");
-            Cart cart;
+
             var existingCart = await cartQueries.GetCartByUserIdAndProductIdAsync(cartRequest.ApplicationUserId, cartRequest.ProductId);
-            if (existingCart != null)
-            {
-                existingCart.Quantity += cartRequest.Quantity;
-                cartRepository.Update(existingCart);
-                cart = await cartRepository.GetAsync(c => c.Id == existingCart.Id);
-            }
-            else
-            {
-                cart = cartRequest.ToAddToCart();
-                cartRepository.Add(cart);
-            }
+
+            var cart = existingCart != null ? await UpdateExistingCartAsync(existingCart, cartRequest.Quantity) : await CreateNewCartAsync(cartRequest);
+
             await unitOfWork.CompleteAsync();
-            return cart.ToCartResponse();
+            if (cart != null) return cart.ToCartResponse();
+            throw new ApplicationException("Error adding to cart");
         }
 
+        private async Task<Cart?> UpdateExistingCartAsync(Cart existingCart, int quantity)
+        {
+            existingCart.Quantity += quantity;
+            cartRepository.Update(existingCart);
+            var cart = await cartRepository.GetAsync(c => c.Id == existingCart.Id);
+            return cart;
+        }
+
+        private Task<Cart> CreateNewCartAsync(CartRequest cartRequest)
+        {
+            var cart = cartRequest.ToAddToCart();
+            cartRepository.Add(cart);
+            return Task.FromResult(cart);
+        }
         public async Task<List<CartResponse>> GetUserCartsAsync(Guid applicationUserId)
         {
             var userCarts = await cartQueries.GetUserCartsAsync(applicationUserId);

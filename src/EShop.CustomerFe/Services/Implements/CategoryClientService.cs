@@ -4,23 +4,14 @@ using Newtonsoft.Json;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class CategoryClientService : ICategoryClientService
+    public class CategoryClientService(HttpClient httpClient) : ICategoryClientService
     {
-        private readonly HttpClient _httpClient;
-
-        public CategoryClientService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
         public async Task<List<CategoryResponse>?> GetAllCategoriesAsync()
         {
-            var response = await _httpClient.GetAsync("/api/v1/categories");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<CategoryResponse>>(content);
-            }
-            return [];
+            var response = await httpClient.GetAsync("/api/v1/categories");
+            if (!response.IsSuccessStatusCode) return [];
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<CategoryResponse>>(content);
         }
     }
 }

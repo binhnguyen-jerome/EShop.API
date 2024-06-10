@@ -5,36 +5,24 @@ using System.Text;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class CartClientService : ICartClientService
+    public class CartClientService(HttpClient httpClient) : ICartClientService
     {
-        private readonly HttpClient _httpClient;
-        public CartClientService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-
-        }
         public async Task<CartResponse?> AddToCartAsync(CartRequest cartRequest)
         {
             var json = JsonConvert.SerializeObject(cartRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("/api/v1/carts", content);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<CartResponse>(responseContent);
-            }
-            return null;
+            var response = await httpClient.PostAsync("/api/v1/carts", content);
+            if (!response.IsSuccessStatusCode) return null;
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<CartResponse>(responseContent);
         }
 
         public async Task<List<CartResponse>?> GetCartByUserIdAsync(Guid userId)
         {
-            var response = await _httpClient.GetAsync($"/api/v1/carts/{userId}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<CartResponse>>(content);
-            }
-            return [];
+            var response = await httpClient.GetAsync($"/api/v1/carts/{userId}");
+            if (!response.IsSuccessStatusCode) return [];
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<CartResponse>>(content);
 
         }
 
@@ -42,24 +30,18 @@ namespace EShop.CustomerFe.Services.Implements
         {
             var json = JsonConvert.SerializeObject(cartRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"/api/v1/carts", content);
-            if (response.IsSuccessStatusCode)
-            {
-                var reponseContent = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<bool>(reponseContent);
-            }
-            return false;
+            var response = await httpClient.PutAsync($"/api/v1/carts", content);
+            if (!response.IsSuccessStatusCode) return false;
+            var reponseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<bool>(reponseContent);
         }
 
         public async Task<bool> RemoveFromCartAsync(Guid cartId)
         {
-            var response = await _httpClient.DeleteAsync($"/api/v1/carts/{cartId}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<bool>(content);
-            }
-            return false;
+            var response = await httpClient.DeleteAsync($"/api/v1/carts/{cartId}");
+            if (!response.IsSuccessStatusCode) return false;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<bool>(content);
         }
     }
 }

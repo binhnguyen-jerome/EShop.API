@@ -6,18 +6,14 @@ using EShop.CustomerFe.Services.Interfaces;
 
 namespace EShop.CustomerFe.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(
+        ILogger<HomeController> logger,
+        IProductClientService productService,
+        ICategoryClientService categoryService)
+        : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IProductClientService productService;
-        private readonly ICategoryClientService categoryService;
+        private readonly ILogger<HomeController> _logger = logger;
 
-        public HomeController(ILogger<HomeController> logger, IProductClientService productService, ICategoryClientService categoryService)
-        {
-            _logger = logger;
-            this.productService = productService;
-            this.categoryService = categoryService;
-        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {

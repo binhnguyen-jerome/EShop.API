@@ -23,7 +23,7 @@ namespace EShop.API.Middleware
 
             //More log stuff        
 
-            ExceptionResponse response = exception switch
+            var response = exception switch
             {
                 ApplicationException _ => new ExceptionResponse(HttpStatusCode.BadRequest, exception.Message),
                 KeyNotFoundException _ => new ExceptionResponse(HttpStatusCode.NotFound, exception.Message),

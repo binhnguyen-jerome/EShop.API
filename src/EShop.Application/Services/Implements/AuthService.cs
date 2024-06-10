@@ -22,6 +22,7 @@ namespace EShop.Application.Services.Implements
             {
                 throw new ApplicationException("Email invalid");
             }
+
             var user = new ApplicationUser
             {
                 Email = registerRequest.Email,
@@ -43,25 +44,20 @@ namespace EShop.Application.Services.Implements
 
         public async Task<UserReponse> Login(LoginRequest loginRequest)
         {
-            var user = await userManager.FindByEmailAsync(loginRequest.Email);
-            if (user != null)
+            var user = await userManager.FindByEmailAsync(loginRequest.Email)
+                .ThrowIfNull($"Can not find {loginRequest.Email}");
+            var isPasswordCorrect = await userManager.CheckPasswordAsync(user, loginRequest.Password);
+            if (isPasswordCorrect)
             {
-                var isPasswordCorrect = await userManager.CheckPasswordAsync(user, loginRequest.Password);
-                if (isPasswordCorrect)
-                {
-                    var userResponse = user.ToUserResponse();
-                    return userResponse;
-                }
-                else
-                {
-                    throw new ApplicationException("Invalid password");
-                }
+                var userResponse = user.ToUserResponse();
+                return userResponse;
             }
             else
             {
-                throw new KeyNotFoundException("User not found");
+                throw new ApplicationException("Invalid password");
             }
         }
+
         public async Task<string> CreateJwtToken(LoginRequest user)
         {
             var claims = await GetClaims(user.Email);
@@ -78,6 +74,7 @@ namespace EShop.Application.Services.Implements
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
         private async Task<List<Claim>> GetClaims(string email)
         {
             var user = await userManager.FindByEmailAsync(email).ThrowIfNull($"Can not find {email}");

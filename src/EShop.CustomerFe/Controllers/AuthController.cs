@@ -7,16 +7,9 @@ using System.Security.Claims;
 
 namespace EShop.CustomerFe.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController(ILogger<ProductController> logger, IAuthClientService authService)
+        : Controller
     {
-        private readonly ILogger<ProductController> _logger;
-        private readonly IAuthClientService authService;
-
-        public AuthController(ILogger<ProductController> logger, IAuthClientService authService)
-        {
-            _logger = logger;
-            this.authService = authService;
-        }
         [HttpGet]
         public IActionResult Login()
         {
@@ -43,7 +36,7 @@ namespace EShop.CustomerFe.Controllers
                 };
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-                _logger.LogInformation("User {Name} logged in at {Time}", user.username, DateTime.UtcNow);
+                logger.LogInformation("User {Name} logged in at {Time}", user.username, DateTime.UtcNow);
 
                 return RedirectToAction("Index", "Home");
             }
