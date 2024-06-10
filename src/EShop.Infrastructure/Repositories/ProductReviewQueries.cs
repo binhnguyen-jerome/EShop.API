@@ -1,5 +1,5 @@
-﻿using EShop.Core.Domain.Entities;
-using EShop.Core.Domain.Repositories;
+﻿using EShop.Core.Entities;
+using EShop.Core.Repositories;
 using EShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

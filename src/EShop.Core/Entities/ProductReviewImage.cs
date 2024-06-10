@@ -1,4 +1,4 @@
-﻿namespace EShop.Core.Domain.Entities
+﻿namespace EShop.Core.Entities
 {
     public class ProductReviewImage : BaseModel
     {

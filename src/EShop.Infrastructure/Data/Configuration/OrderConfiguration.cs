@@ -1,4 +1,4 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,4 +1,4 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Core.Entities;
 using EShop.ViewModels.Dtos.Cart;
 using EShop.ViewModels.Dtos.Product;
 

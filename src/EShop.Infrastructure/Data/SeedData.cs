@@ -1,4 +1,4 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

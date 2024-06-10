@@ -1,6 +1,6 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Core.Entities;
 
-namespace EShop.Core.Domain.Repositories
+namespace EShop.Core.Repositories
 {
     public interface ICartQueries
     {

@@ -1,8 +1,8 @@
 ﻿using EShop.Application.Mappers;
 using EShop.Application.Services.Interfaces;
-using EShop.Core.Domain.Entities;
-using EShop.Core.Domain.Extensions;
-using EShop.Core.Domain.Repositories;
+using EShop.Core.Entities;
+using EShop.Core.Exceptions;
+using EShop.Core.Repositories;
 using EShop.ViewModels.Dtos.Product;
 
 namespace EShop.Application.Services.Implements

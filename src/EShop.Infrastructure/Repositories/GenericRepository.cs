@@ -1,6 +1,6 @@
-﻿using EShop.Core.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using EShop.Core.Repositories;
 using EShop.Infrastructure.Data;
 
 namespace EShop.Infrastructure.Repositories

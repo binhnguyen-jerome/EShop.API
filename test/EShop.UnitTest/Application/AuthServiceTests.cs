@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using EShop.Application.Services.Implements;
-using EShop.Core.Domain.Entities;
+using EShop.Core.Entities;
 using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

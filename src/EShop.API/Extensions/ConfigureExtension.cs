@@ -1,7 +1,5 @@
 ﻿using EShop.Application.Services.Implements;
 using EShop.Application.Services.Interfaces;
-using EShop.Core.Domain.Entities;
-using EShop.Core.Domain.Repositories;
 using EShop.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using EShop.Core.Entities;
+using EShop.Core.Repositories;
 using EShop.Infrastructure.Repositories;
 
 namespace EShop.API.Extensions

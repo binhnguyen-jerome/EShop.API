@@ -1,4 +1,4 @@
-﻿using EShop.Core.Domain.Repositories;
+﻿using EShop.Core.Repositories;
 using EShop.Infrastructure.Data;
 
 namespace EShop.Infrastructure.Repositories

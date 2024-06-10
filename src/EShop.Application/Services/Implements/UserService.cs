@@ -1,7 +1,7 @@
 ﻿using EShop.Application.Mappers;
 using EShop.Application.Services.Interfaces;
-using EShop.Core.Domain.Entities;
-using EShop.Core.Domain.Extensions;
+using EShop.Core.Entities;
+using EShop.Core.Exceptions;
 using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -1,10 +1,11 @@
 ﻿using AutoFixture;
 using EShop.Application.Services.Implements;
-using EShop.Core.Domain.Entities;
-using EShop.Core.Domain.Repositories;
 using EShop.ViewModels.Dtos.Cart;
 using Moq;
 using System.Linq.Expressions;
+using EShop.Core.Entities;
+using EShop.Core.Repositories;
+
 namespace EShop.UnitTest.Application
 {
     public class CartServiceTests

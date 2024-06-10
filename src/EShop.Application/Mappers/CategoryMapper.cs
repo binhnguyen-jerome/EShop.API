@@ -1,4 +1,4 @@
-﻿using EShop.Core.Domain.Entities;
+﻿using EShop.Core.Entities;
 using EShop.ViewModels.Dtos.Category;
 
 namespace EShop.Application.Mappers

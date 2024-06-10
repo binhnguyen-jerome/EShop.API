@@ -1,8 +1,8 @@
 using AutoFixture;
 using EShop.Application.Mappers;
 using EShop.Application.Services.Implements;
-using EShop.Core.Domain.Entities;
-using EShop.Core.Domain.Repositories;
+using EShop.Core.Entities;
+using EShop.Core.Repositories;
 using EShop.ViewModels.Dtos.Product;
 using Moq;
 

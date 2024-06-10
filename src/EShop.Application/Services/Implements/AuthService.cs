@@ -1,6 +1,5 @@
 ﻿using EShop.Application.Mappers;
 using EShop.Application.Services.Interfaces;
-using EShop.Core.Domain.Entities;
 using EShop.ViewModels.Dtos.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using EShop.Core.Domain.Extensions;
+using EShop.Core.Entities;
+using EShop.Core.Exceptions;
 
 namespace EShop.Application.Services.Implements
 {

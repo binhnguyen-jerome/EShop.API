@@ -1,4 +1,4 @@
-﻿namespace EShop.Core.Domain.Repositories
+﻿namespace EShop.Core.Repositories
 {
     public interface IUnitOfWork
     {

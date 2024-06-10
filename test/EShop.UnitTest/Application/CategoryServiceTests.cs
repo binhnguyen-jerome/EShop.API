@@ -1,11 +1,11 @@
 ﻿using AutoFixture;
 using EShop.Application.Mappers;
 using EShop.Application.Services.Implements;
-using EShop.Core.Domain.Entities;
-using EShop.Core.Domain.Repositories;
 using EShop.ViewModels.Dtos.Category;
 using Moq;
 using System.Linq.Expressions;
+using EShop.Core.Entities;
+using EShop.Core.Repositories;
 
 namespace EShop.UnitTest.Application
 {

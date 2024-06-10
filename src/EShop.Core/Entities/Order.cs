@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EShop.Core.Domain.Entities
+namespace EShop.Core.Entities
 {
     public class Order : BaseModel
     {
