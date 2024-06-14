@@ -33,7 +33,7 @@ namespace EShop.Infrastructure.Repositories
                 query = query.Include(includeProp);
             }
             return await query.FirstOrDefaultAsync();
-
+            
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter, string? includeProperties = null)
