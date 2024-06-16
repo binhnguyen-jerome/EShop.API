@@ -1,0 +1,237 @@
+﻿@using EShop.ViewModels.ViewModel
+@using System.Security.Claims
+@model ProductDetailVm
+<div class="tab-pane fade"
+     id="reviews-tab-pane"
+     role="tabpanel"
+     aria-labelledby="reviews-tab"
+     tabindex="0">
+    <div class="my-8">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="me-lg-12 mb-6 mb-md-0">
+                    <div class="mb-5">
+                        <h4 class="mb-3">Customer reviews</h4>
+                        <span>
+                            <small class="text-warning">
+                                @for (int i = 0; i < Model.AverageRating; i++)
+                                {
+                                    <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                                }
+                            </small>
+                            <span class="ms-3">@Model.AverageRating out of 5</span>
+                            <small class="ms-3">@Model.Reviews.Count() global ratings</small>
+                        </span>
+                    </div>
+                    <div class="mb-8">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="text-nowrap me-3 text-muted">
+                                <span class="d-inline-block align-middle text-muted">5</span>
+                                <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                            </div>
+                            <div class="w-100">
+                                <div class="progress" style="height: 6px">
+                                    <div class="progress-bar bg-warning"
+                                         role="progressbar"
+                                         style="width: 60%"
+                                         aria-valuenow="60"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <span class="text-muted ms-3">53%</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="text-nowrap me-3 text-muted">
+                                <span class="d-inline-block align-middle text-muted">4</span>
+                                <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                            </div>
+                            <div class="w-100">
+                                <div class="progress" style="height: 6px">
+                                    <div class="progress-bar bg-warning"
+                                         role="progressbar"
+                                         style="width: 50%"
+                                         aria-valuenow="50"
+                                         aria-valuemin="0"
+                                         aria-valuemax="50"></div>
+                                </div>
+                            </div>
+                            <span class="text-muted ms-3">22%</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="text-nowrap me-3 text-muted">
+                                <span class="d-inline-block align-middle text-muted">3</span>
+                                <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                            </div>
+                            <div class="w-100">
+                                <div class="progress" style="height: 6px">
+                                    <div class="progress-bar bg-warning"
+                                         role="progressbar"
+                                         style="width: 35%"
+                                         aria-valuenow="35"
+                                         aria-valuemin="0"
+                                         aria-valuemax="35"></div>
+                                </div>
+                            </div>
+                            <span class="text-muted ms-3">14%</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="text-nowrap me-3 text-muted">
+                                <span class="d-inline-block align-middle text-muted">2</span>
+                                <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                            </div>
+                            <div class="w-100">
+                                <div class="progress" style="height: 6px">
+                                    <div class="progress-bar bg-warning"
+                                         role="progressbar"
+                                         style="width: 22%"
+                                         aria-valuenow="22"
+                                         aria-valuemin="0"
+                                         aria-valuemax="22"></div>
+                                </div>
+                            </div>
+                            <span class="text-muted ms-3">5%</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="text-nowrap me-3 text-muted">
+                                <span class="d-inline-block align-middle text-muted">1</span>
+                                <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                            </div>
+                            <div class="w-100">
+                                <div class="progress" style="height: 6px">
+                                    <div class="progress-bar bg-warning"
+                                         role="progressbar"
+                                         style="width: 14%"
+                                         aria-valuenow="14"
+                                         aria-valuemin="0"
+                                         aria-valuemax="14"></div>
+                                </div>
+                            </div>
+                            <span class="text-muted ms-3">7%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="mb-10">
+                    <div class="d-flex justify-content-between align-items-center mb-8">
+                        <div>
+                            <h4>Reviews</h4>
+                        </div>
+                        <div>
+                            <select class="form-select">
+                                <option selected>Top Reviews</option>
+                                <option value="Most Recent">Most Recent</option>
+                            </select>
+                        </div>
+                    </div>
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="d-flex border-bottom pb-6 mb-6 pb-4">
+                            <img src="~/images/avatar/avatar-10.jpg"
+                                 alt="avatar"
+                                 class="rounded-circle avatar-lg" />
+                            <div class="ms-5">
+                                <h6 class="mb-1">@review.ApplicationUserName</h6>
+                                <p class="small">
+                                    <span class="text-muted">@review.CreateAt</span>
+                                    <span class="text-primary ms-3 fw-bold">Verified Purchase</span>
+                                </p>
+                                <div class="mb-2">
+                                    @for (int i = 0; i < review.Rate; i++)
+                                    {
+                                        <img src="~/images/icons/star-icon.svg"
+                                             class="img-icon" />
+                                    }
+                                </div>
+                                <p>@review.Content</p>
+                                <div>
+                                    <div class="border icon-shape icon-lg border-2">
+                                        <img src="~/images/products/product-img-1.jpg"
+                                             alt=""
+                                             class="img-fluid" />
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-4">
+                                    <a href="#" class="text-muted">
+                                        <i class="feather-icon icon-thumbs-up me-1"></i>
+                                        Helpful
+                                    </a>
+                                    <a href="#" class="text-muted ms-4">
+                                        <i class="feather-icon icon-flag me-2"></i>
+                                        Report abuse
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div>
+                        <a href="#" class="btn btn-outline-gray-400 text-muted">Read More Reviews</a>
+                    </div>
+                </div>
+                <div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Product"
+                              asp-action="CreateReview"
+                              method="post">
+                            <h3 class="mb-5">Create Review</h3>
+                            <div class="border-bottom py-4 mb-4">
+                                <h4 class="mb-3">Overall rating</h4>
+                                <div class="rater">
+                                    <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                                    <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                                    <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                                    <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                                    <i class="bi bi-star-fill ms-1 small text-warning"></i>
+                                </div>
+                                <select class="form-control mt-2"
+                                        id="Rate"
+                                        required
+                                        asp-for="NewReview.Rate">
+                                    <option value="">Select Rating</option>
+                                    <option value="1">Too Bad</option>
+                                    <option value="2">Bad</option>
+                                    <option value="3">Netural</option>
+                                    <option value="4">Good</option>
+                                    <option value="5">Excellent</option>
+                                </select>
+                            </div>
+                            <div class="py-4 mb-4">
+                                <h5>Add a written review</h5>
+                                <textarea class="form-control"
+                                          rows="3"
+                                          placeholder="What did you like or dislike? What did you use this product for?"
+                                          asp-for="NewReview.Content"></textarea>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <input type="hidden"
+                                       asp-for="NewReview.ProductId"
+                                       value="@Model.Product.Id" />
+                                <input type="hidden"
+                                       asp-for="NewReview.ApplicationUserId"
+                                       value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+                                <button type="submit" class="btn btn-primary">
+                                    Submit Review
+                                </button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-between align-items-center mb-8">
+                            <div>
+                                <h3 class="mb-5">Create Review</h3>
+                            </div>
+                            <div>
+                                <a asp-action="Login"
+                                   asp-controller="Auth"
+                                   class="btn btn-primary">Login to rate</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,161 @@
+﻿@using EShop.ViewModels.ViewModel
+@model CartVM
+@{
+    ViewData["Title"] = "Cart";
+}
+
+@await Html.PartialAsync("_Breadcrumb", "Cart")
+<section class="mb-lg-14 mb-8 mt-8">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card py-1 border-0 mb-8">
+                    <div>
+                        <h1 class="fw-bold">Shop Cart</h1>
+                        <p class="mb-0">Shopping in 382480</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-7">
+                <div class="py-3">
+                    <div class="alert alert-danger p-2" role="alert">
+                        You’ve got FREE delivery. Start
+                        <a href="#!" class="alert-link">checkout now!</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <li class="list-group-item py-3 ps-0 border-top">
+                                <div class="row align-items-center">
+                                    <div class="col-6 col-md-6 col-lg-7">
+                                        <div class="d-flex">
+                                            <img src="@item.Product.ProductImages[0].ImageUrl"
+                                                 alt="Ecommerce"
+                                                 class="icon-shape icon-xxl" />
+                                            <div class="ms-3">
+                                                <a asp-controller="Product"
+                                                   asp-action="Detail"
+                                                   asp-route-productId="@item.Product.Id"
+                                                   class="text-inherit">
+                                                    <h6 class="mb-0">@item.Product.Name</h6>
+                                                </a>
+                                                <div class="mt-2 small lh-1">
+                                                    <input type="hidden" id="cardId" value="@item.Id" />
+                                                    <a class="text-decoration-none text-inherit" asp-action="Remove" asp-route-cartId="@item.Id">
+                                                        <span class="me-1 align-text-bottom">
+                                                            <i data-feather="trash"
+                                                               class="text-success"
+                                                               width="14"
+                                                               height="14"></i>
+                                                        </span>
+                                                        <span class="text-muted">Remove</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-md-4 col-lg-3">
+                                        <div class="input-group input-spinner">
+                                            <input type="hidden" class="productId" value="@item.Product.Id"/>
+                                            <input type="button"
+                                                   value="-"
+                                                   class="button-minus btn btn-sm updateCart"
+                                                   data-field="quantity"
+
+                                                   />
+                                            <input type="number"
+                                                   step="1"
+                                                   max="10"
+                                                   value="@item.Quantity"
+                                                   name="quantity"
+                                                   class="quantity-field form-control-sm form-input quantity" />
+                                            <input type="button"
+                                                   value="+"
+                                                   class="button-plus btn btn-sm updateCart"
+                                                   data-field="quantity"
+                                                   />
+                                        </div>
+                                    </div>
+                                    <div class="col-2 text-lg-end text-start text-md-end col-md-2">
+                                        <span class="fw-bold">$@item.Product.PriceDiscount</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Continue Shopping</a>
+                        <a href="#!" class="btn btn-dark">Update Cart</a>
+                    </div>
+                </div>
+            </div>
+            <!-- sidebar -->
+            <div class="col-12 col-lg-4 col-md-5">
+                <div class="mb-5 card mt-6">
+                    <div class="card-body p-6">
+                        <h2 class="h5 mb-4">Summary</h2>
+                        <div class="card mb-2">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="me-auto">
+                                        <div>Item Subtotal</div>
+                                    </div>
+                                    <span>$@Model.TotalPrice</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="me-auto">
+                                        <div>Service Fee</div>
+                                    </div>
+                                    <span>$3.00</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="me-auto">
+                                        <div class="fw-bold">Subtotal</div>
+                                    </div>
+                                    <span class="fw-bold">$@Model.TotalPrice</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="d-grid mb-1 mt-4">
+                            <a class="btn btn-primary btn-lg d-flex justify-content-between align-items-center"
+                               asp-action="Summary">
+                                Go to Checkout
+                                <span class="fw-bold">$@Model.TotalPrice</span>
+                            </a>
+                        </div>
+                        <p>
+                            <small>
+                                By placing your order, you agree to be bound by the Freshcart
+                                <a href="#!">Terms of Service</a>
+                                and
+                                <a href="#!">Privacy Policy.</a>
+                            </small>
+                        </p>
+                        <div class="mt-8">
+                            <h2 class="h5 mb-3">Add Promo or Gift Card</h2>
+                            <form>
+                                <div class="mb-2">
+                                    <label for="giftcard" class="form-label sr-only">Email address</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="giftcard"
+                                           placeholder="Promo or Gift Card" />
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-outline-dark mb-1">
+                                        Redeem
+                                    </button>
+                                </div>
+                                <p class="text-muted mb-0">
+                                    <small>Terms & Conditions apply</small>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
