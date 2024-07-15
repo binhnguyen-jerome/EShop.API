@@ -19,7 +19,7 @@ namespace EShop.ViewModels.Dtos.Product
         public int Stock { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public List<ProductImageRequest>? ProductImages { get; set; }
     }
     public class ProductImageRequest
@@ -42,7 +42,7 @@ namespace EShop.ViewModels.Dtos.Product
         public int Stock { get; set; }
         public DateTime? UpdateDate { get; set; } = DateTime.Now;
 
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public List<ProductImageRequest>? ProductImages { get; set; }
     }
 }

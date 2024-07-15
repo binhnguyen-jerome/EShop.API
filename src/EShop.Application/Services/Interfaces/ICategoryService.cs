@@ -5,9 +5,9 @@ namespace EShop.Application.Services.Interfaces
     public interface ICategoryService
     {
         Task<List<CategoryResponse>> GetAllCategoriesAsync();
-        Task<CategoryResponse> GetCategoryByIdAsync(Guid id);
+        Task<CategoryResponse> GetCategoryByIdAsync(int id);
         Task<CategoryResponse> CreateCategoryAsync(CategoryRequest category);
-        Task<CategoryResponse> UpdateCategoryAsync(Guid id, CategoryRequest category);
-        Task<bool> DeleteCategoryAsync(Guid id);
+        Task<CategoryResponse> UpdateCategoryAsync(int id, CategoryRequest category);
+        Task<bool> DeleteCategoryAsync(int id);
     }
 }

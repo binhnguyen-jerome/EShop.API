@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EShop.Infrastructure.Data.Configuration
 {
-    public class ProductReviewConfiguration : IEntityTypeConfiguration<ProductReview>
+    public class RatingConfiguration : IEntityTypeConfiguration<Rating>
     {
-        public void Configure(EntityTypeBuilder<ProductReview> builder)
+        public void Configure(EntityTypeBuilder<Rating> builder)
         {
             builder.HasOne(c => c.ApplicationUser)
                 .WithMany(u => u.ProductReviews)

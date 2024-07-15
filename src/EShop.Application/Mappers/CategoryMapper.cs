@@ -7,7 +7,7 @@ namespace EShop.Application.Mappers
     {
         public static CategoryResponse ToCategoryResponse(this Category category)
         {
-            return new CategoryResponse() { Id = category.Id, Name = category.Name, Description = category.Description };
+            return new CategoryResponse() { Id = category.Id, Name = category.Name, Description = category.Description, CategoryImage = category.CategoryImage};
         }
         public static Category ToCategory(this CategoryRequest categoryRequest)
         {

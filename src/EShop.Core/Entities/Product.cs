@@ -19,11 +19,11 @@ namespace EShop.Core.Entities
 
         public DateTime? UpdateDate { get; set; }
 
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public virtual Category? Category { get; set; }
 
         public virtual ICollection<ProductImage>? ProductImages { get; set; }
-        public virtual ICollection<ProductReview>? ProductReviews { get; set; }
+        public virtual ICollection<Rating>? ProductReviews { get; set; }
 
         public virtual ICollection<Cart>? Carts { get; set; }
 

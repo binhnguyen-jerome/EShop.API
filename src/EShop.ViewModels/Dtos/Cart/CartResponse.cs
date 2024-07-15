@@ -1,15 +1,15 @@
-﻿using EShop.ViewModels.Dtos.Product;
+﻿using EShop.ViewModels.Dtos.CartItem;
+using EShop.ViewModels.Dtos.Product;
 
 namespace EShop.ViewModels.Dtos.Cart
 {
     public class CartResponse
     {
-        public Guid Id { get; set; }
-        public Guid ProductId { get; set; }
+        public int Id { get; set; }
 
-        public Guid ApplicationUserId { get; set; }
-        public int Quantity { get; set; }
+        public int ApplicationUserId { get; set; }
+        
+        public ICollection<CartItemResponse> CartItems { get; set; } = new List<CartItemResponse>();
 
-        public ProductResponse Product { get; set; }
     }
 }

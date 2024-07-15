@@ -10,8 +10,8 @@ namespace EShop.API.Controllers
     public class CartController(ICartService cartService) : ControllerBase
     {
         [Authorize(Roles = "Admin, Customer")]
-        [HttpGet("{applicationUserId:guid}")]
-        public async Task<IActionResult> GetUserCarts([FromRoute] Guid applicationUserId)
+        [HttpGet("{applicationUserId:int}")]
+        public async Task<IActionResult> GetUserCarts([FromRoute] int applicationUserId)
         {
             var carts = await cartService.GetUserCartsAsync(applicationUserId);
             return Ok(carts);
@@ -24,12 +24,12 @@ namespace EShop.API.Controllers
             return Ok(cart);
         }
         [Authorize(Roles = "Admin, Customer")]
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> RemoveFromCart([FromRoute] Guid id)
-        {
-            var result = await cartService.RemoveFromCartAsync(id);
-            return Ok(result);
-        }
+        [HttpDelete("{id:int}")]
+        // public async Task<IActionResult> RemoveFromCart([FromRoute] int id)
+        // {
+        //     var result = await cartService.RemoveFromCartAsync(id);
+        //     return Ok(result);
+        // }
         [Authorize(Roles = "Admin, Customer")]
         [HttpPut]
         public async Task<IActionResult> UpdateCart([FromBody] CartRequest cartRequest)

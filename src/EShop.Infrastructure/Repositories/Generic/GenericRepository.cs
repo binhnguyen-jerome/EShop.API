@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using EShop.Core.Repositories;
+using EShop.Core.Repositories.Generic;
 using EShop.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Infrastructure.Repositories
+namespace EShop.Infrastucture.Repositories.Generic
 {
     public sealed class GenericRepository<T>(ApplicationDbContext db) : IGenericRepository<T>
         where T : class

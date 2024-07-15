@@ -3,6 +3,8 @@ using EShop.Application.Services.Interfaces;
 using EShop.Core.Entities;
 using EShop.Core.Exceptions;
 using EShop.Core.Repositories;
+using EShop.Core.Repositories.Generic;
+using EShop.Core.Repositories.Query;
 using EShop.ViewModels.Dtos.Product;
 
 namespace EShop.Application.Services.Implements
@@ -18,7 +20,7 @@ namespace EShop.Application.Services.Implements
             return products.Select(p => p.ToProductResponse()).ToList();
         }
 
-        public async Task<ProductResponse> GetProductByIdAsync(Guid id)
+        public async Task<ProductResponse> GetProductByIdAsync(int id)
         {
             var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found"); ;
             return product.ToProductResponse();
@@ -40,7 +42,7 @@ namespace EShop.Application.Services.Implements
             await unitOfWork.CompleteAsync();
             return true;
         }
-        public async Task<ProductResponse> UpdateProductAsync(Guid id, UpdateProductRequest updateProduct)
+        public async Task<ProductResponse> UpdateProductAsync(int id, UpdateProductRequest updateProduct)
         {
             var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found");
 
@@ -70,7 +72,7 @@ namespace EShop.Application.Services.Implements
             await unitOfWork.CompleteAsync();
             return product.ToProductResponse();
         }
-        public async Task<bool> DeleteProductAsync(Guid id)
+        public async Task<bool> DeleteProductAsync(int id)
         {
             var product = await productQueries.GetByIdAsync(id).ThrowIfNull($"Product with ID {id} not found");
 

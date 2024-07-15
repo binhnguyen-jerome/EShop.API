@@ -2,7 +2,7 @@
 
 namespace EShop.Core.Entities
 {
-    public class ApplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<int>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,7 +12,7 @@ namespace EShop.Core.Entities
         public string? State { get; set; }
         public string? PostalCode { get; set; }
 
-        public virtual ICollection<ProductReview>? ProductReviews { get; set; }
+        public virtual ICollection<Rating>? ProductReviews { get; set; }
         public virtual ICollection<Order>? Orders { get; set; }
         public virtual ICollection<Cart>? Carts { get; set; }
 

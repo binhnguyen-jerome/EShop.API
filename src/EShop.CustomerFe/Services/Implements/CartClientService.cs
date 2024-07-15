@@ -17,7 +17,7 @@ namespace EShop.CustomerFe.Services.Implements
             return JsonConvert.DeserializeObject<CartResponse>(responseContent);
         }
 
-        public async Task<List<CartResponse>?> GetCartByUserIdAsync(Guid userId)
+        public async Task<List<CartResponse>?> GetCartByUserIdAsync(int userId)
         {
             var response = await httpClient.GetAsync($"/api/v1/carts/{userId}");
             if (!response.IsSuccessStatusCode) return [];
@@ -36,7 +36,7 @@ namespace EShop.CustomerFe.Services.Implements
             return JsonConvert.DeserializeObject<bool>(reponseContent);
         }
 
-        public async Task<bool> RemoveFromCartAsync(Guid cartId)
+        public async Task<bool> RemoveFromCartAsync(int cartId)
         {
             var response = await httpClient.DeleteAsync($"/api/v1/carts/{cartId}");
             if (!response.IsSuccessStatusCode) return false;

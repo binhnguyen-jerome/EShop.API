@@ -1,5 +1,6 @@
 ﻿using EShop.Core.Entities;
 using EShop.ViewModels.Dtos.Cart;
+using EShop.ViewModels.Dtos.CartItem;
 using EShop.ViewModels.Dtos.Product;
 
 namespace EShop.Application.Mappers
@@ -10,32 +11,40 @@ namespace EShop.Application.Mappers
         {
             return new Cart
             {
-                ProductId = cartRequest.ProductId,
-                Quantity = cartRequest.Quantity,
-                ApplicationUserId = cartRequest.ApplicationUserId
+                ApplicationUserId = cartRequest.ApplicationUserId,
+                CartItems = cartRequest.CartItems.Select(cartItemRequest => new CartItem
+                {
+                    ProductId = cartItemRequest.ProductId,
+                    Quantity = cartItemRequest.Quantity
+                }).ToList()
             };
         }
+
         public static CartResponse ToCartResponse(this Cart cart)
         {
             return new CartResponse
             {
                 Id = cart.Id,
-                ProductId = cart.ProductId,
-                Quantity = cart.Quantity,
                 ApplicationUserId = cart.ApplicationUserId,
-                Product = new ProductResponse
+                CartItems = cart.CartItems.Select(cartItem => new CartItemResponse
                 {
-                    Id = cart.Product.Id,
-                    Name = cart.Product.Name,
-                    Price = cart.Product.Price,
-                    PriceDiscount = cart.Product.PriceDiscount,
-                    Description = cart.Product.Description,
-                    ProductImages = cart.Product.ProductImages.Select(pi => new ProductImageResponse
+                    ProductId = cartItem.ProductId,
+                    Quantity = cartItem.Quantity,
+                    Product = new ProductResponse
                     {
-                        ImageUrl = pi.ImageUrl
-                    }).ToList(),
-                }
+                        Id = cartItem.Product.Id,
+                        Name = cartItem.Product.Name,
+                        Price = cartItem.Product.Price,
+                        PriceDiscount = cartItem.Product.PriceDiscount,
+                        Description = cartItem.Product.Description,
+                        ProductImages = cartItem.Product.ProductImages.Select(pi => new ProductImageResponse
+                        {
+                            ImageUrl = pi.ImageUrl
+                        }).ToList(),
+                    }
+                }).ToList()
             };
         }
     }
+
 }

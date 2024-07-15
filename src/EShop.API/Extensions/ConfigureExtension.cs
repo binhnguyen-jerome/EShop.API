@@ -9,7 +9,10 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using EShop.Core.Entities;
 using EShop.Core.Repositories;
-using EShop.Infrastructure.Repositories;
+using EShop.Core.Repositories.Generic;
+using EShop.Core.Repositories.Query;
+using EShop.Infrastucture.Repositories.Generic;
+using EShop.Infrastucture.Repositories.Query;
 
 namespace EShop.API.Extensions
 {
@@ -20,7 +23,7 @@ namespace EShop.API.Extensions
             //Inject Query 
             services.AddScoped<IProductQueries, ProductQueries>();
             services.AddScoped<IOrderQueries, OrderQueries>();
-            services.AddScoped<IProductReviewQueries, ProductReviewQueries>();
+            services.AddScoped<IProductReviewQueries, RatingQueries>();
             services.AddScoped<ICartQueries, CartQueries>();
             // Inject Service Repositories
             services.AddScoped<IProductService, ProductService>();
@@ -31,13 +34,14 @@ namespace EShop.API.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICartService, CartService>();
+            
             // Connect to Database
             var connectDb = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
                            options.UseSqlServer(connectDb));
             // Add Identity
             services.AddIdentityApiEndpoints<ApplicationUser>()
-                .AddRoles<IdentityRole<Guid>>()
+                .AddRoles<IdentityRole<int>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             // Check password IdentityOptions
             services.Configure<IdentityOptions>(options =>

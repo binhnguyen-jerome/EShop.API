@@ -5,10 +5,10 @@ namespace EShop.Application.Services.Interfaces
     public interface IUserService
     {
         Task<List<UserReponse>> GetUsersAsync();
-        Task<UserReponse> GetUserAsync(Guid id);
+        Task<UserReponse> GetUserAsync(int id);
 
-        Task<bool> DeleteUserAsync(Guid id);
-        Task<UserReponse> UpdateUserAsync(Guid id, UserRequest userRequest);
-        Task<bool> UpdateUserRoleAsync(Guid id, string newRole);
+        Task<bool> DeleteUserAsync(int id);
+        Task<UserReponse> UpdateUserAsync(int id, UserRequest userRequest);
+        Task<bool> UpdateUserRoleAsync(int id, string newRole);
     }
 }

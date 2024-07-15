@@ -6,7 +6,7 @@ namespace EShop.ViewModels.Dtos.Order
     public class OrderRequest
     {
         [Required]
-        public Guid ApplicationUserId { get; set; }
+        public int ApplicationUserId { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
@@ -32,7 +32,7 @@ namespace EShop.ViewModels.Dtos.Order
     }
     public class OrderItemRequest
     {
-        public Guid ProductId { get; set; }
+        public int ProductId { get; set; }
         public int Quantity { get; set; }
 
         public decimal Price { get; set; }

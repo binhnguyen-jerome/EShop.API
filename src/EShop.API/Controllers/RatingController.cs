@@ -8,32 +8,32 @@ namespace EShop.API.Controllers
     [Route("api/v1/productReviews/")]
     [ApiController]
     [Authorize]
-    public class ProductReviewController(IProductReviewService productReviewService) : Controller
+    public class RatingController(IProductReviewService productReviewService) : Controller
     {
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetProductReview(Guid productId)
+        public async Task<IActionResult> GetProductReview(int productId)
         {
             var productReviewResponses = await productReviewService.GetProductReviewsAsync(productId);
             return Ok(productReviewResponses);
         }
         [Authorize(Roles = "Admin, Customer")]
         [HttpPost]
-        public async Task<IActionResult> CreateProductReview([FromBody] ProductReviewRequest productReviewRequest)
+        public async Task<IActionResult> CreateProductReview([FromBody] RatingRequest ratingRequest)
         {
-            var productReview = await productReviewService.CreateProductReviewAsync(productReviewRequest);
+            var productReview = await productReviewService.CreateProductReviewAsync(ratingRequest);
             return Ok(productReview);
         }
         [Authorize(Roles = "Admin, Customer")]
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateProductReview([FromRoute] Guid id, [FromBody] UpdateProductReviewRequest updateProductReviewRequest)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateProductReview([FromRoute] int id, [FromBody] UpdateRatingRequest updateProductReviewRequest)
         {
             var productReview = await productReviewService.UpdateProductReviewAsync(id, updateProductReviewRequest);
             return Ok(productReview);
         }
         [Authorize(Roles = "Admin, Customer")]
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteProductReview([FromRoute] Guid id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteProductReview([FromRoute] int id)
         {
             var result = await productReviewService.DeleteProductReviewAsync(id);
             return Ok(result);

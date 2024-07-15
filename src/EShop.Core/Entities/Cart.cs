@@ -2,11 +2,10 @@
 {
     public class Cart : BaseModel
     {
-        public Guid ProductId { get; set; }
-        public virtual Product? Product { get; set; }
-        public Guid ApplicationUserId { get; set; }
-        public virtual ApplicationUser? ApplicationUser { get; set; }
 
-        public int Quantity { get; set; }
+        public int ApplicationUserId { get; set; }
+        public virtual ApplicationUser? ApplicationUser { get; set; }
+        
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 }

@@ -3,6 +3,8 @@ using EShop.Application.Services.Interfaces;
 using EShop.Core.Entities;
 using EShop.Core.Exceptions;
 using EShop.Core.Repositories;
+using EShop.Core.Repositories.Generic;
+using EShop.Core.Repositories.Query;
 using EShop.ViewModels.Dtos.Order;
 
 namespace EShop.Application.Services.Implements
@@ -18,7 +20,7 @@ namespace EShop.Application.Services.Implements
             return orders.Select(x => x.ToOrderResponse()).ToList();
         }
 
-        public async Task<OrderDetailResponse> GetOrderDetailByIdAsync(Guid id)
+        public async Task<OrderDetailResponse> GetOrderDetailByIdAsync(int id)
         {
             var order = await orderQueries.GetOrderDetailByIdAsync(id).ThrowIfNull($"Order with ID {id} not found");
             return order.ToOrderDetailResponse();
@@ -39,11 +41,11 @@ namespace EShop.Application.Services.Implements
             return newOrder.ToOrderResponse();
         }
 
-        public Task<OrderResponse> UpdateOrderAsync(Guid id, OrderRequest order)
+        public Task<OrderResponse> UpdateOrderAsync(int id, OrderRequest order)
         {
             throw new NotImplementedException();
         }
-        public async Task<bool> DeleteOrderAsync(Guid id)
+        public async Task<bool> DeleteOrderAsync(int id)
         {
             var order = await orderRepository.GetAsync(o => o.Id == id).ThrowIfNull($"Order with ID {id} not found"); ;
             orderRepository.Remove(order);

@@ -22,10 +22,6 @@ namespace EShop.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             var user = await authService.Login(loginRequest);
             if (true)
             {

@@ -1,7 +1,8 @@
 ﻿using EShop.Core.Repositories;
+using EShop.Core.Repositories.Generic;
 using EShop.Infrastructure.Data;
 
-namespace EShop.Infrastructure.Repositories
+namespace EShop.Infrastucture.Repositories.Generic
 {
     public class UnitOfWork(ApplicationDbContext db) : IUnitOfWork
     {

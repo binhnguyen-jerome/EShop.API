@@ -17,8 +17,8 @@ namespace EShop.API.Controllers
             return Ok(products);
         }
         [AllowAnonymous]
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetProduct([FromRoute] Guid id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetProduct([FromRoute] int id)
         {
             var product = await productService.GetProductByIdAsync(id);
             return Ok(product);
@@ -31,15 +31,15 @@ namespace EShop.API.Controllers
             return CreatedAtAction(nameof(CreateProduct), result);
         }
         [Authorize(Roles = "Admin")]
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, [FromBody] UpdateProductRequest productRequest)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] UpdateProductRequest productRequest)
         {
             var productResponse = await productService.UpdateProductAsync(id, productRequest);
             return Ok(productResponse);
         }
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
             var result = await productService.DeleteProductAsync(id);
             return Ok(result);

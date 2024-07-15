@@ -3,6 +3,7 @@ using EShop.Application.Services.Interfaces;
 using EShop.Core.Entities;
 using EShop.Core.Exceptions;
 using EShop.Core.Repositories;
+using EShop.Core.Repositories.Generic;
 using EShop.ViewModels.Dtos.Category;
 
 namespace EShop.Application.Services.Implements
@@ -18,7 +19,7 @@ namespace EShop.Application.Services.Implements
             return categories.Select(c => c.ToCategoryResponse()).ToList();
         }
 
-        public async Task<CategoryResponse> GetCategoryByIdAsync(Guid id)
+        public async Task<CategoryResponse> GetCategoryByIdAsync(int id)
         {
             var category = await categoryRepository.GetAsync(c => c.Id == id).ThrowIfNull($"Category with ID {id} not found");
             return category.ToCategoryResponse();
@@ -32,7 +33,7 @@ namespace EShop.Application.Services.Implements
 
         }
 
-        public async Task<bool> DeleteCategoryAsync(Guid id)
+        public async Task<bool> DeleteCategoryAsync(int id)
         {
             var category = await categoryRepository.GetAsync(c => c.Id == id).ThrowIfNull($"Category with ID {id} not found");
             categoryRepository.Remove(category);
@@ -40,7 +41,7 @@ namespace EShop.Application.Services.Implements
             return true;
         }
 
-        public async Task<CategoryResponse> UpdateCategoryAsync(Guid id, CategoryRequest categoryRequest)
+        public async Task<CategoryResponse> UpdateCategoryAsync(int id, CategoryRequest categoryRequest)
         {
             var category = await categoryRepository.GetAsync(c => c.Id == id).ThrowIfNull($"Category with ID {id} not found");
 

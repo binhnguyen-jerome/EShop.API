@@ -1,5 +1,4 @@
 ﻿using AutoFixture;
-using EShop.CustomerFe.Services;
 using EShop.CustomerFe.Services.Interfaces;
 using EShop.ViewModels.Dtos.Product;
 using Moq;
@@ -81,7 +80,7 @@ namespace EShop.UnitTest.CustomerFe
         [Fact]
         public async Task GetProductByIdAsync_InvalidId_ReturnNull()
         {
-            var invalidGuid = Guid.NewGuid();
+            var invalidGuid = 20;
 
             // Arrange
             var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);

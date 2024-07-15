@@ -2,18 +2,18 @@
 
 namespace EShop.ViewModels.Dtos.Review
 {
-    public class ProductReviewRequest
+    public class RatingRequest
     {
         [Required]
         public int Rate { get; set; }
         public string? Content { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
 
-        public Guid ProductId { get; set; }
+        public int ProductId { get; set; }
 
-        public Guid ApplicationUserId { get; set; }
+        public int ApplicationUserId { get; set; }
     }
-    public class UpdateProductReviewRequest
+    public class UpdateRatingRequest
     {
         [Required]
         public int Rate { get; set; }

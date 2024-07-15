@@ -23,22 +23,22 @@ namespace EShop.API.Controllers
             var category = await categoryService.CreateCategoryAsync(categoryRequest);
             return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
         }
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetCategory([FromRoute] Guid id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetCategory([FromRoute] int id)
         {
             var categoryResponse = await categoryService.GetCategoryByIdAsync(id);
             return Ok(categoryResponse);
         }
         [Authorize(Roles = "Admin")]
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateCategory([FromRoute] Guid id, [FromBody] CategoryRequest categoryRequest)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateCategory([FromRoute] int id, [FromBody] CategoryRequest categoryRequest)
         {
             var categoryResponse = await categoryService.UpdateCategoryAsync(id, categoryRequest);
             return Ok(categoryResponse);
         }
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var result = await categoryService.DeleteCategoryAsync(id);
             return Ok(result);

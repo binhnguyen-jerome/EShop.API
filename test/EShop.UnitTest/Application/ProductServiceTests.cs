@@ -3,6 +3,8 @@ using EShop.Application.Mappers;
 using EShop.Application.Services.Implements;
 using EShop.Core.Entities;
 using EShop.Core.Repositories;
+using EShop.Core.Repositories.Generic;
+using EShop.Core.Repositories.Query;
 using EShop.ViewModels.Dtos.Product;
 using Moq;
 
@@ -51,7 +53,7 @@ namespace EShop.UnitTest.Application
         {
             //Arrange
             var product = _fixture.Create<Product>();
-            _mockProductQueries.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>()))
+            _mockProductQueries.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(product);
 
             // Act
@@ -65,7 +67,7 @@ namespace EShop.UnitTest.Application
         [Fact]
         public async Task GetById_InvalidId_ReturnNull()
         {
-            await Assert.ThrowsAsync<KeyNotFoundException>(() => _ProductService.GetProductByIdAsync(Guid.NewGuid()));
+            await Assert.ThrowsAsync<KeyNotFoundException>(() => _ProductService.GetProductByIdAsync(1));
 
         }
         #endregion
@@ -95,7 +97,7 @@ namespace EShop.UnitTest.Application
             //Arrange
             var updateProduct = _fixture.Create<UpdateProductRequest>();
             var product = _fixture.Create<Product>();
-            _mockProductQueries.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>()))
+            _mockProductQueries.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(product);
             _mockProductRepository.Setup(repo => repo.Update(It.IsAny<Product>()));
             _mockUnitOfWork.Setup(u => u.CompleteAsync());
@@ -113,7 +115,7 @@ namespace EShop.UnitTest.Application
         {
             //Arrange
             var product = _fixture.Create<Product>();
-            _mockProductQueries.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>()))
+            _mockProductQueries.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(product);
             _mockProductImageRepository.Setup(repo => repo.RemoveRange(It.IsAny<IEnumerable<ProductImage>>()));
             _mockProductRepository.Setup(repo => repo.Remove(It.IsAny<Product>()));

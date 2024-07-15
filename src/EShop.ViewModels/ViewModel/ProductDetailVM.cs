@@ -7,15 +7,15 @@ namespace EShop.ViewModels.ViewModel
     public class ProductDetailVm
     {
         public ProductResponse Product { get; set; } = new();
-        public List<ProductReviewUserResponse> Reviews { get; set; } = [];
+        public List<RatingUserResponse> Reviews { get; set; } = [];
 
-        public ProductReviewRequest NewReview { get; set; } = new();
+        public RatingRequest NewReview { get; set; } = new();
 
         public CartRequest CartRequest { get; set; } = new();
 
         public int AverageRating { get; set; }
 
-        public static ProductDetailVm Create(ProductResponse product, List<ProductReviewUserResponse> reviews)
+        public static ProductDetailVm Create(ProductResponse product, List<RatingUserResponse> reviews)
         {
             return new ProductDetailVm
             {

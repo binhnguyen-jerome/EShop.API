@@ -1,7 +1,7 @@
 ﻿using EShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Infrastructure.Repositories
+namespace EShop.Infrastucture.Repositories.Query
 {
     public class BaseQuery<T> where T : class
     {

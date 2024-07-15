@@ -1,4 +1,5 @@
 ﻿using EShop.ViewModels.Dtos.Cart;
+using EShop.ViewModels.Dtos.CartItem;
 using EShop.ViewModels.Dtos.Order;
 using EShop.ViewModels.Dtos.User;
 
@@ -6,11 +7,11 @@ namespace EShop.ViewModels.ViewModel
 {
     public class CartVM
     {
-        public List<CartResponse> CartItems { get; set; }
+        public List<CartItemResponse> CartItems { get; set; }
         public OrderRequest OrderRequest { get; set; }
         public decimal TotalPrice => CartItems.Sum(x => x.Product.PriceDiscount * x.Quantity);
 
-        public static CartVM Create(List<CartResponse> cartItems, OrderRequest orderRequest, UserReponse user)
+        public static CartVM Create(List<CartItemResponse> cartItems, OrderRequest orderRequest, UserReponse user)
         {
             return new CartVM
             {
@@ -28,7 +29,7 @@ namespace EShop.ViewModels.ViewModel
                 }
             };
         }
-        public static CartVM Create(List<CartResponse> cartItems, OrderRequest orderRequest)
+        public static CartVM Create(List<CartItemResponse> cartItems, OrderRequest orderRequest)
         {
             return new CartVM
             {

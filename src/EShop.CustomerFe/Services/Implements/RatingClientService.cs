@@ -5,23 +5,23 @@ using System.Text;
 
 namespace EShop.CustomerFe.Services.Implements
 {
-    public class ProductReviewClientService(HttpClient httpClient) : IProductReviewClientService
+    public class RatingClientService(HttpClient httpClient) : IRatingClientService
     {
-        public async Task<List<ProductReviewUserResponse>?> GetProductReviewsAsync(Guid productId)
+        public async Task<List<RatingUserResponse>?> GetProductReviewsAsync(int productId)
         {
             var response = await httpClient.GetAsync($"/api/v1/productReviews?productId={productId}");
             if (!response.IsSuccessStatusCode) return [];
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<ProductReviewUserResponse>>(content);
+            return JsonConvert.DeserializeObject<List<RatingUserResponse>>(content);
         }
-        public async Task<ProductReviewResponse?> CreateProductReviewAsync(ProductReviewRequest request)
+        public async Task<RatingResponse?> CreateProductReviewAsync(RatingRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync("/api/v1/productReviews", content);
             if (!response.IsSuccessStatusCode) return null;
             var responseContent = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ProductReviewResponse>(responseContent);
+            return JsonConvert.DeserializeObject<RatingResponse>(responseContent);
         }
     }
 }

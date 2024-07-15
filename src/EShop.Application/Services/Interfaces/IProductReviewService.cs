@@ -4,10 +4,10 @@ namespace EShop.Application.Services.Interfaces
 {
     public interface IProductReviewService
     {
-        Task<ProductReviewResponse> CreateProductReviewAsync(ProductReviewRequest productReviewRequest);
-        Task<ProductReviewResponse> UpdateProductReviewAsync(Guid id, UpdateProductReviewRequest updateProductReviewRequest);
-        Task<bool> DeleteProductReviewAsync(Guid productReviewId);
-        Task<List<ProductReviewResponse>> GetProductReviewsAsync(Guid productId);
+        Task<RatingResponse> CreateProductReviewAsync(RatingRequest ratingRequest);
+        Task<RatingResponse> UpdateProductReviewAsync(int id, UpdateRatingRequest updateProductReviewRequest);
+        Task<bool> DeleteProductReviewAsync(int productReviewId);
+        Task<List<RatingResponse>> GetProductReviewsAsync(int productId);
 
     }
 }

@@ -6,7 +6,7 @@ namespace EShop.CustomerFe.Services.Interfaces
     public interface IProductClientService
     {
         Task<List<ProductResponse>?> GetAllProductsAsync();
-        Task<ProductResponse?> GetProductByIdAsync(Guid productId);
+        Task<ProductResponse?> GetProductByIdAsync(int productId);
 
         Task<PagedResult<ProductResponse>> GetFilterProductsAsync(ProductQuery query);
     }

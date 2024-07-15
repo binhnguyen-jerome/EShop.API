@@ -1,11 +1,11 @@
 ﻿using EShop.Core.Entities;
 
-namespace EShop.Core.Repositories
+namespace EShop.Core.Repositories.Query
 {
     public interface IProductQueries
     {
         Task<List<Product>> GetProductsAsync();
 
-        Task<Product?> GetByIdAsync(Guid id);
+        Task<Product?> GetByIdAsync(int id);
     }
 }

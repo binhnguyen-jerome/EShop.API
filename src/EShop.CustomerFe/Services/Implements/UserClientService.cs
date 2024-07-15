@@ -6,7 +6,7 @@ namespace EShop.CustomerFe.Services.Implements
 {
     public class UserClientService(HttpClient httpClient) : IUserClientService
     {
-        public async Task<UserReponse?> GetUserById(Guid userId)
+        public async Task<UserReponse?> GetUserById(int userId)
         {
             var response = await httpClient.GetAsync($"/api/v1/users/{userId}");
             if (!response.IsSuccessStatusCode) return null;

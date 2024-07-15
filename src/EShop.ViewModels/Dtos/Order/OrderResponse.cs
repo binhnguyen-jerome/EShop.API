@@ -4,8 +4,8 @@ namespace EShop.ViewModels.Dtos.Order
 {
     public class OrderResponse
     {
-        public Guid Id { get; set; }
-        public Guid ApplicationUserId { get; set; }
+        public int Id { get; set; }
+        public int ApplicationUserId { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
@@ -23,8 +23,8 @@ namespace EShop.ViewModels.Dtos.Order
     }
     public class OrderDetailResponse
     {
-        public Guid Id { get; set; }
-        public Guid ApplicationUserId { get; set; }
+        public int Id { get; set; }
+        public int ApplicationUserId { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
@@ -48,7 +48,7 @@ namespace EShop.ViewModels.Dtos.Order
     }
     public class ProductOrderItemResponse
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
     }

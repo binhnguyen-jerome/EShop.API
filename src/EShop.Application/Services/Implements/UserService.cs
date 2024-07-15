@@ -33,7 +33,7 @@ namespace EShop.Application.Services.Implements
             }
             return userResponses;
         }
-        public async Task<UserReponse> GetUserAsync(Guid id)
+        public async Task<UserReponse> GetUserAsync(int id)
         {
             var user = await userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
 
@@ -52,14 +52,14 @@ namespace EShop.Application.Services.Implements
                 Role = roles.FirstOrDefault(),
             };
         }
-        public async Task<bool> DeleteUserAsync(Guid id)
+        public async Task<bool> DeleteUserAsync(int id)
         {
             var user = userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
 
             await userManager.DeleteAsync(user.Result);
             return true;
         }
-        public async Task<UserReponse> UpdateUserAsync(Guid id, UserRequest userRequest)
+        public async Task<UserReponse> UpdateUserAsync(int id, UserRequest userRequest)
         {
             var user = await userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
 
@@ -75,7 +75,7 @@ namespace EShop.Application.Services.Implements
             await userManager.UpdateAsync(user);
             return user.ToUserResponse();
         }
-        public async Task<bool> UpdateUserRoleAsync(Guid id, string newRole)
+        public async Task<bool> UpdateUserRoleAsync(int id, string newRole)
         {
             var user = await userManager.FindByIdAsync(id.ToString()).ThrowIfNull($"User with ID {id} not found");
 

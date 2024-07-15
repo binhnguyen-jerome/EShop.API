@@ -55,7 +55,7 @@ namespace EShop.CustomerFe.Services.Implements
                 TotalItems = allProducts.Count
             };
         }
-        public async Task<ProductResponse?> GetProductByIdAsync(Guid productId)
+        public async Task<ProductResponse?> GetProductByIdAsync(int productId)
         {
             var response = await httpClient.GetAsync($"/api/v1/products/{productId}");
             if (!response.IsSuccessStatusCode) return null;

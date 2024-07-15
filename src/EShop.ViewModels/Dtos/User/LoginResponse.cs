@@ -2,7 +2,7 @@
 {
     public class LoginResponse
     {
-        public Guid userId;
+        public int userId;
         public string username;
         public string token;
     }

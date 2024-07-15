@@ -6,6 +6,7 @@ using Moq;
 using System.Linq.Expressions;
 using EShop.Core.Entities;
 using EShop.Core.Repositories;
+using EShop.Core.Repositories.Generic;
 
 namespace EShop.UnitTest.Application
 {
@@ -64,7 +65,7 @@ namespace EShop.UnitTest.Application
         [Fact]
         public async Task GetById_InvalidId_ReturnNull()
         {
-            await Assert.ThrowsAsync<KeyNotFoundException>(() => _categoryService.GetCategoryByIdAsync(Guid.NewGuid()));
+            await Assert.ThrowsAsync<KeyNotFoundException>(() => _categoryService.GetCategoryByIdAsync(1));
         }
         #endregion
         #region CreateCategoryAsync

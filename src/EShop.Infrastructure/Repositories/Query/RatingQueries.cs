@@ -1,13 +1,14 @@
 ﻿using EShop.Core.Entities;
 using EShop.Core.Repositories;
+using EShop.Core.Repositories.Query;
 using EShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.Infrastructure.Repositories
+namespace EShop.Infrastucture.Repositories.Query
 {
-    public class ProductReviewQueries(ApplicationDbContext db) : BaseQuery<ProductReview>(db), IProductReviewQueries
+    public class RatingQueries(ApplicationDbContext db) : BaseQuery<Rating>(db), IProductReviewQueries
     {
-        public async Task<List<ProductReview>> GetFilteredProductReviewsAsync(Guid productId)
+        public async Task<List<Rating>> GetFilteredProductReviewsAsync(int productId)
         {
             var queryable = dbSet.AsQueryable();
             return await queryable

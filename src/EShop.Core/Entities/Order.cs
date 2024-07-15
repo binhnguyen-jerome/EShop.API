@@ -4,7 +4,7 @@ namespace EShop.Core.Entities
 {
     public class Order : BaseModel
     {
-        public Guid ApplicationUserId { get; set; }
+        public int ApplicationUserId { get; set; }
         public virtual ApplicationUser? ApplicationUser { get; set; }
 
         public DateTime OrderDate { get; set; }

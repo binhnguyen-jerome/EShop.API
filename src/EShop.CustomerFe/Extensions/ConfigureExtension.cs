@@ -40,7 +40,7 @@ namespace EShop.CustomerFe.Extensions
             //Inject Service Repositories
             services.AddHttpClient<IProductClientService, ProductClientService>(configureClient);
             services.AddHttpClient<ICategoryClientService, CategoryClientService>(configureClient);
-            services.AddHttpClient<IProductReviewClientService, ProductReviewClientService>(configureClient);
+            services.AddHttpClient<IRatingClientService, RatingClientService>(configureClient);
             services.AddHttpClient<IUserClientService, UserClientService>(configureClient);
             services.AddHttpClient<ICartClientService, CartClientService>(configureClient);
             services.AddHttpClient<IAuthClientService, AuthClientService>(configureClient);
